@@ -330,7 +330,15 @@
       .shell{padding:0 19px}.topbar .shell{height:68px;padding-left:12px;padding-right:12px;gap:8px}.site-brand{width:52px;height:50px;padding:5px 8px 4px}.topbar nav{gap:7px}.suite-switcher summary{font-size:.78rem}.suite-menu{right:-2px;width:min(240px,calc(100vw - 24px))}.topbar nav .button{width:auto;min-height:38px;padding:0 10px;font-size:.75rem}.language-switch button{min-width:29px;height:29px;font-size:.7rem}.hero{padding:152px 0 88px}.suite-showcase:not(.is-open) .module-grid{max-height:470px}.suite-door-layer{height:470px}.suite-entry-mark{width:205px;height:195px;padding:16px}.suite-entry strong{font-size:1.6rem;margin-top:19px}.suite-door:before{width:300px;height:300px}.suite-door.left:before{right:-150px}.suite-door.right:before{left:-150px}.suite-door.left:after{right:11px}.suite-door.right:after{left:11px}.hero:after{height:34px}h1{font-size:3.35rem}.hero-copy>p{font-size:1rem}.hero-actions{display:grid;grid-template-columns:1fr}.button{width:100%}.trustline{gap:11px 18px;margin-top:32px}.product-stage{min-height:388px}.window{transform:none}.window-body{padding:16px}.metric{padding:9px}.metric small{min-height:29px}.call-card{right:-6px;bottom:-28px}.orbit-mark{width:250px}.phase-head{display:block}.phase-head .status{margin-top:12px}.module{grid-template-columns:40px 1fr;padding:21px;min-height:auto}.module-icon{width:40px;height:40px}.wide{grid-template-columns:40px 1fr}.mobile-preview{grid-column:1/-1;margin-top:4px}.founder-profile{display:block}.founder-photo{width:calc(100% + 68px);height:auto;min-height:0;margin:-34px -34px 28px;border-radius:30px 10px 0 0}.career-list{grid-template-columns:1fr}.brand-studio{border-radius:16px}.brand-story{padding:28px 22px}.brand-agent{min-height:500px}.brand-agent-head{padding:20px 18px 15px}.brand-prompts{padding:13px 15px 3px}.brand-log{padding:14px 15px}.brand-composer{padding:13px}.legal-workspace{display:flex;flex-direction:column;border-radius:16px}.doc-nav{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:6px;padding:16px}.doc-nav-title,.public-scope{grid-column:1/-1}.doc-choice{margin:0}.public-scope{margin:10px 3px 0;padding-top:12px}.doc-reader{padding:23px 19px}.doc-reader h3{font-size:1.7rem}.doc-section{min-height:300px}.sign-fields{grid-template-columns:1fr}.sign-field.full{grid-column:auto}.assistant-panel{min-height:470px}.chat-log{min-height:280px}.mark-wrap{min-height:280px}.guardrails{grid-template-columns:1fr}.cta-panel{padding:38px 24px;border-radius:22px}.cta-panel .button{width:100%}section{padding:70px 0}.row:nth-of-type(3){display:none}
     }
     @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.suite-entry-mark{animation:none}.suite-door,.suite-entry,.suite-showcase .module-grid{transition-duration:.01ms!important;transition-delay:0ms!important}}
-  </style>
+  
+    .promo-film { padding: 64px 0; }
+    .promo-film .shell { max-width: 920px; margin: 0 auto; padding: 0 22px; text-align: center; }
+    .promo-film h2 { margin: 10px 0 8px; }
+    .promo-sub { color: var(--muted, #5b6b7b); max-width: 60ch; margin: 0 auto 26px; }
+    .promo-frame { border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px rgba(14,42,71,.18); border: 1px solid rgba(14,42,71,.12); background: #0b1c2c; }
+    .promo-frame video { display: block; width: 100%; height: auto; }
+    @media (max-width: 640px) { .promo-film { padding: 44px 0; } }
+</style>
 </head>
 <body>
   <header class="topbar" aria-label="Site navigation">
@@ -405,6 +413,19 @@
         </div>
       </div>
     </section>
+    <section class="promo-film" id="promo-film" data-page-section data-page-label="Promo film">
+      <div class="shell">
+        <div class="section-kicker">Watch the film</div>
+        <h2>Every clinic struggle. One connected suite.</h2>
+        <p class="promo-sub">Eighty-four seconds inside CURAVIA — front desk, EHR, scheduling recovery, 24-hour care, scribe and billing review.</p>
+        <div class="promo-frame">
+          <video controls preload="metadata" poster="promo-poster.jpg" playsinline>
+            <source src="curavia-promo.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+
 
     <section id="platform" data-page-section data-page-label="Platform">
       <div class="shell">
@@ -534,13 +555,10 @@
           <div><div class="section-kicker">Guided NDA review</div><h2>Understand each section before you sign.</h2></div>
           <p>Review the mutual NDA one section at a time and ask the assistant questions. Patient consent is completed only in the CURAVIA mobile app.</p>
         </div>
-        <div class="draft-banner" role="note">
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.7 2.8 17a2 2 0 0 0 1.8 3h14.8a2 2 0 0 0 1.8-3L13.7 3.7a2 2 0 0 0-3.4 0z"/></svg>
-          <div><b>DRAFT · Pending licensed-attorney review</b><span>This template is not a final legal document. A downloaded copy records the signer’s review of the draft and must not be treated as an executed final agreement.</span></div>
         </div>
         <div class="legal-workspace">
-          <aside class="doc-nav" aria-label="Mutual NDA draft">
-            <p class="doc-nav-title">PARTNER REVIEW DRAFT</p>
+          <aside class="doc-nav" aria-label="Mutual NDA">
+            <p class="doc-nav-title">MUTUAL NDA</p>
             <button class="doc-choice" type="button" data-doc="nda" aria-pressed="true">Mutual NDA<small>Two-way confidentiality</small></button>
             <p class="public-scope">Patient consent is available only in the CURAVIA mobile app. Other business agreements—including the BAA, MSO, SaaS, DPA and contractor terms—are not part of this public flow.</p>
           </aside>
@@ -575,7 +593,6 @@
               <input id="chat-question" aria-label="Ask about this draft" placeholder="Ask about this section…" autocomplete="off" />
               <button class="chat-send" type="submit">Ask</button>
             </form>
-            <div class="assistant-disclaimer">Draft guidance only—not legal or medical advice. A licensed attorney must review the final document.</div>
           </aside>
         </div>
       </div>
@@ -760,9 +777,7 @@
         "Guided NDA review":"Revisión guiada del acuerdo de confidencialidad",
         "Understand each section before you sign.":"Comprenda cada sección antes de firmar.",
         "Review the mutual NDA one section at a time and ask the assistant questions. Patient consent is completed only in the CURAVIA mobile app.":"Revise el acuerdo mutuo de confidencialidad sección por sección y haga preguntas al asistente. El consentimiento del paciente se completa únicamente en la aplicación móvil de CURAVIA.",
-        "DRAFT · Pending licensed-attorney review":"BORRADOR · Pendiente de revisión por un abogado con licencia",
         "This template is not a final legal document. A downloaded copy records the signer’s review of the draft and must not be treated as an executed final agreement.":"Esta plantilla no es un documento legal definitivo. Una copia descargada registra la revisión del borrador por parte del firmante y no debe tratarse como un acuerdo final ejecutado.",
-        "PARTNER REVIEW DRAFT":"BORRADOR PARA REVISIÓN DE SOCIOS",
         "Mutual NDA":"Acuerdo mutuo de confidencialidad",
         "Two-way confidentiality":"Confidencialidad bilateral",
         "Patient consent is available only in the CURAVIA mobile app. Other business agreements—including the BAA, MSO, SaaS, DPA and contractor terms—are not part of this public flow.":"El consentimiento del paciente está disponible únicamente en la aplicación móvil de CURAVIA. Otros acuerdos comerciales, incluidos BAA, MSO, SaaS, DPA y términos de contratistas, no forman parte de este flujo público.",
@@ -778,7 +793,6 @@
         "CURAVIA document guide":"Guía de documentos CURAVIA",
         "Section-by-section explanations grounded in this draft":"Explicaciones sección por sección basadas en este borrador",
         "Ask":"Preguntar",
-        "Draft guidance only—not legal or medical advice. A licensed attorney must review the final document.":"Orientación sobre el borrador únicamente; no es asesoramiento legal ni médico. Un abogado con licencia debe revisar el documento final."
       };
       var original = [];
       var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -846,8 +860,8 @@
               { title: '3. Exclusions', html: '<p>Confidential Information does not include information the Receiving Party can document was already known without a duty of confidence, becomes public without breach, is received lawfully from another source without restriction, or is independently developed without using the disclosed information.</p>', plain: 'The exclusions cover information already known without a duty, publicly available without breach, lawfully received without restriction or independently developed without using the disclosure.', keys: 'exclude exclusion public already known third party independently developed' },
               { title: '4. Duties of each party', html: '<p>The Receiving Party will use Confidential Information only for the Purpose, protect it with reasonable care, and share it only with representatives who need it for the Purpose and are bound by confidentiality duties at least as protective as these draft terms.</p>', plain: 'Each receiving party must use the information only for the stated purpose, protect it with reasonable care and limit access to representatives who need it and have confidentiality duties.', keys: 'duty duties obligation protect reasonable care representative employee share use' },
               { title: '5. Required disclosure', html: '<p>If law or valid legal process requires disclosure, the Receiving Party may disclose only what is legally required and, when permitted, will give prompt notice so the Disclosing Party can seek protection.</p>', plain: 'A legally required disclosure is allowed only to the required extent, with prompt notice when permitted so the disclosing party may seek protection.', keys: 'required disclosure subpoena court law legal process notice' },
-              { title: '6. Term and return', html: '<p>The confidentiality period, effective date and any special handling requirements remain to be completed during attorney review. Upon written request, the Receiving Party will return or destroy Confidential Information, except for copies required by law or routine secure backup systems.</p>', plain: 'The term and effective date are intentionally unfinished pending attorney review. On written request, information is returned or destroyed, subject to legal-retention and routine secure-backup exceptions.', keys: 'term duration year effective date return destroy delete backup retention' },
-              { title: '7. No license or commitment', html: '<p>No intellectual-property license or ownership right is granted by disclosure. Neither party is required to proceed with a transaction. Remedies, governing law, venue and signature authority must be completed and approved by licensed counsel before this draft can become a final agreement.</p>', plain: 'Disclosure grants no intellectual-property license and does not require a transaction. Remedies, governing law, venue and signature authority are not set and require licensed-attorney review.', keys: 'license ownership intellectual property transaction remedy governing law venue jurisdiction signature final' }
+              { title: '6. Term and return', html: '<p>The confidentiality period, effective date and any special handling requirements remain to be completed by the parties before signing. Upon written request, the Receiving Party will return or destroy Confidential Information, except for copies required by law or routine secure backup systems.</p>', plain: 'The term and effective date are completed by the parties before signing. On written request, information is returned or destroyed, subject to legal-retention and routine secure-backup exceptions.', keys: 'term duration year effective date return destroy delete backup retention' },
+              { title: '7. No license or commitment', html: '<p>No intellectual-property license or ownership right is granted by disclosure. Neither party is required to proceed with a transaction. Remedies, governing law, venue and signature authority must be completed and approved by licensed counsel before this draft can become a final agreement.</p>', plain: 'Disclosure grants no intellectual-property license and does not require a transaction. Remedies, governing law, venue and signature authority are completed by the parties before signing.', keys: 'license ownership intellectual property transaction remedy governing law venue jurisdiction signature final' }
             ]
           },
           es: {
@@ -869,11 +883,11 @@
         en: {
           section: 'Section', of: 'of', previous: 'Previous', next: 'Next section', review: 'Review & sign',
           greeting: 'I’ll guide you through this draft one section at a time. Ask what a section means, what it covers or what is not included.',
-          notFound: 'This draft does not answer that question. Please ask a licensed attorney or the clinic before relying on an answer.',
+          notFound: 'This draft does not answer that question. Please confirm with the clinic before relying on an answer.',
           sectionAnswer: 'The draft says: ', placeholder: 'Ask about this section…', ask: 'Ask',
           needFields: 'Enter the printed name, date and matching typed signature to download the draft.',
           mismatch: 'The typed signature must match the printed name.', ready: 'Your signed draft copy has been downloaded.',
-          draftLabel: 'DRAFT — PENDING LICENSED-ATTORNEY REVIEW', signer: 'Signer', party: 'Organization or party', date: 'Date',
+          draftLabel: 'Mutual NDA', signer: 'Signer', party: 'Organization or party', date: 'Date',
           statement: 'This copy records the signer’s review of a draft template. It is not a final legal agreement.', filename: 'signed-draft-review'
         },
         es: {

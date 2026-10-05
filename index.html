@@ -152,6 +152,8 @@
     .module p{font-size:.86rem;color:var(--ink-soft);margin:0 0 13px}
     .module .status{font-size:.67rem}
     .module-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:2px}
+    a.module{text-decoration:none;color:inherit;cursor:pointer;transition:border-color .2s ease,box-shadow .2s ease}
+    a.module:hover{border-color:var(--teal);box-shadow:0 10px 28px rgba(5,55,59,.10)}
     .service-link{display:inline-flex;align-items:center;gap:6px;color:var(--teal);font-size:.72rem;font-weight:700;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--teal) 45%,transparent);padding-bottom:2px}
     .service-link:hover{color:var(--teal-deep);border-bottom-color:currentColor}
     .service-link:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-bottom-color:transparent}
@@ -393,9 +395,9 @@
               </div>
               <div class="activity">
                 <div class="activity-title">CONNECTED WORKFLOWS</div>
-                <div class="row"><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 2 2.3z"/></svg></span><span class="row-text"><b>Voice front desk</b><small>Calls answered, booked or escalated</small></span><span class="row-status">Coming soon</span></div>
-                <div class="row"><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="row-text"><b>Appointment recovery</b><small>Open slot offered to the right patient</small></span><span class="row-status">Built</span></div>
-                <div class="row"><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h6M8 11h6"/></svg></span><span class="row-text"><b>Clinical documentation</b><small>Draft prepared for clinician review</small></span><span class="row-status">Coming soon</span></div>
+                <div class="row"><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 2 2.3z"/></svg></span><span class="row-text"><b>Voice front desk</b><small>Calls answered, booked or escalated</small></span></div>
+                <div class="row"><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="row-text"><b>Appointment recovery</b><small>Open slot offered to the right patient</small></span></div>
+                <div class="row"><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M8 7h6M8 11h6"/></svg></span><span class="row-text"><b>Clinical documentation</b><small>Draft prepared for clinician review</small></span></div>
               </div>
             </div>
           </div>
@@ -426,7 +428,6 @@
 
         <div class="phase-head">
           <div><h2>Phase 1 · Pilot foundation</h2><p class="phase-copy">The core clinic experience, built for one login, role-based access and one connected operational picture.</p></div>
-          <span class="status">In development</span>
         </div>
         <div class="suite-showcase" id="suite-showcase">
           <div class="suite-door-layer" aria-hidden="true">
@@ -441,13 +442,13 @@
           </button>
           <button class="suite-close" id="suite-close" type="button">Close doors</button>
           <div class="module-grid" id="suite-components">
-          <article class="module voice-feature"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 2 2.3z"/></svg></div><div><h3>AI Voice Front Desk</h3><p>Answers missed calls, supports scheduling and routes urgent or complex needs to the right person.</p><span class="status">Coming soon</span></div></article>
-          <article class="module"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v4M16 2v4M3 9h18M5 4h14a2 2 0 0 1 2 2v14H3V6a2 2 0 0 1 2-2z"/><path d="M8 14h3l2-2 3 3"/></svg></div><div><h3>INSNAPP Medical</h3><p>Matches canceled appointment slots with waiting patients, with EHR write-back required before a recovery counts.</p><div class="module-actions"><span class="status">Built</span><a class="service-link" href="#home">Landing page</a><a class="service-link" href="#signing">NDA</a></div></div></article>
-          <article class="module"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M12 7v10M7 12h10"/></svg></div><div><h3>24H Doctor</h3><p>Supports continuous care programs with a human care team, structured interactions and clinically governed escalation.</p><div class="module-actions"><span class="status">In build</span><a class="service-link" href="#home">Landing page</a><a class="service-link" href="#signing">NDA</a></div></div></article>
-          <article class="module"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v10M8 9a4 4 0 0 0 8 0V7a4 4 0 1 0-8 0v2zM5 20h14M12 17v3"/></svg></div><div><h3>Exam-Room Scribe</h3><p>Turns visit context into a structured draft while keeping the clinician responsible for review and sign-off.</p><div class="module-actions"><span class="status">Built</span><a class="service-link" href="#home">Landing page</a><a class="service-link" href="#signing">NDA</a></div></div></article>
-          <article class="module"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5M8 17h3"/><path d="m15 16 2 2 3-4"/></svg></div><div><h3>Billing Review</h3><p>Vivian’s review screen routes each claim by payer track and blocks export until a human signs off.</p><div class="module-actions"><span class="status">Built</span><a class="service-link" href="#home">Landing page</a><a class="service-link" href="#signing">NDA</a></div></div></article>
-          <article class="module"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M7 16V9M12 16V6M17 16v-4"/></svg></div><div><h3>Practice Ops Dashboard</h3><p>Brings schedule recovery, care-program activity, call handling and review queues into one operating view.</p><div class="module-actions"><span class="status">Built</span><a class="service-link" href="#home">Landing page</a><a class="service-link" href="#signing">NDA</a></div></div></article>
-          <article class="module wide"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg></div><div><h3>Patient Mobile Experience</h3><p>One bilingual patient-facing place for earlier-slot offers, countdowns, accept or decline, pool preferences and continuous-care interactions.</p><div class="module-actions"><span class="status">In build</span><a class="service-link" href="#home">Landing page</a><a class="service-link" href="#signing">NDA</a></div></div><div class="mobile-preview" aria-hidden="true"><div class="phone-slab"><div></div><div></div></div><span><b>Earlier opening available</b><small>A Spanish-and-English, mobile-first path from offer to confirmed appointment.</small></span></div></article>
+          <a class="module voice-feature" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 2 2.3z"/></svg></div><div><h3>AI Voice Front Desk</h3><p>Answers missed calls, supports scheduling and routes urgent or complex needs to the right person.</p></div></a>
+          <a class="module" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 2v4M16 2v4M3 9h18M5 4h14a2 2 0 0 1 2 2v14H3V6a2 2 0 0 1 2-2z"/><path d="M8 14h3l2-2 3 3"/></svg></div><div><h3>INSNAPP Medical</h3><p>Matches canceled appointment slots with waiting patients, with EHR write-back required before a recovery counts.</p></div></a>
+          <a class="module" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M12 7v10M7 12h10"/></svg></div><div><h3>24H Doctor</h3><p>Supports continuous care programs with a human care team, structured interactions and clinically governed escalation.</p></div></a>
+          <a class="module" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v10M8 9a4 4 0 0 0 8 0V7a4 4 0 1 0-8 0v2zM5 20h14M12 17v3"/></svg></div><div><h3>Exam-Room Scribe</h3><p>Turns visit context into a structured draft while keeping the clinician responsible for review and sign-off.</p></div></a>
+          <a class="module" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h5M8 17h3"/><path d="m15 16 2 2 3-4"/></svg></div><div><h3>Billing Review</h3><p>Vivian’s review screen routes each claim by payer track and blocks export until a human signs off.</p></div></a>
+          <a class="module" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M7 16V9M12 16V6M17 16v-4"/></svg></div><div><h3>Practice Ops Dashboard</h3><p>Brings schedule recovery, care-program activity, call handling and review queues into one operating view.</p></div></a>
+          <a class="module wide" href="#signing"><div class="module-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg></div><div><h3>Patient Mobile Experience</h3><p>One bilingual patient-facing place for earlier-slot offers, countdowns, accept or decline, pool preferences and continuous-care interactions.</p></div><div class="mobile-preview" aria-hidden="true"><div class="phone-slab"><div></div><div></div></div><span><b>Earlier opening available</b><small>A Spanish-and-English, mobile-first path from offer to confirmed appointment.</small></span></div></a>
           </div>
         </div>
       </div>
@@ -609,8 +610,6 @@
         "THE SUITE":"LA SUITE",
         "Click to open":"Haga clic para abrir",
         "Close doors":"Cerrar puertas",
-        "Landing page":"Página principal",
-        "NDA":"NDA",
         "Principles":"Principios",
         "Request a demo":"Solicitar una demostración",
         "Now building with a private pilot":"En desarrollo con un programa piloto privado",
@@ -632,10 +631,8 @@
         "CONNECTED WORKFLOWS":"FLUJOS CONECTADOS",
         "Voice front desk":"Recepción por voz",
         "Calls answered, booked or escalated":"Llamadas atendidas, agendadas o escaladas",
-        "Coming soon":"Próximamente",
         "Appointment recovery":"Recuperación de citas",
         "Open slot offered to the right patient":"Cita libre ofrecida al paciente adecuado",
-        "Built":"Construido",
         "Clinical documentation":"Documentación clínica",
         "Draft prepared for clinician review":"Borrador preparado para revisión clínica",
         "AI-assisted call flow":"Flujo de llamadas asistido por IA",
@@ -648,13 +645,11 @@
         "The suite is being built as a set of connected, role-specific tools for patients, clinicians and practice teams—not a stack of isolated point solutions.":"La suite se está construyendo como un conjunto de herramientas conectadas y específicas por rol para pacientes, médicos y equipos de la clínica, no como soluciones aisladas.",
         "Phase 1 · Pilot foundation":"Fase 1 · Base del piloto",
         "The core clinic experience, built for one login, role-based access and one connected operational picture.":"La experiencia central de la clínica, creada con un solo inicio de sesión, acceso por roles y una visión operativa conectada.",
-        "In development":"En desarrollo",
         "AI Voice Front Desk":"Recepción por voz con IA",
         "Answers missed calls, supports scheduling and routes urgent or complex needs to the right person.":"Responde llamadas perdidas, facilita la programación y dirige las necesidades urgentes o complejas a la persona adecuada.",
         "Matches canceled appointment slots with waiting patients, with EHR write-back required before a recovery counts.":"Conecta citas canceladas con pacientes en espera y exige registrar el cambio en el EHR antes de contar la recuperación.",
         "24H Doctor":"Médico 24H",
         "Supports continuous care programs with a human care team, structured interactions and clinically governed escalation.":"Apoya programas de atención continua con un equipo humano, interacciones estructuradas y escalamiento con supervisión clínica.",
-        "In build":"En construcción",
         "Exam-Room Scribe":"Asistente de documentación clínica",
         "Turns visit context into a structured draft while keeping the clinician responsible for review and sign-off.":"Convierte el contexto de la visita en un borrador estructurado, manteniendo al médico responsable de revisarlo y aprobarlo.",
         "Billing Review":"Revisión de facturación",

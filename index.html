@@ -256,6 +256,23 @@
     .chat-composer input::placeholder{color:#a9c8c4}
     .chat-send{border:0;background:var(--gold);color:#172b2c;border-radius:8px;padding:0 12px;font:inherit;font-size:.72rem;font-weight:700;cursor:pointer}
     .assistant-disclaimer{padding:0 16px 14px;color:#9fbdb9;font-size:.61rem;line-height:1.4}
+    .doc-nav-list{display:grid;gap:4px}
+    .nda-nav-btn{display:flex;align-items:center;gap:9px;width:100%;border:0;background:transparent;color:var(--ink);text-align:left;padding:8px 9px;border-radius:9px;font:inherit;font-size:.76rem;font-weight:600;cursor:pointer}
+    .nda-nav-btn .dot{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);font-size:.62rem;font-weight:700;flex:0 0 auto;background:var(--card)}
+    .nda-nav-btn.current{background:var(--card);box-shadow:0 6px 22px rgba(5,55,59,.09);color:var(--teal)}
+    .nda-nav-btn.reviewed .dot{background:var(--teal);border-color:var(--teal);color:#fff}
+    .nda-nav-btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    .doc-progress-track{height:5px;border-radius:99px;background:var(--line);margin:16px 6px 12px;overflow:hidden}
+    .doc-progress-track span{display:block;height:100%;width:0;background:var(--gold);transition:width .3s ease}
+    .reset-matter{width:calc(100% - 12px);margin:0 6px}
+    .reset-status{font-size:.68rem;color:var(--ink-soft);margin:7px 6px 0;min-height:14px}
+    #doc-copy{white-space:pre-wrap}
+    .quick-asks{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
+    .quick-asks button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#eef8f6;border-radius:99px;padding:6px 10px;font:inherit;font-size:.66rem;cursor:pointer}
+    .quick-asks button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    .download-copy{width:100%;margin-top:9px;padding:11px 15px}
+    .fine-print{font-size:.68rem;color:var(--ink-soft);line-height:1.5;margin-top:12px}
+    #signature-panel .doc-progress{letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--teal)}
 
     .brand-section{background:var(--paper)}
     .brand-intro{display:grid;grid-template-columns:.78fr 1.22fr;gap:70px;align-items:end;margin-bottom:34px}
@@ -326,7 +343,7 @@
 
     @media(max-width:1080px) and (min-width:901px){.topbar nav{gap:14px}.topbar nav>a,.suite-switcher summary{font-size:.8rem}.topbar nav>a:nth-of-type(2),.topbar nav>a:nth-of-type(4){display:none}}
     @media(max-width:900px){
-      .hero{padding-top:126px;min-height:auto}.hero-grid{grid-template-columns:1fr;gap:60px}.hero-copy{text-align:left}.product-stage{max-width:610px}.intro,.principle,.founder,.legal-intro,.brand-intro{grid-template-columns:1fr;gap:32px}.brand-studio{grid-template-columns:1fr}.brand-agent{min-height:500px}.founder-profile{position:static;display:grid;grid-template-columns:minmax(160px,.75fr) minmax(0,1.25fr);gap:10px 26px}.founder-photo{grid-row:1/5;width:calc(100% + 34px);height:100%;min-height:330px;margin:-34px 0 -34px -34px;border-radius:30px 0 0 10px}.founder-facts,.founder-contact{grid-column:2}.legal-workspace{grid-template-columns:200px minmax(0,1fr)}.assistant-panel{grid-column:1/-1;min-height:480px}.chat-log{min-height:260px;max-height:360px}.intro>p{margin-top:0}.timeline{grid-template-columns:1fr;gap:0}.timeline:before{left:10px;right:auto;top:20px;bottom:20px;width:1px;height:auto}.phase{padding:0 0 38px 48px}.phase:before{top:4px;left:0}.phase>p{min-height:0}.cta-panel{grid-template-columns:1fr}.module-grid{grid-template-columns:1fr}.wide{grid-column:span 1}.phase-head{align-items:start}.topbar nav>a:not(.button){display:none}.suite-menu{left:auto;right:0;transform:none}.suite-menu:before{left:auto;right:24px;transform:rotate(45deg)}.page-pagination{position:absolute;top:78px;right:18px;bottom:auto;transform:none;grid-template-columns:auto auto auto;gap:8px;padding:7px 9px}.page-pagination button{width:34px;height:34px}.page-dots{display:none}.page-count{display:flex;align-items:baseline;gap:4px;min-width:50px;justify-content:center}.page-count span{font-size:.62rem}.page-label{display:none}
+      .hero{padding-top:126px;min-height:auto}.hero-grid{grid-template-columns:1fr;gap:60px}.hero-copy{text-align:left}.product-stage{max-width:610px}.intro,.principle,.founder,.legal-intro,.brand-intro{grid-template-columns:1fr;gap:32px}.brand-studio{grid-template-columns:1fr}.brand-agent{min-height:500px}.founder-profile{position:static;display:grid;grid-template-columns:minmax(160px,.75fr) minmax(0,1.25fr);gap:10px 26px}.founder-photo{grid-row:1/5;width:calc(100% + 34px);height:100%;min-height:330px;margin:-34px 0 -34px -34px;border-radius:30px 0 0 10px}.founder-facts,.founder-contact{grid-column:2}.legal-workspace{grid-template-columns:200px minmax(0,1fr)}.assistant-panel{grid-column:1/-1;min-height:480px}.chat-log{min-height:260px;max-height:360px}.intro>p{margin-top:0}.timeline{grid-template-columns:1fr;gap:0}.timeline:before{left:10px;right:auto;top:20px;bottom:20px;width:1px;height:auto}.phase{padding:0 0 38px 48px}.phase:before{top:4px;left:0}.phase>p{min-height:0}.cta-panel{grid-template-columns:1fr}.module-grid{grid-template-columns:1fr}.suite-showcase .module-grid{grid-template-columns:1fr}.wide{grid-column:span 1}.phase-head{align-items:start}.topbar nav>a:not(.button){display:none}.suite-menu{left:auto;right:0;transform:none}.suite-menu:before{left:auto;right:24px;transform:rotate(45deg)}.page-pagination{position:absolute;top:78px;right:18px;bottom:auto;transform:none;grid-template-columns:auto auto auto;gap:8px;padding:7px 9px}.page-pagination button{width:34px;height:34px}.page-dots{display:none}.page-count{display:flex;align-items:baseline;gap:4px;min-width:50px;justify-content:center}.page-count span{font-size:.62rem}.page-label{display:none}
     }
     @media(max-width:620px){
       .shell{padding:0 19px}.topbar .shell{height:68px;padding-left:12px;padding-right:12px;gap:8px}.site-brand{width:52px;height:50px;padding:5px 8px 4px}.topbar nav{gap:7px}.suite-switcher summary{font-size:.78rem}.suite-menu{right:-2px;width:min(240px,calc(100vw - 24px))}.topbar nav .button{width:auto;min-height:38px;padding:0 10px;font-size:.75rem}.language-switch button{min-width:29px;height:29px;font-size:.7rem}.hero{padding:152px 0 88px}.suite-showcase:not(.is-open) .module-grid{max-height:470px}.suite-door-layer{height:470px}.suite-entry-mark{width:205px;height:195px;padding:16px}.suite-entry strong{font-size:1.6rem;margin-top:19px}.suite-door:before{width:300px;height:300px}.suite-door.left:before{right:-150px}.suite-door.right:before{left:-150px}.suite-door.left:after{right:11px}.suite-door.right:after{left:11px}.hero:after{height:34px}h1{font-size:3.35rem}.hero-copy>p{font-size:1rem}.hero-actions{display:grid;grid-template-columns:1fr}.button{width:100%}.trustline{gap:11px 18px;margin-top:32px}.product-stage{min-height:388px}.window{transform:none}.window-body{padding:16px}.metric{padding:9px}.metric small{min-height:29px}.call-card{right:-6px;bottom:-28px}.orbit-mark{width:250px}.phase-head{display:block}.phase-head .status{margin-top:12px}.module{grid-template-columns:40px 1fr;padding:21px;min-height:auto}.module-icon{width:40px;height:40px}.wide{grid-template-columns:40px 1fr}.mobile-preview{grid-column:1/-1;margin-top:4px}.founder-profile{display:block}.founder-photo{width:calc(100% + 68px);height:auto;min-height:0;margin:-34px -34px 28px;border-radius:30px 10px 0 0}.career-list{grid-template-columns:1fr}.brand-studio{border-radius:16px}.brand-story{padding:28px 22px}.brand-agent{min-height:500px}.brand-agent-head{padding:20px 18px 15px}.brand-prompts{padding:13px 15px 3px}.brand-log{padding:14px 15px}.brand-composer{padding:13px}.legal-workspace{display:flex;flex-direction:column;border-radius:16px}.doc-nav{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:6px;padding:16px}.doc-nav-title,.public-scope{grid-column:1/-1}.doc-choice{margin:0}.public-scope{margin:10px 3px 0;padding-top:12px}.doc-reader{padding:23px 19px}.doc-reader h3{font-size:1.7rem}.doc-section{min-height:300px}.sign-fields{grid-template-columns:1fr}.sign-field.full{grid-column:auto}.assistant-panel{min-height:470px}.chat-log{min-height:280px}.mark-wrap{min-height:280px}.guardrails{grid-template-columns:1fr}.cta-panel{padding:38px 24px;border-radius:22px}.cta-panel .button{width:100%}section{padding:70px 0}.row:nth-of-type(3){display:none}
@@ -340,6 +357,7 @@
     .promo-frame { border-radius: 14px; overflow: hidden; box-shadow: 0 24px 60px rgba(14,42,71,.18); border: 1px solid rgba(14,42,71,.12); background: #0b1c2c; }
     .promo-frame video { display: block; width: 100%; height: auto; }
     @media (max-width: 640px) { .promo-film { padding: 44px 0; } }
+    @media(max-width:400px){.topbar .shell{height:auto;flex-wrap:wrap;padding-bottom:12px}.topbar nav{width:100%;justify-content:flex-end}}
 </style>
 </head>
 <body>
@@ -546,52 +564,68 @@
       <div class="shell">
         <div class="legal-intro">
           <div><div class="section-kicker">Guided NDA review</div><h2>Understand each section before you sign.</h2></div>
-          <p>Review the mutual NDA one section at a time and ask the assistant questions. Patient consent is completed only in the CURAVIA mobile app.</p>
+          <p>Review the mutual NDA one section at a time and ask the assistant questions. When every section is marked reviewed, complete the agreement details and sign — the executed copy is recorded by IEC and emailed to you and to IEC. Patient consent is completed only in the CURAVIA mobile app.</p>
         </div>
         </div>
         <div class="legal-workspace">
           <aside class="doc-nav" aria-label="Mutual NDA">
-            <p class="doc-nav-title">MUTUAL NDA</p>
-            <button class="doc-choice" type="button" data-doc="nda" aria-pressed="true">Mutual NDA<small>Two-way confidentiality</small></button>
+            <p class="doc-nav-title" id="sections-label">Document sections</p>
+            <div class="doc-nav-list" id="doc-nav-list"></div>
+            <div class="doc-progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+            <button class="step-button reset-matter" type="button" id="reset-matter">Reset (start fresh)</button>
+            <p class="reset-status" id="reset-status" role="status"></p>
             <p class="public-scope">Patient consent is available only in the CURAVIA mobile app. Other business agreements—including the BAA, MSO, SaaS, DPA and contractor terms—are not part of this public flow.</p>
           </aside>
 
           <article class="doc-reader" aria-live="polite">
-            <div class="doc-meta"><span class="doc-progress" id="doc-progress">Section 1 of 7</span></div>
-            <h3 id="doc-title">Mutual NDA</h3>
-            <p class="doc-purpose" id="doc-purpose"></p>
-            <div class="doc-section" id="doc-section"></div>
+            <div class="doc-meta"><span class="doc-progress" id="doc-label">Mutual NDA · Section 1 of 12</span></div>
+            <h3 id="doc-title"></h3>
+            <p class="doc-purpose" id="doc-summary"></p>
+            <div class="doc-section" id="doc-copy"></div>
             <div class="doc-controls">
-              <button class="step-button" id="prev-section" type="button">Previous</button>
-              <button class="step-button primary" id="next-section" type="button">Next section</button>
+              <button class="step-button" id="prev-section" type="button">← Previous</button>
+              <button class="step-button primary" id="review-section" type="button">Mark reviewed &amp; continue</button>
             </div>
-            <form class="sign-form" id="sign-form" novalidate>
-              <h4>Typed signature for this draft</h4>
-              <p>Complete these fields to download a review copy. This does not convert the draft into a final legal agreement.</p>
-              <div class="sign-fields">
-                <div class="sign-field full"><label for="printed-name">Printed name</label><input id="printed-name" autocomplete="name" /></div>
-                <div class="sign-field"><label for="party-name">Organization or party</label><input id="party-name" /></div>
-                <div class="sign-field"><label for="sign-date">Date</label><input id="sign-date" type="date" /></div>
-                <div class="sign-field full"><label for="typed-signature">Type your full legal name as your signature</label><input class="signature-input" id="typed-signature" /></div>
-              </div>
-              <button class="download-signed" type="submit">Download signed draft copy</button>
-              <p class="form-note" id="form-note" role="status"></p>
-            </form>
+            <section class="sign-form" id="signature-panel" aria-labelledby="signature-title">
+              <p class="doc-progress" id="signature-label">Final step · Signer copy</p>
+              <h4 id="signature-title">Complete the agreement and sign</h4>
+              <p id="signature-intro">All sections have been reviewed. Complete every agreement detail and add the counterparty signer’s typed signature.</p>
+              <form id="signature-form">
+                <div class="sign-fields">
+                  <div class="sign-field"><label for="effective-date" id="effective-date-label">Effective date</label><input id="effective-date" type="date" required /></div>
+                  <div class="sign-field"><label for="iec-state" id="iec-state-label">IEC state of incorporation</label><input id="iec-state" required autocomplete="address-level1" placeholder="Massachusetts" /></div>
+                  <div class="sign-field"><label for="party-name" id="party-label">Counterparty legal name</label><input id="party-name" required autocomplete="organization" /></div>
+                  <div class="sign-field"><label for="entity-type-state" id="entity-type-state-label">Counterparty entity type and state</label><input id="entity-type-state" required placeholder="Massachusetts limited liability company" /></div>
+                  <div class="sign-field full"><label for="counterparty-address" id="address-label">Counterparty principal address</label><input id="counterparty-address" required autocomplete="street-address" /></div>
+                  <div class="sign-field full"><label for="agreement-purpose" id="purpose-label">Purpose</label><input id="agreement-purpose" required placeholder="a potential pilot deployment of the CURAVIA clinic platform" /></div>
+                  <div class="sign-field"><label for="printed-name" id="printed-label">Counterparty signer’s printed name</label><input id="printed-name" required autocomplete="name" /></div>
+                  <div class="sign-field"><label for="signer-email" id="signer-email-label">Signer email for the executed copy</label><input id="signer-email" type="email" required autocomplete="email" /></div>
+                  <div class="sign-field"><label for="signature-date" id="date-label">Signature date</label><input id="signature-date" type="date" required /></div>
+                  <div class="sign-field"><label for="signer-title" id="title-label">Signer title (optional)</label><input id="signer-title" autocomplete="organization-title" /></div>
+                  <div class="sign-field full"><label for="typed-signature" id="typed-label">Typed signature</label><input class="signature-input" id="typed-signature" required placeholder="Type your full legal name" /></div>
+                </div>
+                <button class="download-signed" type="submit" id="download-signed">Sign agreement</button>
+                <button class="step-button download-copy" type="button" id="download-copy" hidden>Download signed copy (PDF)</button>
+                <p class="form-note" id="form-status" role="status"></p>
+                <p class="fine-print" id="signature-fine">When you sign and submit, the executed NDA is recorded by IEC, Inc., and an executed PDF copy is emailed to IEC at info@iecincglobal.com and to you at the email address above. You can also download the signed PDF for your own records.</p>
+              </form>
+            </section>
           </article>
 
           <aside class="assistant-panel" aria-label="Document assistant">
-            <div class="assistant-head"><strong>CURAVIA document guide</strong><span>Section-by-section explanations grounded in this draft</span></div>
+            <div class="assistant-head"><strong id="assistant-name">CURAVIA document guide</strong><span id="assistant-limit">Section-by-section explanations grounded in this agreement</span></div>
             <div class="chat-log" id="chat-log" aria-live="polite"></div>
+            <div class="quick-asks" id="quick-asks"></div>
             <form class="chat-composer" id="chat-form">
-              <input id="chat-question" aria-label="Ask about this draft" placeholder="Ask about this section…" autocomplete="off" />
-              <button class="chat-send" type="submit">Ask</button>
+              <input id="chat-question" aria-label="Ask about this agreement" placeholder="Ask about confidentiality, term…" autocomplete="off" />
+              <button class="chat-send" type="submit" id="chat-send">Ask</button>
             </form>
           </aside>
         </div>
       </div>
     </section>
 
-    <section class="cta" id="contact" data-page-section data-page-label="Contact">
+<section class="cta" id="contact" data-page-section data-page-label="Contact">
       <div class="shell">
         <div class="cta-panel"><div><h2>See the CURAVIA clinic experience.</h2><p>Request a conversation about the pilot, the roadmap and how the suite can fit your practice.</p></div><a class="button gold" href="mailto:info@getcuravia.com?subject=CURAVIA%20Demo%20Request&body=I%27d%20like%20to%20request%20a%20demo%20and%20learn%20more%20about%20CURAVIA.">Request a demo <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       </div>
@@ -757,7 +791,7 @@
         "Founder · AI-powered MSO platform in development":"Fundador · Plataforma de MSO impulsada por IA en desarrollo",
         "Guided NDA review":"Revisión guiada del acuerdo de confidencialidad",
         "Understand each section before you sign.":"Comprenda cada sección antes de firmar.",
-        "Review the mutual NDA one section at a time and ask the assistant questions. Patient consent is completed only in the CURAVIA mobile app.":"Revise el acuerdo mutuo de confidencialidad sección por sección y haga preguntas al asistente. El consentimiento del paciente se completa únicamente en la aplicación móvil de CURAVIA.",
+        "Review the mutual NDA one section at a time and ask the assistant questions. When every section is marked reviewed, complete the agreement details and sign — the executed copy is recorded by IEC and emailed to you and to IEC. Patient consent is completed only in the CURAVIA mobile app.":"Revise el acuerdo mutuo de confidencialidad sección por sección y haga preguntas al asistente. Cuando todas las secciones estén marcadas como revisadas, complete los datos del acuerdo y firme: la copia ejecutada queda registrada por IEC y se le envía por correo a usted y a IEC. El consentimiento del paciente se completa únicamente en la aplicación móvil de CURAVIA.",
         "This template is not a final legal document. A downloaded copy records the signer’s review of the draft and must not be treated as an executed final agreement.":"Esta plantilla no es un documento legal definitivo. Una copia descargada registra la revisión del borrador por parte del firmante y no debe tratarse como un acuerdo final ejecutado.",
         "Mutual NDA":"Acuerdo mutuo de confidencialidad",
         "Two-way confidentiality":"Confidencialidad bilateral",
@@ -772,7 +806,7 @@
         "Type your full legal name as your signature":"Escriba su nombre legal completo como firma",
         "Download signed draft copy":"Descargar copia firmada del borrador",
         "CURAVIA document guide":"Guía de documentos CURAVIA",
-        "Section-by-section explanations grounded in this draft":"Explicaciones sección por sección basadas en este borrador",
+        "Section-by-section explanations grounded in this agreement":"Explicaciones sección por sección basadas en este acuerdo",
         "Ask":"Preguntar",
       };
       var original = [];
@@ -804,209 +838,514 @@
   </script>
   <script>
     (function () {
-      var docs = {
-        consent: {
-          en: {
-            title: 'Patient consent form',
-            purpose: 'Draft consent for participation in CURAVIA-supported care, communications and AI-assisted clinic workflows.',
-            sections: [
-              { title: '1. Purpose and choice', html: '<p>CURAVIA is being piloted to support clinic communications, scheduling, care coordination and documentation. Participation is voluntary. You may ask questions before deciding whether to participate.</p>', plain: 'Participation in CURAVIA-supported workflows is voluntary, and the draft gives the patient a chance to ask questions before participating.', keys: 'purpose voluntary choice participate participation decline' },
-              { title: '2. AI assistance and human oversight', html: '<p>Software may help answer or route calls, organize information, prepare draft documentation and support follow-up. It does not replace the judgment of your clinician or care team. Clinical decisions, final documentation and billing review remain with authorized people.</p>', plain: 'Software may assist with calls, organization, draft documentation and follow-up, while authorized clinicians and staff retain responsibility for clinical decisions, final documentation and billing review.', keys: 'ai artificial intelligence automation human clinician doctor oversight decision billing documentation' },
-              { title: '3. Communications', html: '<p>You agree that the clinic may contact you through the phone number or other contact information you provide for care-related calls, appointment messages and follow-up. Message or data rates may apply. Communication preferences can be changed by contacting the clinic.</p>', plain: 'The draft permits care-related calls and appointment or follow-up messages using contact information the patient provides; preferences may be changed by contacting the clinic.', keys: 'call calls text sms message communications phone contact rates preference appointment' },
-              { title: '4. Health information', html: '<p>Information used in these workflows remains subject to the clinic’s privacy practices and applicable law. Access should be limited by role and to what is reasonably necessary for care and operations. This draft does not authorize unrelated marketing or a sale of health information.</p>', plain: 'Health information remains subject to the clinic’s privacy practices and applicable law, with role-limited, minimum-necessary access; the draft does not authorize unrelated marketing or sale of health information.', keys: 'health information privacy hipaa data access sell sale marketing record ehr' },
-              { title: '5. Limits and urgent needs', html: '<p>AI-assisted tools may be unavailable, delayed or incorrect and should not be used as an emergency service. For an emergency, call 911 or use the emergency service available in your location. Contact the clinic directly for time-sensitive clinical concerns.</p>', plain: 'The tools may be unavailable, delayed or incorrect and are not an emergency service. The draft directs emergencies to 911 or the local emergency service and time-sensitive clinical concerns to the clinic.', keys: 'risk error wrong incorrect delay unavailable emergency urgent 911 medical advice' },
-              { title: '6. Questions and withdrawal', html: '<p>You may ask the clinic for an explanation or a copy of this consent. You may withdraw consent for future participation by contacting the clinic in writing. Withdrawal does not undo actions already taken in reliance on earlier consent and may limit use of optional CURAVIA-supported workflows.</p>', plain: 'The patient may ask questions, request a copy and withdraw consent for future participation in writing. Withdrawal does not undo earlier actions and may limit optional workflows.', keys: 'withdraw revoke revocation cancel stop copy question future writing' }
-            ]
-          },
-          es: {
-            title: 'Formulario de consentimiento del paciente',
-            purpose: 'Borrador de consentimiento para participar en atención, comunicaciones y flujos clínicos asistidos por IA con apoyo de CURAVIA.',
-            sections: [
-              { title: '1. Propósito y elección', html: '<p>CURAVIA está en fase piloto para apoyar las comunicaciones de la clínica, la programación de citas, la coordinación de atención y la documentación. La participación es voluntaria. Puede hacer preguntas antes de decidir si participa.</p>', plain: 'La participación en los flujos apoyados por CURAVIA es voluntaria, y el borrador permite que el paciente haga preguntas antes de participar.', keys: 'propósito voluntaria elección participar participación rechazar' },
-              { title: '2. Asistencia de IA y supervisión humana', html: '<p>El software puede ayudar a responder o dirigir llamadas, organizar información, preparar borradores de documentación y apoyar el seguimiento. No reemplaza el criterio de su médico o equipo de atención. Las decisiones clínicas, la documentación final y la revisión de facturación permanecen a cargo de personas autorizadas.</p>', plain: 'El software puede ayudar con llamadas, organización, borradores de documentación y seguimiento, mientras que médicos y personal autorizado conservan la responsabilidad por las decisiones clínicas, la documentación final y la revisión de facturación.', keys: 'ia inteligencia artificial automatización humano médico supervisión decisión facturación documentación' },
-              { title: '3. Comunicaciones', html: '<p>Usted acepta que la clínica pueda comunicarse mediante el número de teléfono u otra información de contacto que proporcione para llamadas relacionadas con la atención, mensajes de citas y seguimiento. Pueden aplicarse tarifas de mensajes o datos. Puede cambiar sus preferencias comunicándose con la clínica.</p>', plain: 'El borrador permite llamadas relacionadas con la atención y mensajes de citas o seguimiento usando la información que proporciona el paciente; las preferencias se pueden cambiar comunicándose con la clínica.', keys: 'llamada llamadas texto sms mensaje comunicaciones teléfono contacto tarifas preferencia cita' },
-              { title: '4. Información de salud', html: '<p>La información utilizada en estos flujos sigue sujeta a las prácticas de privacidad de la clínica y a la ley aplicable. El acceso debe limitarse según el rol y a lo razonablemente necesario para la atención y las operaciones. Este borrador no autoriza mercadeo no relacionado ni la venta de información de salud.</p>', plain: 'La información de salud sigue sujeta a las prácticas de privacidad de la clínica y la ley aplicable, con acceso limitado por rol y al mínimo necesario; el borrador no autoriza mercadeo no relacionado ni la venta de información de salud.', keys: 'salud información privacidad hipaa datos acceso vender venta mercadeo expediente ehr' },
-              { title: '5. Límites y necesidades urgentes', html: '<p>Las herramientas asistidas por IA pueden no estar disponibles, retrasarse o ser incorrectas, y no deben usarse como servicio de emergencia. En una emergencia, llame al 911 o use el servicio de emergencia disponible en su ubicación. Comuníquese directamente con la clínica para inquietudes clínicas urgentes.</p>', plain: 'Las herramientas pueden no estar disponibles, retrasarse o ser incorrectas y no son un servicio de emergencia. El borrador dirige las emergencias al 911 o al servicio local y las inquietudes clínicas urgentes a la clínica.', keys: 'riesgo error incorrecto retraso no disponible emergencia urgente 911 consejo médico' },
-              { title: '6. Preguntas y retiro', html: '<p>Puede pedir a la clínica una explicación o una copia de este consentimiento. Puede retirar el consentimiento para participación futura comunicándose con la clínica por escrito. El retiro no deshace acciones ya tomadas basadas en un consentimiento anterior y puede limitar el uso de flujos opcionales apoyados por CURAVIA.</p>', plain: 'El paciente puede hacer preguntas, solicitar una copia y retirar por escrito el consentimiento para participación futura. El retiro no deshace acciones anteriores y puede limitar flujos opcionales.', keys: 'retirar revocar revocación cancelar detener copia pregunta futuro escrito' }
-            ]
-          }
-        },
-        nda: {
-          en: {
-            title: 'Mutual NDA',
-            purpose: 'Draft mutual confidentiality terms for two parties exploring a possible business relationship.',
-            sections: [
-              { title: '1. Parties and purpose', html: '<p>The parties may share information only to evaluate or discuss a potential business relationship (the “Purpose”). Each party can be a Disclosing Party when sharing information and a Receiving Party when receiving it.</p>', plain: 'Either party may disclose or receive information, but only for evaluating or discussing the potential business relationship.', keys: 'party parties purpose relationship mutual disclosing receiving' },
-              { title: '2. Confidential information', html: '<p>“Confidential Information” means non-public business, technical, financial, clinical, product or operational information disclosed in writing, orally, visually or electronically that is marked confidential or that a reasonable person would understand to be confidential.</p>', plain: 'Confidential Information covers non-public business, technical, financial, clinical, product and operational information that is marked confidential or reasonably understood to be confidential.', keys: 'confidential information definition oral written visual electronic business technical financial clinical product' },
-              { title: '3. Exclusions', html: '<p>Confidential Information does not include information the Receiving Party can document was already known without a duty of confidence, becomes public without breach, is received lawfully from another source without restriction, or is independently developed without using the disclosed information.</p>', plain: 'The exclusions cover information already known without a duty, publicly available without breach, lawfully received without restriction or independently developed without using the disclosure.', keys: 'exclude exclusion public already known third party independently developed' },
-              { title: '4. Duties of each party', html: '<p>The Receiving Party will use Confidential Information only for the Purpose, protect it with reasonable care, and share it only with representatives who need it for the Purpose and are bound by confidentiality duties at least as protective as these draft terms.</p>', plain: 'Each receiving party must use the information only for the stated purpose, protect it with reasonable care and limit access to representatives who need it and have confidentiality duties.', keys: 'duty duties obligation protect reasonable care representative employee share use' },
-              { title: '5. Required disclosure', html: '<p>If law or valid legal process requires disclosure, the Receiving Party may disclose only what is legally required and, when permitted, will give prompt notice so the Disclosing Party can seek protection.</p>', plain: 'A legally required disclosure is allowed only to the required extent, with prompt notice when permitted so the disclosing party may seek protection.', keys: 'required disclosure subpoena court law legal process notice' },
-              { title: '6. Term and return', html: '<p>The confidentiality period, effective date and any special handling requirements remain to be completed by the parties before signing. Upon written request, the Receiving Party will return or destroy Confidential Information, except for copies required by law or routine secure backup systems.</p>', plain: 'The term and effective date are completed by the parties before signing. On written request, information is returned or destroyed, subject to legal-retention and routine secure-backup exceptions.', keys: 'term duration year effective date return destroy delete backup retention' },
-              { title: '7. No license or commitment', html: '<p>No intellectual-property license or ownership right is granted by disclosure. Neither party is required to proceed with a transaction. Remedies, governing law, venue and signature authority must be completed and approved by licensed counsel before this draft can become a final agreement.</p>', plain: 'Disclosure grants no intellectual-property license and does not require a transaction. Remedies, governing law, venue and signature authority are completed by the parties before signing.', keys: 'license ownership intellectual property transaction remedy governing law venue jurisdiction signature final' }
-            ]
-          },
-          es: {
-            title: 'Acuerdo mutuo de confidencialidad',
-            purpose: 'Borrador de términos mutuos de confidencialidad para dos partes que exploran una posible relación comercial.',
-            sections: [
-              { title: '1. Partes y propósito', html: '<p>Las partes pueden compartir información únicamente para evaluar o conversar sobre una posible relación comercial (el “Propósito”). Cada parte puede ser Parte Divulgadora al compartir información y Parte Receptora al recibirla.</p>', plain: 'Cualquiera de las partes puede divulgar o recibir información, pero únicamente para evaluar o conversar sobre la posible relación comercial.', keys: 'parte partes propósito relación mutuo divulgadora receptora' },
-              { title: '2. Información confidencial', html: '<p>“Información Confidencial” significa información no pública comercial, técnica, financiera, clínica, de producto u operativa divulgada por escrito, oralmente, visualmente o por medios electrónicos que esté marcada como confidencial o que una persona razonable entendería como confidencial.</p>', plain: 'La Información Confidencial incluye información no pública comercial, técnica, financiera, clínica, de producto y operativa marcada como confidencial o razonablemente entendida como tal.', keys: 'confidencial información definición oral escrito visual electrónica comercial técnica financiera clínica producto' },
-              { title: '3. Exclusiones', html: '<p>La Información Confidencial no incluye información que la Parte Receptora pueda documentar que ya conocía sin deber de confidencialidad, que se haga pública sin incumplimiento, que reciba legalmente de otra fuente sin restricciones o que desarrolle independientemente sin usar la información divulgada.</p>', plain: 'Las exclusiones cubren información ya conocida sin deber, disponible públicamente sin incumplimiento, recibida legalmente sin restricción o desarrollada independientemente sin usar la divulgación.', keys: 'excluir exclusión pública ya conocida tercero desarrollo independiente' },
-              { title: '4. Deberes de cada parte', html: '<p>La Parte Receptora usará la Información Confidencial solo para el Propósito, la protegerá con cuidado razonable y la compartirá únicamente con representantes que la necesiten para el Propósito y estén sujetos a deberes de confidencialidad al menos tan protectores como estos términos preliminares.</p>', plain: 'Cada parte receptora debe usar la información solo para el propósito indicado, protegerla con cuidado razonable y limitar el acceso a representantes que la necesiten y tengan deberes de confidencialidad.', keys: 'deber deberes obligación proteger cuidado razonable representante empleado compartir usar' },
-              { title: '5. Divulgación obligatoria', html: '<p>Si la ley o un proceso legal válido exige divulgación, la Parte Receptora podrá revelar solo lo legalmente requerido y, cuando esté permitido, dará aviso oportuno para que la Parte Divulgadora pueda buscar protección.</p>', plain: 'Una divulgación exigida legalmente se permite solo en la medida requerida, con aviso oportuno cuando esté permitido para que la parte divulgadora busque protección.', keys: 'divulgación obligatoria citación tribunal ley proceso legal aviso' },
-              { title: '6. Plazo y devolución', html: '<p>El período de confidencialidad, la fecha de vigencia y cualquier requisito especial de manejo quedan por completar durante la revisión legal. A solicitud escrita, la Parte Receptora devolverá o destruirá la Información Confidencial, salvo copias exigidas por ley o sistemas rutinarios de respaldo seguro.</p>', plain: 'El plazo y la fecha de vigencia quedan intencionalmente incompletos hasta la revisión legal. A solicitud escrita, la información se devuelve o destruye, con excepciones de retención legal y respaldo seguro rutinario.', keys: 'plazo duración año fecha vigencia devolver destruir eliminar respaldo retención' },
-              { title: '7. Sin licencia ni compromiso', html: '<p>La divulgación no concede licencia de propiedad intelectual ni derecho de titularidad. Ninguna parte está obligada a proceder con una transacción. Los recursos, la ley aplicable, el foro y la autoridad para firmar deben ser completados y aprobados por un abogado con licencia antes de que este borrador pueda convertirse en un acuerdo final.</p>', plain: 'La divulgación no concede licencia de propiedad intelectual ni exige una transacción. Los recursos, la ley aplicable, el foro y la autoridad de firma no están establecidos y requieren revisión legal.', keys: 'licencia propiedad intelectual transacción recurso ley aplicable foro jurisdicción firma final' }
-            ]
-          }
-        }
-      };
-      var ui = {
-        en: {
-          section: 'Section', of: 'of', previous: 'Previous', next: 'Next section', review: 'Review & sign',
-          greeting: 'I’ll guide you through this draft one section at a time. Ask what a section means, what it covers or what is not included.',
-          notFound: 'This draft does not answer that question. Please confirm with the clinic before relying on an answer.',
-          sectionAnswer: 'The draft says: ', placeholder: 'Ask about this section…', ask: 'Ask',
-          needFields: 'Enter the printed name, date and matching typed signature to download the draft.',
-          mismatch: 'The typed signature must match the printed name.', ready: 'Your signed draft copy has been downloaded.',
-          draftLabel: 'Mutual NDA', signer: 'Signer', party: 'Organization or party', date: 'Date',
-          statement: 'This copy records the signer’s review of a draft template. It is not a final legal agreement.', filename: 'signed-draft-review'
-        },
-        es: {
-          section: 'Sección', of: 'de', previous: 'Anterior', next: 'Siguiente sección', review: 'Revisar y firmar',
-          greeting: 'Le guiaré por este borrador sección por sección. Pregunte qué significa una sección, qué cubre o qué no está incluido.',
-          notFound: 'Este borrador no responde esa pregunta. Consulte a un abogado con licencia o a la clínica antes de confiar en una respuesta.',
-          sectionAnswer: 'El borrador dice: ', placeholder: 'Pregunte sobre esta sección…', ask: 'Preguntar',
-          needFields: 'Ingrese el nombre en letra de molde, la fecha y una firma escrita que coincida para descargar el borrador.',
-          mismatch: 'La firma escrita debe coincidir con el nombre en letra de molde.', ready: 'Se descargó su copia firmada del borrador.',
-          draftLabel: 'BORRADOR — PENDIENTE DE REVISIÓN POR ABOGADO CON LICENCIA', signer: 'Firmante', party: 'Organización o parte', date: 'Fecha',
-          statement: 'Esta copia registra la revisión de una plantilla preliminar por parte del firmante. No es un acuerdo legal definitivo.', filename: 'revision-borrador-firmado'
-        }
-      };
+      "use strict";
 
-      var activeDoc = 'nda';
-      var activeLang = 'en';
-      var activeSection = 0;
-      var title = document.getElementById('doc-title');
-      var purpose = document.getElementById('doc-purpose');
-      var section = document.getElementById('doc-section');
-      var progress = document.getElementById('doc-progress');
-      var previous = document.getElementById('prev-section');
-      var next = document.getElementById('next-section');
-      var signForm = document.getElementById('sign-form');
-      var chatLog = document.getElementById('chat-log');
-      var chatForm = document.getElementById('chat-form');
-      var chatQuestion = document.getElementById('chat-question');
-      var formNote = document.getElementById('form-note');
+      // The executed instrument is IEC's standard Mutual Non-Disclosure
+      // Agreement — the same final text the MEDEXEC website flow executes
+      // (IEC is the named party for both products; CURAVIA enters through
+      // the branding and the Purpose). The CURAVIA-specific 7-section
+      // template that used to sit here was a self-declared draft (parties
+      // unnamed; term, governing law and venue left blank "to be completed
+      // ... before this draft can become a final agreement") and was never
+      // submittable anywhere; it is retired from the signing path.
+      var agreementTexts = [
+  "This Mutual Non-Disclosure Agreement (\"Agreement\") is entered into as of [EFFECTIVE DATE] (\"Effective Date\"), by and between:\n\nInternational Empire Consultants, Inc., a [STATE] corporation with its principal place of business at 923 Hyde Park Ave, Boston, MA 02136 (\"IEC\"), and\n\n[COUNTERPARTY NAME], a [ENTITY TYPE/STATE] with its principal place of business at [ADDRESS] (\"Counterparty\").\n\nIEC and Counterparty are each a \"Party\" and together the \"Parties.\" Each Party may disclose Confidential Information to the other in connection with discussions regarding [PURPOSE — e.g., \"a potential pilot deployment of the CURAVIA clinic platform\"] (the \"Purpose\").",
+  "\"Confidential Information\" means all non-public information disclosed by one Party (the \"Disclosing Party\") to the other (the \"Receiving Party\"), whether orally, visually, or in writing, that is designated as confidential or that a reasonable person would understand to be confidential given the circumstances of disclosure. It includes, without limitation: product designs, software, source code, algorithms, technical documentation, business plans, pricing, customer and patient-related information (subject to Section 9), financial data, and marketing strategies.\n\nExclusions. Confidential Information does not include information that: (a) is or becomes publicly available without breach of this Agreement; (b) was already known to the Receiving Party without a duty of confidentiality, as shown by written records; (c) is independently developed by the Receiving Party without use of or reference to the Disclosing Party's Confidential Information; or (d) is rightfully received from a third party without a duty of confidentiality.",
+  "The Receiving Party shall: (a) hold the Disclosing Party's Confidential Information in strict confidence; (b) use it solely for the Purpose; (c) not disclose it to any third party except as permitted in Section 3; and (d) protect it with at least the same degree of care it uses for its own confidential information, and in no event less than reasonable care.",
+  "The Receiving Party may disclose Confidential Information to its and its affiliates' employees, contractors, and professional advisors who have a need to know for the Purpose and who are bound by confidentiality obligations at least as protective as this Agreement. The Receiving Party remains responsible for any breach by such persons.",
+  "If the Receiving Party is required by law, regulation, or court order to disclose Confidential Information, it shall (to the extent legally permitted) promptly notify the Disclosing Party and cooperate to seek confidential treatment, disclosing only the minimum information legally required.",
+  "Nothing in this Agreement grants any intellectual property license or right, by implication or otherwise. Neither Party is obligated to enter into any further agreement or transaction. All Confidential Information is provided \"as is.\"",
+  "Upon the Disclosing Party's written request, or upon termination of discussions regarding the Purpose, the Receiving Party shall promptly return or destroy all Confidential Information (including copies), except for one archival copy retained for legal compliance, which remains subject to this Agreement.",
+  "This Agreement takes effect on the Effective Date and continues for two (2) years. The obligations in Sections 1–4 and 6 survive for two (2) years from the date of each disclosure. Notwithstanding the foregoing, the Receiving Party's obligations with respect to Confidential Information that qualifies as a trade secret under applicable law shall survive for so long as such information remains a trade secret.",
+  "The Parties acknowledge that breach may cause irreparable harm for which monetary damages are inadequate, and the Disclosing Party is entitled to seek injunctive relief in addition to any other remedies.",
+  "If any disclosure involves protected health information (\"PHI\") as defined by HIPAA, the Parties shall execute a Business Associate Agreement before any PHI is disclosed, and this Agreement does not authorize the disclosure of PHI.",
+  "This Agreement is the entire agreement on confidentiality for the Purpose and supersedes prior discussions on that subject. It may not be amended except in a signed writing. Neither Party may assign it without the other's written consent, except to a successor in a merger or asset sale. If any provision is unenforceable, the remainder continues in effect. This Agreement is governed by the laws of the Commonwealth of Massachusetts, without regard to conflict-of-law rules. The Parties consent to the exclusive jurisdiction of the state and federal courts located in the Commonwealth of Massachusetts for any dispute arising under this Agreement. No waiver of any provision of this Agreement is effective unless in a signed writing, and no waiver of one breach constitutes waiver of any other. It may be executed in counterparts, including by electronic signature.",
+  "IN WITNESS WHEREOF, the Parties have executed this Agreement as of the Effective Date.\n\nInternational Empire Consultants, Inc. — pre-signed by IEC\n\nSignature: Mohammed Morgan, MD  Name: Mohammed Morgan, MD\n\nTitle: Founder & CEO  Date: the date the executed copy is issued\n\n[COUNTERPARTY NAME]\n\nSignature: ___________________________  Name: ___________________________\n\nTitle: ___________________________  Date: ___________________________"
+];
 
-      function normalize(value) {
-        return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-      }
-      function escapeHtml(value) {
-        return value.replace(/[&<>"']/g, function (character) {
-          return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[character];
+      var enMeta = [
+  [
+    "Parties & purpose",
+    "Parties",
+    "Identify both parties, the effective date, and the specific business purpose for sharing information."
+  ],
+  [
+    "1. Confidential Information",
+    "Confidential info",
+    "Defines protected information and the four documented exclusions."
+  ],
+  [
+    "2. Obligations",
+    "Obligations",
+    "Use the information only for the stated Purpose and protect it with at least reasonable care."
+  ],
+  [
+    "3. Permitted disclosures",
+    "Permitted access",
+    "Disclosure is limited to need-to-know personnel and advisors under equally protective duties."
+  ],
+  [
+    "4. Legally compelled disclosure",
+    "Legal disclosure",
+    "Give notice when permitted, seek confidential treatment, and disclose only the legal minimum."
+  ],
+  [
+    "5. No license; no obligation",
+    "No license",
+    "Sharing information grants no intellectual-property rights and creates no duty to proceed."
+  ],
+  [
+    "6. Return or destruction",
+    "Return / destroy",
+    "Return or destroy information when requested or when discussions end, subject to one compliance copy."
+  ],
+  [
+    "7. Term and survival",
+    "Term",
+    "The agreement and ordinary confidentiality duties last two years; trade-secret duties survive while the information remains a trade secret."
+  ],
+  [
+    "8. Remedies",
+    "Remedies",
+    "A breach may justify injunctive relief in addition to other remedies."
+  ],
+  [
+    "9. Protected health information",
+    "PHI",
+    "A Business Associate Agreement is required before any PHI is disclosed."
+  ],
+  [
+    "10. General",
+    "General",
+    "Massachusetts law and exclusive Massachusetts venue apply; amendments and waivers must be signed writings."
+  ],
+  [
+    "Execution",
+    "Signature",
+    "Both parties execute the agreement as of the Effective Date, including by electronic signature."
+  ]
+];
+
+      var esMeta = [
+  [
+    "Partes y propósito",
+    "Partes",
+    "Identifique a ambas partes, la fecha de vigencia y el propósito comercial específico."
+  ],
+  [
+    "1. Información confidencial",
+    "Info. confidencial",
+    "Define la información protegida y las cuatro exclusiones documentadas."
+  ],
+  [
+    "2. Obligaciones",
+    "Obligaciones",
+    "Use la información solo para el Propósito y protéjala con al menos cuidado razonable."
+  ],
+  [
+    "3. Divulgaciones permitidas",
+    "Acceso permitido",
+    "El acceso se limita a personal y asesores que necesitan conocerla y tienen deberes equivalentes."
+  ],
+  [
+    "4. Divulgación exigida por ley",
+    "Divulgación legal",
+    "Avise cuando esté permitido, procure trato confidencial y divulgue solo el mínimo legal."
+  ],
+  [
+    "5. Sin licencia ni obligación",
+    "Sin licencia",
+    "Compartir información no concede derechos de propiedad intelectual ni obliga a continuar."
+  ],
+  [
+    "6. Devolución o destrucción",
+    "Devolver / destruir",
+    "Devuelva o destruya la información cuando se solicite o terminen las conversaciones, salvo una copia legal."
+  ],
+  [
+    "7. Plazo y supervivencia",
+    "Plazo",
+    "El acuerdo y los deberes ordinarios duran dos años; los secretos comerciales siguen protegidos mientras mantengan esa condición."
+  ],
+  [
+    "8. Remedios",
+    "Remedios",
+    "Un incumplimiento puede justificar medidas cautelares además de otros remedios."
+  ],
+  [
+    "9. Información médica protegida",
+    "PHI",
+    "Se requiere un Acuerdo de Asociado Comercial antes de divulgar PHI."
+  ],
+  [
+    "10. General",
+    "General",
+    "Rigen las leyes de Massachusetts y la jurisdicción exclusiva de Massachusetts; cambios y renuncias deben firmarse."
+  ],
+  [
+    "Firma",
+    "Firma",
+    "Ambas partes firman el acuerdo desde la Fecha de Vigencia, incluso de forma electrónica."
+  ]
+];
+
+      function makeSections(meta) {
+        return meta.map(function (item, index) {
+          return { title: item[0], short: item[1], summary: item[2], text: agreementTexts[index] };
         });
       }
+
+      var sections = { en: makeSections(enMeta), es: makeSections(esMeta) };
+
+      var ui = {
+        en: {
+          sections: "Document sections", label: "Mutual NDA · Section", of: "of", prev: "← Previous", review: "Mark reviewed & continue", reviewed: "Reviewed · Continue", reset: "Reset (start fresh)", resetDone: "Cleared. Starting fresh.", guide: "CURAVIA document guide", limit: "Section-by-section explanations grounded in this agreement", placeholder: "Ask about confidentiality, term, venue…", ask: "Ask", hello: "I’ll help you review this agreement section by section. Ask a question, or use one of the prompts below.", quick: ["How long does it last?", "Where are disputes heard?", "Can PHI be shared?"], finalLabel: "Final step · Signer copy", finalTitle: "Complete the agreement and sign", finalIntro: "All sections have been reviewed. Complete every agreement detail and add the counterparty signer’s typed signature.", effectiveDate: "Effective date", iecState: "IEC state of incorporation", party: "Counterparty legal name", entityTypeState: "Counterparty entity type and state", address: "Counterparty principal address", purposeLabel: "Purpose", printed: "Counterparty signer’s printed name", date: "Signature date", title: "Signer title (optional)", typed: "Typed signature", typedPlaceholder: "Type your full legal name", download: "Sign agreement", downloadCopy: "Download signed copy (PDF)", email: "Signer email for the executed copy", sending: "Signing and sending the executed copies…", sendFailed: "The executed copy could not be delivered. Nothing was emailed — check your connection and sign again.", fine: "When you sign and submit, the executed NDA is recorded by IEC, Inc., and an executed PDF copy is emailed to IEC at info@iecincglobal.com and to you at the email address above. You can also download the signed PDF for your own records.", ready: "Agreement signed and recorded. An executed PDF copy was emailed to IEC and to your email address.", changed: "Agreement details changed. Sign again to re-issue the executed copy.", missing: "Complete every required agreement and signature field before signing.", incompleteReview: "Review every section before signing.", fallback: "I can only answer from this agreement. Try asking about the term, exclusions, permitted access, required disclosure, PHI, Massachusetts venue, return or destruction, or signatures.", term: "The Agreement continues for two years from the Effective Date. Sections 1–4 and 6 survive for two years from each disclosure. Trade-secret duties survive for as long as the information remains a trade secret.", exclude: "The agreement excludes information that becomes public without breach, was already known without a confidentiality duty and can be documented, is independently developed without use of the disclosed information, or is rightfully received from a third party without a confidentiality duty.", access: "Access is limited to the receiving party’s and its affiliates’ employees, contractors, and professional advisors who need the information for the Purpose and are bound by obligations at least as protective as this Agreement.", purpose: "Confidential Information may be used only for the completed Purpose stated by the parties.", disclosure: "If disclosure is legally required, the receiving party must, when legally permitted, promptly notify the disclosing party, cooperate to seek confidential treatment, and disclose only the legal minimum.", return: "On written request or when discussions end, Confidential Information must be returned or destroyed, except for one archival copy kept for legal compliance.", owner: "The Agreement grants no intellectual-property license or right. Neither party is obligated to enter a further agreement or transaction.", phi: "The Agreement does not authorize disclosure of protected health information. The parties must execute a Business Associate Agreement before any PHI is disclosed.", venue: "Massachusetts law governs. The parties consent to exclusive jurisdiction in the state and federal courts located in the Commonwealth of Massachusetts. A waiver is effective only in a signed writing, and waiving one breach does not waive another.", signature: "The parties may execute the Agreement in counterparts, including by electronic signature. Complete every required agreement detail before adding the counterparty signature."
+        },
+        es: {
+          sections: "Secciones del documento", label: "NDA mutuo · Sección", of: "de", prev: "← Anterior", review: "Marcar revisada y continuar", reviewed: "Revisada · Continuar", reset: "Restablecer (empezar de nuevo)", resetDone: "Borrado. Empezando de nuevo.", guide: "Guía de documentos CURAVIA", limit: "Explicaciones sección por sección basadas en este acuerdo", placeholder: "Pregunte sobre confidencialidad, plazo, jurisdicción…", ask: "Preguntar", hello: "Le ayudaré a revisar este acuerdo sección por sección. Haga una pregunta o use una de las opciones siguientes.", quick: ["¿Cuánto dura?", "¿Dónde se resuelven disputas?", "¿Se puede compartir PHI?"], finalLabel: "Paso final · Copia del firmante", finalTitle: "Complete el acuerdo y firme", finalIntro: "Se revisaron todas las secciones. Complete todos los datos del acuerdo y añada la firma escrita del firmante de la contraparte.", effectiveDate: "Fecha de vigencia", iecState: "Estado de constitución de IEC", party: "Nombre legal de la contraparte", entityTypeState: "Tipo de entidad y estado de la contraparte", address: "Dirección principal de la contraparte", purposeLabel: "Propósito", printed: "Nombre del firmante de la contraparte", date: "Fecha de firma", title: "Cargo del firmante (opcional)", typed: "Firma escrita", typedPlaceholder: "Escriba su nombre legal completo", download: "Firmar acuerdo", downloadCopy: "Descargar copia firmada (PDF)", email: "Correo del firmante para la copia ejecutada", sending: "Firmando y enviando las copias ejecutadas…", sendFailed: "La copia ejecutada no pudo entregarse. No se envió ningún correo: verifique su conexión y firme de nuevo.", fine: "Al firmar y enviar, el NDA ejecutado queda registrado por IEC, Inc., y se envía una copia ejecutada en PDF por correo a IEC a info@iecincglobal.com y a usted a la dirección indicada arriba. También puede descargar el PDF firmado para sus registros.", ready: "Acuerdo firmado y registrado. Se envió una copia ejecutada en PDF por correo a IEC y a su dirección.", changed: "Los datos del acuerdo cambiaron. Firme de nuevo para emitir la copia ejecutada.", missing: "Complete todos los campos obligatorios del acuerdo y la firma antes de firmar.", incompleteReview: "Revise todas las secciones antes de firmar.", fallback: "Solo puedo responder usando este acuerdo. Pregunte sobre el plazo, exclusiones, acceso permitido, divulgación legal, PHI, jurisdicción de Massachusetts, devolución o destrucción, o firmas.", term: "El Acuerdo continúa durante dos años desde la Fecha de Vigencia. Las Secciones 1–4 y 6 sobreviven durante dos años desde cada divulgación. Los deberes sobre secretos comerciales sobreviven mientras la información siga siendo un secreto comercial.", exclude: "Se excluye la información que se hace pública sin incumplimiento, que ya se conocía sin deber de confidencialidad y puede documentarse, que se desarrolla independientemente o que se recibe legítimamente de un tercero sin deber de confidencialidad.", access: "El acceso se limita a empleados, contratistas y asesores profesionales de la parte receptora y sus afiliadas que necesiten la información para el Propósito y estén sujetos a deberes al menos tan protectores como este Acuerdo.", purpose: "La Información Confidencial solo puede usarse para el Propósito completado por las partes.", disclosure: "Si la ley exige divulgar, la parte receptora debe, cuando la ley lo permita, avisar de inmediato, cooperar para procurar trato confidencial y divulgar solo el mínimo legal.", return: "A solicitud escrita o al terminar las conversaciones, la Información Confidencial debe devolverse o destruirse, salvo una copia archivada para cumplimiento legal.", owner: "El Acuerdo no concede ninguna licencia ni derecho de propiedad intelectual. Ninguna parte está obligada a celebrar otro acuerdo o transacción.", phi: "El Acuerdo no autoriza divulgar información médica protegida. Las partes deben firmar un Acuerdo de Asociado Comercial antes de divulgar PHI.", venue: "Rige la ley de Massachusetts. Las partes aceptan jurisdicción exclusiva de los tribunales estatales y federales de Massachusetts. Una renuncia solo es efectiva por escrito y firmada; renunciar a un incumplimiento no renuncia a otro.", signature: "Las partes pueden firmar el Acuerdo en ejemplares separados, incluso con firma electrónica. Complete todos los datos obligatorios antes de añadir la firma de la contraparte."
+        }
+      };
+
+      var lang = "en";
+      var current = 0;
+      var reviewed = {};
+      var navList = document.getElementById("doc-nav-list");
+      var chatLog = document.getElementById("chat-log");
+      var signaturePanel = document.getElementById("signature-panel");
+      var agreementFieldIds = ["effective-date", "iec-state", "party-name", "entity-type-state", "counterparty-address", "agreement-purpose"];
+      var signerFieldIds = ["printed-name", "signature-date", "signer-title", "typed-signature", "signer-email"];
+      var PURPOSE_PLACEHOLDER = '[PURPOSE — e.g., "a potential pilot deployment of the CURAVIA clinic platform"]';
+
+      function getAgreementData() {
+        return {
+          effectiveDate: document.getElementById("effective-date").value,
+          iecState: document.getElementById("iec-state").value.trim(),
+          party: document.getElementById("party-name").value.trim(),
+          entityTypeState: document.getElementById("entity-type-state").value.trim(),
+          address: document.getElementById("counterparty-address").value.trim(),
+          purpose: document.getElementById("agreement-purpose").value.trim()
+        };
+      }
+
+      function fillAgreementText(text, data) {
+        var values = {
+          "[EFFECTIVE DATE]": data.effectiveDate || "[EFFECTIVE DATE]",
+          "[STATE]": data.iecState || "[STATE]",
+          "[COUNTERPARTY NAME]": data.party || "[COUNTERPARTY NAME]",
+          "[ENTITY TYPE/STATE]": data.entityTypeState || "[ENTITY TYPE/STATE]",
+          "[ADDRESS]": data.address || "[ADDRESS]"
+        };
+        values[PURPOSE_PLACEHOLDER] = data.purpose || PURPOSE_PLACEHOLDER;
+        Object.keys(values).forEach(function (placeholder) {
+          text = text.split(placeholder).join(values[placeholder]);
+        });
+        return text;
+      }
+
+      function renderNav() {
+        navList.innerHTML = "";
+        sections[lang].forEach(function (section, index) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "nda-nav-btn" + (index === current ? " current" : "") + (reviewed[index] ? " reviewed" : "");
+          btn.setAttribute("aria-current", index === current ? "step" : "false");
+          btn.innerHTML = '<span class="dot">' + (reviewed[index] ? "✓" : (index + 1)) + '</span><span>' + section.short + '</span>';
+          btn.addEventListener("click", function () { current = index; renderDocument(); });
+          navList.appendChild(btn);
+        });
+        var count = Object.keys(reviewed).length;
+        document.getElementById("progress-bar").style.width = ((count / sections[lang].length) * 100) + "%";
+      }
+
+      function renderDocument() {
+        var section = sections[lang][current];
+        var t = ui[lang];
+        document.getElementById("doc-label").textContent = t.label + " " + (current + 1) + " " + t.of + " " + sections[lang].length;
+        document.getElementById("doc-title").textContent = section.title;
+        document.getElementById("doc-summary").textContent = section.summary;
+        document.getElementById("doc-copy").textContent = fillAgreementText(section.text, getAgreementData());
+        document.getElementById("prev-section").textContent = t.prev;
+        document.getElementById("prev-section").disabled = current === 0;
+        document.getElementById("review-section").textContent = reviewed[current] ? t.reviewed : t.review;
+        renderNav();
+      }
+
       function addBubble(kind, text) {
-        var bubble = document.createElement('div');
-        bubble.className = 'chat-bubble ' + kind;
+        var bubble = document.createElement("div");
+        bubble.className = "chat-bubble " + kind;
         bubble.textContent = text;
         chatLog.appendChild(bubble);
         chatLog.scrollTop = chatLog.scrollHeight;
       }
-      function resetChat() {
-        chatLog.innerHTML = '';
-        addBubble('agent', ui[activeLang].greeting);
-      }
-      function render() {
-        var documentData = docs[activeDoc][activeLang];
-        var current = documentData.sections[activeSection];
-        title.textContent = documentData.title;
-        purpose.textContent = documentData.purpose;
-        section.innerHTML = '<h4>' + current.title + '</h4>' + current.html;
-        progress.textContent = ui[activeLang].section + ' ' + (activeSection + 1) + ' ' + ui[activeLang].of + ' ' + documentData.sections.length;
-        previous.textContent = ui[activeLang].previous;
-        previous.disabled = activeSection === 0;
-        next.textContent = activeSection === documentData.sections.length - 1 ? ui[activeLang].review : ui[activeLang].next;
-        chatQuestion.placeholder = ui[activeLang].placeholder;
-        chatForm.querySelector('button').textContent = ui[activeLang].ask;
-        signForm.classList.remove('visible');
-        formNote.textContent = '';
-      }
-      function selectDocument(name) {
-        activeDoc = name;
-        activeSection = 0;
-        document.querySelectorAll('.doc-choice').forEach(function (button) {
-          button.setAttribute('aria-pressed', String(button.getAttribute('data-doc') === name));
+
+      function renderAssistant(reset) {
+        var t = ui[lang];
+        document.getElementById("sections-label").textContent = t.sections;
+        document.getElementById("reset-matter").textContent = t.reset;
+        document.getElementById("assistant-name").textContent = t.guide;
+        document.getElementById("assistant-limit").textContent = t.limit;
+        document.getElementById("chat-question").placeholder = t.placeholder;
+        document.getElementById("chat-send").textContent = t.ask;
+        document.getElementById("signature-label").textContent = t.finalLabel;
+        document.getElementById("signature-title").textContent = t.finalTitle;
+        document.getElementById("signature-intro").textContent = t.finalIntro;
+        document.getElementById("effective-date-label").textContent = t.effectiveDate;
+        document.getElementById("iec-state-label").textContent = t.iecState;
+        document.getElementById("party-label").textContent = t.party;
+        document.getElementById("entity-type-state-label").textContent = t.entityTypeState;
+        document.getElementById("address-label").textContent = t.address;
+        document.getElementById("purpose-label").textContent = t.purposeLabel;
+        document.getElementById("printed-label").textContent = t.printed;
+        document.getElementById("signer-email-label").textContent = t.email;
+        document.getElementById("date-label").textContent = t.date;
+        document.getElementById("title-label").textContent = t.title;
+        document.getElementById("typed-label").textContent = t.typed;
+        document.getElementById("typed-signature").placeholder = t.typedPlaceholder;
+        document.getElementById("download-signed").textContent = t.download;
+        document.getElementById("download-copy").textContent = t.downloadCopy;
+        document.getElementById("signature-fine").textContent = t.fine;
+        var quick = document.getElementById("quick-asks");
+        quick.innerHTML = "";
+        t.quick.forEach(function (question) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = question;
+          btn.addEventListener("click", function () { answerQuestion(question); });
+          quick.appendChild(btn);
         });
-        render();
-        resetChat();
+        if (reset) {
+          chatLog.innerHTML = "";
+          addBubble("agent", t.hello);
+        }
       }
-      document.querySelectorAll('.doc-choice').forEach(function (button) {
-        button.addEventListener('click', function () { selectDocument(button.getAttribute('data-doc')); });
+
+      function answerQuestion(question) {
+        var t = ui[lang];
+        var q = question.toLowerCase();
+        addBubble("user", question);
+        var answer = t.fallback;
+        if (/long|term|last|dur|plazo|tiempo/.test(q)) answer = t.term;
+        else if (/exclude|not confidential|exception|exclu|no es confidencial/.test(q)) answer = t.exclude;
+        else if (/who|access|see|share|quién|acceso|ver|compart/.test(q)) answer = t.access;
+        else if (/purpose|use|propósito|usar|uso/.test(q)) answer = t.purpose;
+        else if (/law|required|court|disclos|ley|orden|divulg/.test(q)) answer = t.disclosure;
+        else if (/return|destroy|delete|devol|destru|elimin/.test(q)) answer = t.return;
+        else if (/own|license|intellectual|propiedad|licencia/.test(q)) answer = t.owner;
+        else if (/phi|hipaa|health information|información médica|salud protegida/.test(q)) answer = t.phi;
+        else if (/venue|jurisdiction|massachusetts|waiver|court|jurisdic|tribunal|renuncia/.test(q)) answer = t.venue;
+        else if (/sign|electronic|signature|firma|electrónica/.test(q)) answer = t.signature;
+        addBubble("agent", answer);
+      }
+
+      document.getElementById("prev-section").addEventListener("click", function () {
+        if (current > 0) { current -= 1; renderDocument(); }
       });
-      previous.addEventListener('click', function () {
-        if (activeSection > 0) { activeSection -= 1; render(); }
-      });
-      next.addEventListener('click', function () {
-        var total = docs[activeDoc][activeLang].sections.length;
-        if (activeSection < total - 1) { activeSection += 1; render(); }
-        else { signForm.classList.add('visible'); signForm.scrollIntoView({behavior:'smooth', block:'nearest'}); }
-      });
-      chatForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        var raw = chatQuestion.value.trim();
-        if (!raw) return;
-        addBubble('user', raw);
-        chatQuestion.value = '';
-        var query = normalize(raw);
-        var documentData = docs[activeDoc][activeLang];
-        var match = null;
-        documentData.sections.some(function (item) {
-          var terms = normalize(item.keys).split(/\s+/);
-          if (terms.some(function (term) { return term.length > 3 && query.indexOf(term) !== -1; })) { match = item; return true; }
+
+      document.getElementById("review-section").addEventListener("click", function () {
+        reviewed[current] = true;
+        var nextMissing = -1;
+        sections[lang].some(function (_, index) {
+          if (!reviewed[index]) { nextMissing = index; return true; }
           return false;
         });
-        if (!match && /this section|current section|esta seccion|seccion actual/.test(query)) match = documentData.sections[activeSection];
-        addBubble('agent', match ? ui[activeLang].sectionAnswer + match.plain : ui[activeLang].notFound);
+        if (nextMissing !== -1) {
+          current = current < sections[lang].length - 1 && !reviewed[current + 1] ? current + 1 : nextMissing;
+          renderDocument();
+          return;
+        }
+        renderDocument();
+        signaturePanel.classList.add("visible");
+        signaturePanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
       });
-      signForm.addEventListener('submit', function (event) {
+
+      document.getElementById("reset-matter").addEventListener("click", function () {
+        var t = ui[lang];
+        reviewed = {};
+        current = 0;
+        signaturePanel.classList.remove("visible");
+        document.getElementById("download-copy").hidden = true;
+        signedPdf = null;
+        signedData = null;
+        document.getElementById("signature-form").reset();
+        document.getElementById("chat-question").value = "";
+        document.getElementById("form-status").textContent = "";
+        var resetNow = new Date();
+        document.getElementById("signature-date").value = new Date(resetNow.getTime() - resetNow.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+        renderDocument();
+        renderAssistant(true);
+        document.getElementById("reset-status").textContent = t.resetDone;
+        document.getElementById("doc-title").focus({ preventScroll: true });
+      });
+
+      document.getElementById("chat-form").addEventListener("submit", function (event) {
         event.preventDefault();
-        var printed = document.getElementById('printed-name').value.trim();
-        var party = document.getElementById('party-name').value.trim();
-        var date = document.getElementById('sign-date').value;
-        var signature = document.getElementById('typed-signature').value.trim();
-        if (!printed || !date || !signature) { formNote.textContent = ui[activeLang].needFields; return; }
-        if (normalize(printed) !== normalize(signature)) { formNote.textContent = ui[activeLang].mismatch; return; }
-        var documentData = docs[activeDoc][activeLang];
-        var body = documentData.sections.map(function (item) { return '<section><h2>' + item.title + '</h2>' + item.html + '</section>'; }).join('');
-        var output = '<!doctype html><html lang="' + activeLang + '"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>' + escapeHtml(documentData.title) + ' — ' + escapeHtml(ui[activeLang].draftLabel) + '</title><style>body{font-family:Arial,sans-serif;max-width:760px;margin:48px auto;padding:0 24px;color:#18383b;line-height:1.55}header{border:3px solid #bb8a18;padding:22px;margin-bottom:32px}header b{display:block;color:#845d00;font-size:18px}h1{font-size:32px;margin:26px 0 6px}h2{font-size:18px;margin-top:28px;border-top:1px solid #cbdad8;padding-top:18px}.signature{margin-top:42px;padding:22px;background:#edf5f3}.signature p{margin:7px 0}.typed{font-family:Georgia,serif;font-style:italic;font-size:22px}@media print{body{margin:0}}</style></head><body><header><b>' + escapeHtml(ui[activeLang].draftLabel) + '</b><span>' + escapeHtml(ui[activeLang].statement) + '</span></header><h1>' + escapeHtml(documentData.title) + '</h1><p>' + escapeHtml(documentData.purpose) + '</p>' + body + '<div class="signature"><p><strong>' + escapeHtml(ui[activeLang].signer) + ':</strong> ' + escapeHtml(printed) + '</p><p><strong>' + escapeHtml(ui[activeLang].party) + ':</strong> ' + escapeHtml(party || '—') + '</p><p><strong>' + escapeHtml(ui[activeLang].date) + ':</strong> ' + escapeHtml(date) + '</p><p class="typed">' + escapeHtml(signature) + '</p></div></body></html>';
-        var blob = new Blob([output], {type:'text/html;charset=utf-8'});
-        var link = document.createElement('a');
+        var input = document.getElementById("chat-question");
+        var value = input.value.trim();
+        if (!value) return;
+        input.value = "";
+        answerQuestion(value);
+      });
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"]/g, function (char) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[char];
+        });
+      }
+
+      function iecSignatureBlock(data) {
+        // IEC's signature is pre-applied in the website: every executed copy
+        // goes out with both signatures. The date is a token: the server
+        // replaces it with the actual date the executed copy is issued —
+        // never with the client-entered Effective Date.
+        return '<div><h3>International Empire Consultants, Inc.</h3>'
+          + '<p>(Pre-signed by IEC)</p>'
+          + '<p>Signature: <em>Mohammed Morgan, MD</em></p>'
+          + '<p>Name: Mohammed Morgan, MD</p>'
+          + '<p>Title: Founder &amp; CEO</p>'
+          + '<p>Date: [IEC EXECUTION DATE]</p></div>';
+      }
+
+      function buildSignedHtml(data) {
+        var docSections = sections.en.slice(0, 11).map(function (section, index) {
+          var heading = index === 0 ? "" : '<h2>' + escapeHtml(section.title) + '</h2>';
+          return '<section' + (index === 0 ? ' class="intro"' : '') + '>' + heading + '<p>' + escapeHtml(fillAgreementText(section.text, data)) + '</p></section>';
+        }).join("");
+        var signatureBlock = '<section class="execution"><h2>Execution</h2><p><strong>IN WITNESS WHEREOF</strong>, the Parties have executed this Agreement as of the Effective Date.</p><div class="signatures">'
+          + iecSignatureBlock(data)
+          + '<div><h3>' + escapeHtml(data.party) + '</h3><p>Signature: <em>' + escapeHtml(data.signature) + '</em></p><p>Name: ' + escapeHtml(data.name) + '</p><p>Title: ' + escapeHtml(data.title || "—") + '</p><p>Date: ' + escapeHtml(data.date) + '</p></div></div></section>';
+        return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CURAVIA Mutual Non-Disclosure Agreement</title></head><body><header><h1>Mutual Non-Disclosure Agreement</h1><p>International Empire Consultants, Inc. and ' + escapeHtml(data.party) + '</p></header>' + docSections + signatureBlock + '</body></html>';
+      }
+
+      // The executed copy is a PDF generated and recorded by the server;
+      // a successful submit returns its exact bytes, and this downloads
+      // them — the same PDF that was emailed to IEC and to the signer.
+      var signedPdf = null;
+      var signedData = null;
+
+      function downloadSignedPdf() {
+        if (!signedPdf) return;
+        var binary = atob(signedPdf.base64);
+        var bytes = new Uint8Array(binary.length);
+        for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        var blob = new Blob([bytes], { type: "application/pdf" });
         var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
         link.href = url;
-        link.download = ui[activeLang].filename + '-' + activeDoc + '-' + date + '.html';
+        link.download = signedPdf.fileName;
         document.body.appendChild(link);
         link.click();
         link.remove();
         window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-        formNote.textContent = ui[activeLang].ready;
+      }
+
+      agreementFieldIds.concat(signerFieldIds).forEach(function (fieldId) {
+        document.getElementById(fieldId).addEventListener("input", function () {
+          if (agreementFieldIds.indexOf(fieldId) !== -1) renderDocument();
+          if (!signedData) return;
+          signedData = null;
+          signedPdf = null;
+          document.getElementById("download-copy").hidden = true;
+          document.getElementById("form-status").textContent = ui[lang].changed;
+        });
       });
 
-      window.curaviaLegalSetLanguage = function (lang) {
-        activeLang = lang;
-        activeSection = Math.min(activeSection, docs[activeDoc][activeLang].sections.length - 1);
-        document.querySelector('.doc-nav').setAttribute('aria-label', lang === 'es' ? 'Borrador del acuerdo mutuo de confidencialidad' : 'Mutual NDA draft');
+      document.getElementById("signature-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var t = ui[lang];
+        var form = event.currentTarget;
+        var status = document.getElementById("form-status");
+        var allReviewed = sections[lang].every(function (_, index) { return reviewed[index]; });
+        if (!allReviewed) {
+          status.textContent = t.incompleteReview;
+          return;
+        }
+        if (!form.checkValidity()) {
+          status.textContent = t.missing;
+          form.reportValidity();
+          return;
+        }
+        var data = getAgreementData();
+        data.name = document.getElementById("printed-name").value.trim();
+        data.date = document.getElementById("signature-date").value;
+        data.title = document.getElementById("signer-title").value.trim();
+        data.signature = document.getElementById("typed-signature").value.trim();
+        data.email = document.getElementById("signer-email").value.trim();
+        if (!data.effectiveDate || !data.iecState || !data.party || !data.entityTypeState || !data.address || !data.purpose || !data.name || !data.date || !data.signature || !data.email) {
+          status.textContent = t.missing;
+          return;
+        }
+        // No silent failure: success is shown ONLY after the server
+        // confirms it recorded the signing and emailed the executed PDF
+        // to IEC and to the signer. Any failure says so, with signing
+        // again as the retry.
+        var submitButton = document.getElementById("download-signed");
+        submitButton.disabled = true;
+        status.textContent = t.sending;
+        fetch("https://app.getmedexec.com/api/nda/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            product: "curavia",
+            effectiveDate: data.effectiveDate,
+            iecState: data.iecState,
+            party: data.party,
+            entityTypeState: data.entityTypeState,
+            address: data.address,
+            purpose: data.purpose,
+            name: data.name,
+            title: data.title,
+            date: data.date,
+            signature: data.signature,
+            signerEmail: data.email,
+            documentHtml: buildSignedHtml(data)
+          })
+        }).then(function (response) {
+          return response.json().catch(function () { return null; }).then(function (body) {
+            return { ok: response.ok && !!body && body.ok === true, body: body };
+          });
+        }).then(function (result) {
+          submitButton.disabled = false;
+          if (!result.ok || !result.body.pdfBase64) {
+            signedData = null;
+            signedPdf = null;
+            document.getElementById("download-copy").hidden = true;
+            status.textContent = t.sendFailed;
+            return;
+          }
+          signedData = data;
+          signedPdf = { base64: result.body.pdfBase64, fileName: result.body.fileName };
+          status.textContent = t.ready;
+          document.getElementById("download-copy").hidden = false;
+        }).catch(function () {
+          submitButton.disabled = false;
+          signedData = null;
+          signedPdf = null;
+          document.getElementById("download-copy").hidden = true;
+          status.textContent = t.sendFailed;
+        });
+      });
+
+      document.getElementById("download-copy").addEventListener("click", function () {
+        downloadSignedPdf();
+      });
+
+      window.curaviaLegalSetLanguage = function (l) {
+        lang = l === "es" ? "es" : "en";
+        current = Math.min(current, sections[lang].length - 1);
+        document.querySelector('.doc-nav').setAttribute('aria-label', lang === 'es' ? 'Acuerdo mutuo de confidencialidad' : 'Mutual NDA');
         document.querySelector('.assistant-panel').setAttribute('aria-label', lang === 'es' ? 'Asistente de documentos' : 'Document assistant');
-        chatQuestion.setAttribute('aria-label', lang === 'es' ? 'Pregunte sobre este borrador' : 'Ask about this draft');
-        render();
-        resetChat();
+        document.getElementById("chat-question").setAttribute('aria-label', lang === 'es' ? 'Pregunte sobre este acuerdo' : 'Ask about this agreement');
+        renderDocument();
+        renderAssistant(true);
       };
-      var today = new Date();
-      var localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0,10);
-      document.getElementById('sign-date').value = localDate;
-      render();
-      resetChat();
-    }());
+
+      var now = new Date();
+      var localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+      document.getElementById("signature-date").value = localDate;
+      renderDocument();
+      renderAssistant(true);
+    })();
+
   </script>
   <script>
     (function () {

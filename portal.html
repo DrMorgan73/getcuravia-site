@@ -12,7 +12,7 @@
       color-scheme: light dark;
       --ink:#102f33; --ink-soft:#466064; --paper:#f7faf8; --white:#ffffff;
       --teal:#006b70; --teal-deep:#034d56; --teal-pale:#dcefed; --gold:#d6a93e;
-      --line:#ccdcda; --card:#ffffff; --shadow:0 22px 60px rgba(5,55,59,.12);
+      --line:#ccdcda; --card:#ffffff; --shadow:0 22px 60px rgba(5,55,59,.12); --danger:#a63a22;
       --hero:#073f47; --hero-ink:#f4fbf9; --hero-soft:#c2dad7;
       --radius:22px;
     }
@@ -20,7 +20,7 @@
       :root {
         --ink:#edf7f5; --ink-soft:#a9c0be; --paper:#071b1e; --white:#0d292d;
         --teal:#52c3be; --teal-deep:#8dd8d3; --teal-pale:#12393b; --gold:#e2b84d;
-        --line:#244348; --card:#0d292d; --shadow:0 22px 60px rgba(0,0,0,.28);
+        --line:#244348; --card:#0d292d; --shadow:0 22px 60px rgba(0,0,0,.28); --danger:#e08a70;
         --hero:#041719; --hero-ink:#f4fbf9; --hero-soft:#b4cecb;
       }
     }
@@ -352,6 +352,11 @@
     .portal-card span{display:block;color:var(--ink-soft);font-size:.95rem;line-height:1.55}
     .portal-card .portal-open{margin-top:18px;color:var(--teal);font-weight:700;font-size:.85rem}
     .portal-card .portal-open:after{content:" \2192"}
+    .portal-card .api-status{display:block;margin-top:14px;font-size:.85rem;font-weight:700}
+    .portal-card .api-status.is-checking{color:var(--ink-soft)}
+    .portal-card .api-status.is-ok{color:var(--teal)}
+    .portal-card .api-status.is-bad{color:var(--danger)}
+    @media(max-width:400px){.topbar .shell{height:auto;flex-wrap:wrap;padding-bottom:12px}.topbar nav{width:100%;justify-content:flex-end}}
 </style>
 </head>
 <body>
@@ -389,7 +394,7 @@
         <div class="portal-grid">
           <a class="portal-card" href="https://curavia-dash-suite.vercel.app" target="_blank" rel="noopener"><strong>Staff Suite</strong><span>For clinic staff — sign in to the CURAVIA Suite.</span><span class="portal-open">Open</span></a>
           <a class="portal-card" href="https://curavia-patient-app-inssnapp.vercel.app" target="_blank" rel="noopener"><strong>Patient App</strong><span>For patients — appointments, programs, messages.</span><span class="portal-open">Open</span></a>
-          <a class="portal-card" href="https://curavia-staff-api.vercel.app/v1/health" target="_blank" rel="noopener"><strong>API status</strong><span>System status for the CURAVIA platform API.</span><span class="portal-open">Open</span></a>
+          <a class="portal-card" href="https://curavia-staff-api.vercel.app/v1/health" target="_blank" rel="noopener"><strong>API status</strong><span>System status for the CURAVIA platform API.</span><span class="api-status is-checking" id="api-status" role="status" aria-live="polite">Checking API status…</span><span class="portal-open">Open</span></a>
         </div>
       </div>
     </section>
@@ -445,6 +450,46 @@
       document.querySelectorAll('[data-lang]').forEach(function (button) {
         button.addEventListener('click', function () { setLanguage(button.getAttribute('data-lang')); });
       });
+    }());
+  </script>
+  <script>
+    // Live API status for the Portal API card (audit fix 2026-10-25, F1).
+    // Fail-closed: "operational" is shown ONLY on HTTP-ok + parsed JSON ok:true.
+    // Any failure, timeout, non-2xx, or ok!==true shows "unavailable" — never healthy.
+    // Card href/destination unchanged; this script only updates the status line.
+    (function () {
+      var el = document.getElementById('api-status');
+      if (!el) return;
+      var endpoint = 'https://curavia-staff-api.vercel.app/v1/health';
+      var strings = {
+        en: { checking: 'Checking API status\u2026', ok: 'API operational', bad: 'API status unavailable \u2014 open the card to view the live response' },
+        es: { checking: 'Comprobando el estado de la API\u2026', ok: 'API operativa', bad: 'Estado de la API no disponible \u2014 abra la tarjeta para ver la respuesta en vivo' }
+      };
+      var state = 'checking';
+      function lang() { return document.documentElement.lang === 'es' ? 'es' : 'en'; }
+      function render() {
+        el.textContent = strings[lang()][state];
+        el.className = 'api-status' + (state === 'ok' ? ' is-ok' : state === 'bad' ? ' is-bad' : ' is-checking');
+      }
+      // Re-render in the new language when the existing switcher flips <html lang>.
+      // (The status line's initial text is deliberately NOT in the page's ES
+      // dictionary, so the page's own text-walker never overwrites it.)
+      new MutationObserver(function (records) {
+        for (var i = 0; i < records.length; i++) {
+          if (records[i].attributeName === 'lang') render();
+        }
+      }).observe(document.documentElement, { attributes: true });
+      render();
+      var controller = new AbortController();
+      var timer = setTimeout(function () { controller.abort(); }, 8000);
+      fetch(endpoint, { signal: controller.signal, cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function (data) { state = (data && data.ok === true) ? 'ok' : 'bad'; })
+        .catch(function () { state = 'bad'; })
+        .finally(function () { clearTimeout(timer); render(); });
     }());
   </script>
 </body>

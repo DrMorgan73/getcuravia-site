@@ -60,6 +60,13 @@ const DEMO_PROVISIONED_ACCOUNTS = [
     email: "demo@curavia.example",
     name: "Demo Reviewer",
     status: "active"
+  },
+  {
+    email: "mohdology@gmail.com",
+    name: "Mohamed Ismael",
+    token: "129ffe80d2611eecd5f26eb9542a59553d3379904f64682d",
+    status: "invited",
+    issuedAt: "2026-11-05T07:44:34-05:00"
   }
 ];
 

@@ -288,7 +288,7 @@ const ACTIVATIONS_KEY = "curavia_demo_activations";
 function normalizeEmail(email) { return String(email || "").trim().toLowerCase(); }
 
 function demoSession() { return DemoStore.get(SESSION_KEY); }
-function demoSignOut() { DemoStore.remove(SESSION_KEY); }
+function demoSignOut() { demoActivity("logout"); DemoStore.remove(SESSION_KEY); }
 
 /* A status flip (paused/revoked) ends an existing session, exactly as
    at the portal: control is administrative, in provisioning.js. */

@@ -341,7 +341,11 @@ function demoLogin(email, password) {
 }
 
 function demoSession() { return DemoStore.get(SESSION_KEY); }
-function demoSignOut() { DemoStore.remove(SESSION_KEY); }
+function demoSignOut() {
+  const s = demoSession();
+  if (s && s.email) demoActivity("logout", "", s.email);
+  DemoStore.remove(SESSION_KEY);
+}
 
 /* Exposed for the node smoke test; harmless in the browser. */
 if (typeof module !== "undefined" && module.exports) {

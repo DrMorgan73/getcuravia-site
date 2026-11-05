@@ -65,7 +65,7 @@ const DEMO_PROVISIONED_ACCOUNTS = [
     email: "mohdology@gmail.com",
     name: "Mohamed Ismael",
     token: "129ffe80d2611eecd5f26eb9542a59553d3379904f64682d",
-    status: "invited",
+    status: "paused",
     issuedAt: "2026-11-05T07:44:34-05:00"
   },
   {

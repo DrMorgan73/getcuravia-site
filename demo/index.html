@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CURAVIA Demo — Live Workflow | getcuravia.com</title>
+<meta name="description" content="CURAVIA demo portal: a live, screen-by-screen walkthrough of one clinic day — booking, intake, the visit, the scribe's summary, billing review — across the CURAVIA Suite and the patient app, on synthetic data. Access is for those who have signed the CURAVIA Mutual NDA.">
+<style>
+  /* CURAVIA design system (from getcuravia.com + the CURAVIA Suite):
+     deep teal-green ink, teal primary, gold accent, pale paper,
+     DM Sans / Newsreader. LIGHT theme. */
+  :root {
+    --ink: #102f33;
+    --ink-soft: #466064;
+    --muted: #6d858a;
+    --paper: #f7faf8;
+    --surface: #ffffff;
+    --teal: #006b70;
+    --teal-deep: #034d56;
+    --teal-soft: #d9eeee;
+    --gold: #d6a93e;
+    --gold-soft: #fff3cb;
+    --line: #ccdcda;
+    --danger: #b3261e;
+    --danger-soft: #fdeceb;
+    --good: #146c43;
+    --mint: #dcf2e3;
+    --radius: 14px;
+    --shadow: 0 16px 44px rgba(16, 47, 51, .10);
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--ink); font-family: var(--sans); line-height: 1.55;
+    background: linear-gradient(165deg, #eef8f6 0%, #f4fbf9 55%, #f8fbfa 100%);
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+  }
+  button, input { font: inherit; }
+  a { color: var(--teal-deep); }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+  .nav {
+    max-width: 1060px; margin: 0 auto;
+    padding: .8rem clamp(1rem, 4vw, 2.5rem);
+    display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem;
+    font-size: .9rem; font-weight: 600; color: var(--ink-soft);
+  }
+  .nav a { text-decoration: none; color: var(--ink-soft); }
+  .nav a:hover { color: var(--teal); }
+  .nav-brand { margin-right: auto; flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
+  .brand-word { font-weight: 800; font-size: 22px; letter-spacing: .14em; color: var(--ink); line-height: 1; }
+  .brand-word .pulse { color: var(--gold); }
+  .brand-tag { display: block; font-size: 7.4px; letter-spacing: .3em; color: var(--muted); font-weight: 700; margin-top: 3px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border: none; border-radius: 10px; padding: 11px 18px;
+    font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none;
+    transition: transform .05s ease, opacity .15s; background: var(--teal); color: #fff;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn:hover { background: var(--teal-deep); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-ghost { background: #e7efed; color: var(--ink); }
+  .btn-ghost:hover { background: #d9e6e3; }
+  .btn-sm { padding: 7px 12px; font-size: 13px; border-radius: 9px; }
+
+  .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--teal); margin: 0 0 1rem; }
+  h1, h2, h3 { color: var(--ink); text-wrap: balance; }
+  h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.1rem, 5vw, 3.1rem); line-height: 1.1; margin: 0 0 12px; letter-spacing: -.01em; }
+  h1 .accent { color: var(--teal); font-style: italic; }
+  h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.5rem, 3vw, 1.9rem); margin: 0 0 .8rem; }
+  h3 { margin: 0 0 .5rem; font-size: 1.05rem; }
+  .lede { color: var(--ink-soft); max-width: 640px; font-size: 16.5px; line-height: 1.55; }
+  .muted { color: var(--muted); }
+  .small { font-size: 12.5px; }
+
+  .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .pill-teal { background: var(--teal-soft); color: var(--teal-deep); }
+  .pill-amber { background: var(--gold-soft); color: #92600a; }
+
+  .section { padding-block: clamp(2.2rem, 5vw, 3.6rem); }
+  .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; border: 1px solid rgba(204, 220, 218, .7); }
+  .form-card { max-width: 520px; margin: 0 auto; padding: clamp(1.2rem, 3vw, 2rem); }
+  .field { margin-bottom: 1rem; }
+  .field label { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .field input { width: 100%; border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fbfdfc; color: var(--ink); font-size: 14px; outline: none; }
+  .field input:focus { border-color: var(--teal); background: #fff; }
+  .form-msg { border-radius: 10px; padding: 11px 13px; font-size: 13.5px; margin-bottom: 1rem; }
+  .form-msg.error { background: var(--danger-soft); color: #7c2113; }
+  .form-msg.ok { background: var(--teal-soft); color: var(--teal-deep); }
+
+  .steps-card { margin: 30px auto; max-width: 880px; padding: 16px 22px; }
+  .steps-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13.5px; font-weight: 700; color: var(--ink-soft); align-items: center; }
+  .steps-row .final { color: var(--teal); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 1.4rem; transform: translateX(-50%) translateY(2rem);
+    background: var(--ink); color: #fff; padding: 10px 14px; border-radius: 10px;
+    font-size: 13px; font-weight: 600; opacity: 0; pointer-events: none; transition: all .3s ease; z-index: 60; max-width: 90vw; text-align: center; box-shadow: var(--shadow);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .footer { padding: 2rem clamp(1rem, 4vw, 2.5rem) 3rem; color: var(--muted); font-size: 12.5px; }
+  .footer-inner { max-width: 1060px; margin: 0 auto; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: center; }
+</style>
+</head>
+<body>
+<header class="nav">
+  <a class="nav-brand" href="../" aria-label="CURAVIA home">
+    <span><span class="brand-word">CURAVIA<span class="pulse">.</span></span><span class="brand-tag">CONNECTED CLINIC SUITE</span></span>
+  </a>
+  <a href="../">getcuravia.com</a>
+  <span id="nav-user" class="muted" hidden></span>
+  <button class="btn btn-sm" type="button" id="nav-auth-btn">Sign In</button>
+</header>
+
+<main>
+  <!-- ============ VIEW: LANDING ============ -->
+  <section id="view-landing">
+    <div class="wrap" style="padding-top:clamp(1.6rem,4vw,3rem);">
+      <div style="text-align:center;margin:20px auto 10px;max-width:720px;">
+        <p class="eyebrow">CURAVIA Demo Portal</p>
+        <h1>Less clinic friction. <span class="accent">More time for care.</span></h1>
+        <p class="lede" style="margin:0 auto;">A live walkthrough of CURAVIA — one clinic day followed end to end across the CURAVIA Suite (the staff dashboard) and the patient app: a booking, the voice front desk, intake, the visit, the scribe's summary, the clinician's signature, and billing review. Synthetic cases only; no real patient data is used anywhere in this demo.</p>
+      </div>
+      <div class="card steps-card">
+        <div class="steps-row">
+          <span>1 · Patient books in the app</span><span>→</span>
+          <span>2 · Voice front desk &amp; intake</span><span>→</span>
+          <span>3 · Visit &amp; scribe summary</span><span>→</span>
+          <span>4 · Clinician signs</span><span>→</span>
+          <span>5 · Billing review</span><span>→</span>
+          <span class="final">✓ Summary in the patient's app</span>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1.4rem;">
+        <button class="btn" type="button" data-goto="login" style="padding:13px 26px;font-size:15px;">Sign in</button>
+        <p class="small muted" style="max-width:620px;margin:1.2rem auto 0;">Demo access is available to those who have signed the CURAVIA Mutual Non-Disclosure Agreement (NDA). There is no public signup — IEC creates each demo account, and if one has been created for you, your email holds a one-time activation link to set your password.</p>
+      </div>
+    </div>
+    <div class="wrap section">
+      <h2>Inside the demo</h2>
+      <p class="lede">Two surfaces, one clinic day — exactly as the platform runs it, not a mock-up.</p>
+      <p class="lede" style="max-width:760px;">The CURAVIA Suite (staff web) and the patient app (mobile) move through the same synthetic case together: the patient books and completes intake in the app, the front desk sees her on today's schedule, the scribe drafts the visit summary, the clinician reviews and signs, billing checks the codes — a human approves every step — and the signed summary lands back in the patient's app.</p>
+    </div>
+  </section>
+
+  <!-- ============ VIEW: LOGIN ============ -->
+  <section id="view-login" hidden>
+    <div class="wrap section">
+      <div class="card form-card">
+        <p class="eyebrow">Demo Portal</p>
+        <h2>Sign in</h2>
+        <div class="form-msg error" id="login-msg" hidden></div>
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="li-email">Email</label>
+            <input id="li-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="li-password">Password</label>
+            <input id="li-password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="btn" type="submit" style="width:100%;">Sign in to the demo</button>
+        </form>
+        <p class="small muted" style="margin-top:1rem;">Demo accounts are created by IEC for NDA signers — there is no public signup. If you received an activation email, set your password from the link in it first, then sign in here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VIEW: HANDOFF (signed-in) ============ -->
+  <section id="view-home" hidden>
+    <div class="wrap section">
+      <div class="card form-card" style="max-width:640px;">
+        <p class="eyebrow">Demo Portal</p>
+        <h2>You&rsquo;re signed in.</h2>
+        <p class="lede" style="font-size:1rem;">The demo is the <strong>CURAVIA Suite and the patient app as live HTML</strong> — the same layouts, screens, and labels as the application — running a guided showing of one synthetic clinic day: booking &rarr; voice front desk &rarr; intake &rarr; today's schedule &rarr; the visit &rarr; scribe summary &rarr; clinician signature &rarr; billing review &rarr; the summary in the patient's app, with the audit trail behind all of it.</p>
+        <p><span class="pill pill-amber">SYNTHETIC DATA ONLY</span> <span class="pill pill-teal">NO DATABASE — SELF-CONTAINED HTML</span></p>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.2rem;">
+          <a class="btn" id="enter-demo" href="#" rel="nofollow">Open the CURAVIA demo &rarr;</a>
+          <button class="btn btn-ghost" type="button" id="sign-out-1">Sign out</button>
+        </div>
+        <p class="small muted" id="demo-gate-note" style="margin-top:1rem;" hidden>Your access is confirmed — the demo opens from the button above.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>© 2026 International Empire Consultants, Inc. All rights reserved. · Developed by IEC, Inc.</span>
+    <span><a href="mailto:info@getcuravia.com">info@getcuravia.com</a> · CURAVIA Demo Portal — synthetic data only</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="/demo/provisioning.js"></script>
+<script>
+"use strict";
+/* =====================================================================
+   CURAVIA Demo Portal — gate (v2, provisioned-access model)
+   Static property: the gate is a client-side simulation. There is NO
+   public self-signup and passwords are never sent by email: IEC
+   provisions each account (provisioning.js — DEMO_PROVISIONED_ACCOUNTS,
+   the allowlist underneath), the signer receives a one-time activation
+   link and sets their own password at demo/activate/. Every account
+   carries a status we control — invited / active / paused / revoked —
+   enforced here at login. Real per-user auth is the named next step.
+   ===================================================================== */
+
+/* ---- Seed account so the portal can be reviewed end to end.
+        The seed email is on the allowlist above. ---- */
+const DEMO_SEED_ACCOUNTS = [
+  { name: "Demo Reviewer", email: "demo@curavia.example", password: "CuraviaDemo#2026" }
+];
+
+/* ---- Storage: localStorage in the browser, in-memory under test ---- */
+const DemoStore = (() => {
+  let mem = {};
+  const hasLS = typeof localStorage !== "undefined";
+  return {
+    get(k) {
+      if (hasLS) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+      return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null;
+    },
+    set(k, v) {
+      if (hasLS) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } }
+      else { mem[k] = v; }
+    },
+    remove(k) {
+      if (hasLS) { try { localStorage.removeItem(k); } catch (e) { /* noop */ } }
+      else { delete mem[k]; }
+    },
+    _reset() { mem = {}; }
+  };
+})();
+
+const ACCOUNTS_KEY = "curavia_demo_accounts";
+const SESSION_KEY = "curavia_demo_session";
+const ACTIVATIONS_KEY = "curavia_demo_activations";
+
+function normalizeEmail(email) { return String(email || "").trim().toLowerCase(); }
+
+/* The provisioning list (provisioning.js) is the allowlist underneath:
+   only emails IEC has provisioned can ever activate or sign in. */
+function findProvisioned(email) {
+  const e = normalizeEmail(email);
+  const list = typeof DEMO_PROVISIONED_ACCOUNTS !== "undefined" ? DEMO_PROVISIONED_ACCOUNTS : [];
+  return list.find(a => normalizeEmail(a.email) === e) || null;
+}
+
+function loadActivations() {
+  const stored = DemoStore.get(ACTIVATIONS_KEY);
+  return stored && typeof stored === "object" ? stored : {};
+}
+
+/* Effective status: the config status wins for paused/revoked (flipped
+   by us + redeploy); a completed activation turns invited → active. */
+function effectiveStatus(email) {
+  const p = findProvisioned(email);
+  if (!p) return null;
+  const s = String(p.status || "invited").toLowerCase();
+  if (s === "revoked") return "revoked";
+  if (s === "paused") return "paused";
+  if (s === "active") return "active";
+  return loadActivations()[normalizeEmail(email)] ? "active" : "invited";
+}
+
+function loadAccounts() {
+  const stored = DemoStore.get(ACCOUNTS_KEY);
+  const accounts = Array.isArray(stored) ? stored.slice() : [];
+  for (const seed of DEMO_SEED_ACCOUNTS) {
+    if (!accounts.some(a => normalizeEmail(a.email) === normalizeEmail(seed.email))) {
+      accounts.push({ name: seed.name, email: normalizeEmail(seed.email), password: seed.password, seed: true });
+    }
+  }
+  return accounts;
+}
+
+function saveAccounts(accounts) { DemoStore.set(ACCOUNTS_KEY, accounts); }
+
+function findAccount(email) {
+  const e = normalizeEmail(email);
+  return loadAccounts().find(a => normalizeEmail(a.email) === e) || null;
+}
+
+/* Activity monitoring (DrMorgan's order, 2026-11-05): demo user
+   activity is reported to /api/demo-notify, which emails DrMorgan on
+   a successful login/activation and forwards EVERY event to the IEC
+   Office central ingest. Fire-and-forget — a monitoring failure must
+   never block or break the sign-in. Unlike the earlier portals, the
+   seed account is NOT suppressed here: the endpoint logs seed events
+   centrally (flagged seed) while keeping the email silent for seed. */
+const DEMO_SEED_EMAIL = "demo@curavia.example";
+function demoActivity(event, detail, email) {
+  try {
+    const who = normalizeEmail(email || (demoSession() && demoSession().email) || "");
+    if (!who) return;
+    if (typeof fetch !== "function") return;
+    fetch("/api/demo-notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event, email: who, detail: detail || "" }),
+      keepalive: true
+    }).catch(() => {});
+  } catch (e) { /* monitoring never breaks the demo */ }
+}
+
+/* Login: provisioned accounts only, status-gated. There is no signup —
+   accounts come from IEC provisioning + the one-time activation link
+   (demo/activate/), which is where the password gets set. Every
+   outcome is reported to the activity endpoint: a success as "login",
+   a failure as "login_failed" with the reason, and attempts on
+   paused/revoked accounts as their own events. */
+function demoLogin(email, password) {
+  email = normalizeEmail(email);
+  const status = effectiveStatus(email);
+  const account = findAccount(email);
+  if (!account) {
+    if (status === "invited") { demoActivity("login_failed", "not_activated", email); return { ok: false, error: "This demo account has been created but not activated yet. Use the activation link in your email to set your password first." }; }
+    if (status === "paused") { demoActivity("paused_attempt", "login", email); return { ok: false, error: "Access for this account is paused. Your account is preserved — contact info@getcuravia.com." }; }
+    if (status === "revoked") { demoActivity("revoked_attempt", "login", email); return { ok: false, error: "Access for this account has been revoked. Contact info@getcuravia.com." }; }
+    demoActivity("login_failed", "no_account", email);
+    return { ok: false, error: "No demo account exists for this email. Demo accounts are created by IEC for NDA signers — there is no public signup." };
+  }
+  if (status === "paused") { demoActivity("paused_attempt", "login", email); return { ok: false, error: "Access for this account is paused. Your account is preserved — contact info@getcuravia.com." }; }
+  if (status === "revoked") { demoActivity("revoked_attempt", "login", email); return { ok: false, error: "Access for this account has been revoked. Contact info@getcuravia.com." }; }
+  if (account.password !== String(password || "")) { demoActivity("login_failed", "bad_password", email); return { ok: false, error: "Incorrect password for this demo account." }; }
+  const session = { name: account.name, email: normalizeEmail(account.email) };
+  DemoStore.set(SESSION_KEY, session);
+  demoActivity("login", "", session.email);
+  return { ok: true, session };
+}
+
+function demoSession() { return DemoStore.get(SESSION_KEY); }
+function demoSignOut() { DemoStore.remove(SESSION_KEY); }
+
+/* Exposed for the node smoke test; harmless in the browser. */
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { DEMO_SEED_ACCOUNTS, DemoStore, findProvisioned, effectiveStatus, loadActivations, demoLogin, demoSession, demoSignOut, findAccount, demoActivity };
+}
+</script>
+
+
+<script>
+"use strict";
+/* ===== Demo app handoff =====
+   The public site's job ends at this link: the signed-in demo user is
+   handed into the demo — the CURAVIA Suite and the patient app as
+   live HTML (demo/app/), fully self-contained, synthetic data only,
+   no database. ABSOLUTE path on purpose: the portal is served at
+   /demo (no trailing slash, via rewrite), where a relative "app/"
+   resolves to /app — a 404 (found in InSnap live review, 2026-11-04). */
+const DEMO_APP_URL = "/demo/app/";
+
+/* ===== View router + forms (browser only) ===== */
+if (typeof document !== "undefined") {
+  const VIEWS = ["landing", "login", "home"];
+  const $ = id => document.getElementById(id);
+
+  function showToast(text) {
+    const t = $("toast");
+    t.textContent = text;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3400);
+  }
+
+  function refreshNav() {
+    let s = demoSession();
+    if (s) {
+      /* Status flips (paused/revoked) end an existing session here. */
+      const st = effectiveStatus(s.email);
+      if (st === "paused" || st === "revoked") { demoSignOut(); s = null; }
+    }
+    const btn = $("nav-auth-btn");
+    const user = $("nav-user");
+    if (s) {
+      user.hidden = false;
+      user.textContent = s.name + " · demo access";
+      btn.textContent = "Sign out";
+    } else {
+      user.hidden = true;
+      btn.textContent = "Sign In";
+    }
+  }
+
+  function showView(name) {
+    for (const v of VIEWS) $("view-" + v).hidden = v !== name;
+    refreshNav();
+    window.scrollTo({ top: 0 });
+  }
+
+  document.addEventListener("click", e => {
+    const g = e.target.closest("[data-goto]");
+    if (g) { showView(g.getAttribute("data-goto")); }
+  });
+
+  $("nav-auth-btn").addEventListener("click", () => {
+    if (demoSession()) { demoSignOut(); showView("landing"); showToast("Signed out of the demo portal."); }
+    else showView("login");
+  });
+
+  function formMsg(id, text) {
+    const m = $(id);
+    m.textContent = text;
+    m.hidden = !text;
+  }
+
+  $("login-form").addEventListener("submit", e => {
+    e.preventDefault();
+    formMsg("login-msg", "");
+    const r = demoLogin($("li-email").value, $("li-password").value);
+    if (!r.ok) { formMsg("login-msg", r.error); return; }
+    showView("home");
+    showToast("Signed in — welcome back, " + r.session.name + ".");
+  });
+
+  $("sign-out-1").addEventListener("click", () => {
+    demoSignOut();
+    showView("landing");
+    showToast("Signed out of the demo portal.");
+  });
+
+  const enterBtn = $("enter-demo");
+  if (DEMO_APP_URL) {
+    enterBtn.setAttribute("href", DEMO_APP_URL);
+  } else {
+    enterBtn.addEventListener("click", e => {
+      e.preventDefault();
+      $("demo-gate-note").hidden = false;
+    });
+  }
+
+  refreshNav();
+}
+</script>
+</body>
+</html>

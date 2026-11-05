@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>CURAVIA Demo — Connected Clinic Suite (Synthetic Data) | getcuravia.com</title>
+<meta name="description" content="The CURAVIA demo: the CURAVIA Suite staff dashboard and the patient app as live HTML, showing one synthetic clinic day from booking to billing review. Synthetic data only.">
+<style>
+  /* CURAVIA Suite design system — from the product (clinic-platform
+     apps/dash-suite styles.css): deep teal shell, pale canvas, teal
+     accent, gold ("The C Pulse") gradient, white panels. */
+  :root {
+    --bg: #0a2e2b; --bg-2: #0d5c60;
+    --canvas: #eef4f3; --panel: #ffffff; --panel-muted: #f4faf9;
+    --border: #d4e8e4; --border-soft: #e6f0ee;
+    --ink: #0f172a; --ink-soft: #5b7170; --ink-faint: #8ba3a1;
+    --accent: #0d7377; --accent-dark: #0a5a5e; --accent-soft: #e6f5f4;
+    --gold: #c9a227; --gold-light: #e8c547; --gold-soft: #faf3dc;
+    --brand-gradient: linear-gradient(135deg, #0d7377 0%, #14a098 50%, #c9a227 100%);
+    --danger: #dc2626; --danger-bg: #fee2e2; --success: #16a34a; --success-bg: #dcf2e3;
+    --amber-soft: #fdf0d5; --amber-ink: #92600a;
+    --radius: 14px; --radius-sm: 9px;
+    --shadow: 0 8px 24px rgba(10, 46, 43, 0.08), 0 2px 6px rgba(10, 46, 43, 0.05);
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans); color: var(--ink); background: var(--canvas);
+    min-height: 100vh; min-height: 100dvh; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; line-height: 1.5; font-size: 14.5px;
+  }
+  a { color: var(--accent-dark); }
+  h1, h2, h3 { color: var(--ink); margin: 0; }
+  button { font-family: inherit; cursor: pointer; }
+  input, select, textarea { font-family: inherit; font-size: 14px; color: var(--ink); }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  /* ---------- shared primitives ---------- */
+  .card { background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; border: 1px solid var(--border-soft); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; border-radius: 10px; padding: 10px 16px; font-weight: 700; font-size: 13.5px; transition: transform .05s ease, opacity .15s; background: #e7efed; color: var(--ink); }
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-teal { background: var(--accent); color: #fff; }
+  .btn-teal:hover { background: var(--accent-dark); }
+  .btn-deep { background: var(--bg); color: #fff; }
+  .btn-ghost { background: #e7efed; color: var(--ink); }
+  .btn-sm { padding: 7px 12px; font-size: 12.5px; border-radius: 9px; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .pill-teal { background: var(--accent-soft); color: var(--accent-dark); }
+  .pill-amber { background: var(--amber-soft); color: var(--amber-ink); }
+  .pill-gold { background: var(--gold-soft); color: #7a5c07; }
+  .pill-green { background: var(--success-bg); color: #146c43; }
+  .pill-red { background: var(--danger-bg); color: #8c1d18; }
+  .pill-gray { background: #edf1f6; color: var(--ink-soft); }
+  .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .muted { color: var(--ink-soft); }
+  .small { font-size: 12.5px; }
+  .row { display: flex; align-items: center; gap: 10px; }
+  .spread { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .stack { display: flex; flex-direction: column; gap: 14px; }
+  .divider { height: 1px; background: var(--border-soft); margin: 4px 0; }
+  .notice { border-radius: 10px; padding: 11px 13px; font-size: 13px; line-height: 1.45; }
+  .notice-teal { background: var(--accent-soft); color: var(--accent-dark); }
+  .notice-amber { background: var(--amber-soft); color: #7c5203; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th { padding: 8px 6px; border-bottom: 1px solid var(--border); text-align: left; color: var(--ink-soft); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+  .data-table td { padding: 10px 6px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--border-soft); font-size: 13px; }
+  .kv span { color: var(--ink-soft); }
+  .kv b { font-weight: 600; text-align: right; }
+
+  /* ---------- phone frame (patient app) ---------- */
+  .phone { width: 400px; max-width: 94vw; margin: 0 auto; background: #0d1b2e; border-radius: 44px; padding: 12px; box-shadow: 0 30px 60px rgba(13, 27, 46, .35); }
+  .phone-screen { background: linear-gradient(170deg, #f4faf9, #e9f3f1); border-radius: 36px; overflow: hidden; min-height: 700px; display: flex; flex-direction: column; position: relative; }
+  .phone-notch { width: 110px; height: 22px; background: #0d1b2e; border-radius: 0 0 14px 14px; margin: 0 auto; flex: none; }
+  .phone-body { flex: 1; overflow-y: auto; padding: 14px 14px 8px; }
+  .tabbar { display: flex; border-top: 1px solid var(--border); background: #fff; flex: none; }
+  .tabbar button { flex: 1; background: none; border: none; padding: 10px 2px 14px; font-size: 11px; font-weight: 700; color: var(--ink-faint); display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: default; }
+  .tabbar button.active { color: var(--accent-dark); }
+  .tabbar .tab-ico { font-size: 18px; }
+  .chat-msg { padding: 8px 11px; max-width: 92%; border-radius: 18px; box-shadow: var(--shadow); border: 1px solid var(--border-soft); background: #fff; }
+  .chat-msg p { margin: 0; font-size: 13.5px; }
+  .chat-msg .who { color: var(--ink-faint); font-size: 12px; margin-top: 2px; }
+
+  /* ---------- CURAVIA Suite window ---------- */
+  .suite { display: flex; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); max-width: 1080px; margin: 0 auto; text-align: left; }
+  .suite-side { width: 218px; flex: 0 0 218px; background: var(--bg); color: #c7d8d5; padding: 18px 14px; display: flex; flex-direction: column; }
+  .suite-brand { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; }
+  .suite-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--brand-gradient); display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--serif); font-weight: 700; font-size: 16px; flex: none; }
+  .suite-name { color: #fff; font-weight: 700; font-size: 14.5px; line-height: 1.15; }
+  .suite-tag { font-size: 8px; letter-spacing: .14em; color: #9fc4bf; }
+  .suite-sec { font-size: 9.5px; letter-spacing: .12em; color: #7fa8a3; text-transform: uppercase; margin: 14px 4px 6px; }
+  .suite-link { display: block; padding: 7px 9px; border-radius: 8px; font-size: 13px; color: #c7d8d5; margin-bottom: 1px; }
+  .suite-link.active { background: rgba(20, 160, 152, .22); color: #fff; font-weight: 600; }
+  .suite-user { margin-top: auto; padding-top: 14px; font-size: 12px; color: #9fc4bf; }
+  .suite-main { flex: 1; padding: 20px 22px; min-width: 0; background: var(--panel-muted); }
+  .suite-main h2.page { font-family: var(--serif); font-size: 22px; margin: 2px 0 12px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 760px) { .stat-grid { grid-template-columns: 1fr 1fr; } .suite { flex-direction: column; } .suite-side { width: 100%; flex: none; } }
+  .stat-card { background: var(--panel); border: 1px solid var(--border-soft); border-top: 3px solid var(--accent); border-radius: 12px; padding: 13px 15px; }
+  .stat-card.gold { border-top-color: var(--gold); }
+  .stat-label { font-size: 10px; letter-spacing: .05em; color: var(--ink-soft); text-transform: uppercase; }
+  .stat-value { font-family: var(--serif); font-size: 25px; margin: 3px 0 1px; }
+  .stat-note { font-size: 11px; color: var(--ink-soft); }
+  .tile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 760px) { .tile-grid { grid-template-columns: 1fr 1fr; } }
+  .tile { background: var(--panel); border: 1px solid var(--border-soft); border-radius: 12px; padding: 14px; }
+  .tile .t-ico { font-size: 20px; }
+  .tile .t-name { font-weight: 700; font-size: 13.5px; margin-top: 6px; }
+  .tile .t-note { font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+  .sched { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 760px) { .sched { grid-template-columns: 1fr; } }
+  .appt { display: flex; gap: 10px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--border-soft); border-radius: 10px; margin-bottom: 8px; align-items: flex-start; }
+  .appt.hero { border-color: var(--gold); background: var(--gold-soft); }
+  .appt .time { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 13px; flex: none; width: 62px; }
+  .summary-sec { margin-bottom: 12px; }
+  .summary-sec h4 { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-dark); margin: 0 0 4px; }
+  .summary-sec p { margin: 0; font-size: 13.5px; }
+  .timeline { display: flex; flex-direction: column; }
+  .tl-row { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-soft); align-items: baseline; font-size: 13px; }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-time { font-variant-numeric: tabular-nums; font-weight: 800; color: var(--ink-soft); font-size: 12.5px; flex: none; width: 74px; }
+
+  /* ---------- demo shell ---------- */
+  .demo-top { max-width: 1160px; margin: 0 auto; padding: 18px clamp(1rem, 4vw, 2.5rem) 0; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .demo-top .spacer { flex: 1; }
+  .walkbar { max-width: 1160px; margin: 14px auto 0; padding: 0 clamp(1rem, 4vw, 2.5rem); }
+  .walk-card { background: var(--panel); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border-soft); padding: 14px 18px; }
+  .walk-dots { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+  .walk-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--border); background: #fff; color: var(--ink-soft); font-weight: 800; font-size: 12.5px; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  .walk-dot.done { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-dark); }
+  .walk-dot.now { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .walk-nav { display: flex; gap: 8px; align-items: center; }
+  .stage { max-width: 1160px; margin: 0 auto; padding: 18px clamp(1rem, 4vw, 2.5rem) 8px; }
+  .stage-caption { max-width: 860px; margin: 0 auto 16px; text-align: center; }
+  .surface-row { display: flex; gap: 26px; align-items: flex-start; justify-content: center; flex-wrap: wrap; }
+  .surface-note { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); text-align: center; margin-bottom: 10px; }
+  .jump-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+  .jump-btn { border: 1.5px solid var(--border); background: #fff; border-radius: 999px; padding: 6px 14px; font-weight: 700; font-size: 13px; color: var(--ink-soft); }
+  .jump-btn:hover { border-color: var(--accent); color: var(--accent-dark); }
+  .demo-footer { max-width: 1160px; margin: 0 auto; padding: 18px clamp(1rem, 4vw, 2.5rem) 34px; color: var(--ink-soft); font-size: 12.5px; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .lock-wrap { max-width: 520px; margin: 12vh auto 0; padding: 0 1rem; }
+
+  /* ---------- combined flow view (Suite + patient app at once) ---------- */
+  .flow-wrap { position: relative; left: 50%; transform: translateX(-50%); width: min(1560px, 97vw); }
+  .flow-bar { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+  .flow-bar-main { flex: 1 1 520px; min-width: min(520px, 100%); }
+  .flow-title { font-weight: 800; font-size: 19px; margin-top: 2px; }
+  .flow-text { color: var(--ink-soft); font-size: 14.5px; margin: 4px 0 0; }
+  .flow-dots { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .flow-dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--border); background: #fff; color: var(--ink-soft); font-weight: 800; font-size: 11.5px; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  .flow-dot.done { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-dark); }
+  .flow-dot.now { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .flow-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .flow-hint { text-align: center; color: var(--ink-faint); font-size: 12.5px; margin: 10px auto 0; max-width: 900px; }
+  .flow-grid { display: flex; gap: 18px; align-items: flex-start; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .flow-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .flow-col-suite { flex: 1 1 560px; min-width: min(560px, 100%); max-width: 820px; }
+  .flow-col-phone { flex: 0 1 400px; min-width: min(400px, 100%); }
+  .flow-grid.has-focus .flow-col.is-mini { flex: 0 1 250px; }
+  .flow-grid.has-focus .flow-col-suite.is-focus { max-width: none; }
+  .flow-pane-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 28px; }
+  .flow-pane-label { background: none; border: none; font: inherit; font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); cursor: pointer; padding: 2px 0; text-align: left; }
+  .flow-pane-label:hover { color: var(--accent-dark); }
+  .flow-zoomctl { display: inline-flex; gap: 4px; align-items: center; flex: none; }
+  .flow-zoomctl button { border: 1.5px solid var(--border); background: #fff; border-radius: 8px; min-width: 28px; height: 28px; font-weight: 800; font-size: 13px; color: var(--ink-soft); padding: 0 6px; line-height: 1; }
+  .flow-zoomctl button:hover { border-color: var(--accent); color: var(--accent-dark); }
+  .flow-tag { font-size: 12.5px; color: var(--ink-soft); background: #eef3f2; border-radius: 10px; padding: 7px 10px; line-height: 1.4; }
+  .flow-tag.hit { background: var(--accent-soft); color: var(--accent-dark); font-weight: 600; }
+  .flow-surface { border-radius: 16px; }
+  .flow-surface.hit { outline: 3px solid var(--accent); outline-offset: 3px; animation: flow-pulse 1.4s ease-out 1; }
+  @keyframes flow-pulse { 0% { box-shadow: 0 0 0 0 rgba(13, 115, 119, .45); } 100% { box-shadow: 0 0 0 18px rgba(13, 115, 119, 0); } }
+  .event-strip { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 0 auto 16px; max-width: 900px; }
+  .event-chip { background: var(--bg); color: #fff; border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 700; }
+  .event-chip.live { background: var(--danger); }
+</style>
+</head>
+<body>
+
+<!-- ============ LOCK SCREEN (signed-out bounce, as the product demo does) ============ -->
+<div id="lock-screen" hidden>
+  <div class="lock-wrap">
+    <div class="card" style="text-align:center;padding:32px 26px;">
+      <div style="display:flex;justify-content:center;"><span class="suite-mark" style="width:44px;height:44px;font-size:22px;border-radius:12px;">C</span></div>
+      <h2 style="margin-top:14px;font-family:var(--serif);">Sign in to the CURAVIA demo</h2>
+      <p class="muted">The demo opens only through the Demo Portal sign-in — the same door as the product walkthrough.</p>
+      <p style="margin-top:16px;"><a class="btn btn-teal" href="/demo" rel="nofollow">Go to the Demo Portal &rarr;</a></p>
+      <p class="small muted">Synthetic data only · Developed by IEC, Inc.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEMO SHELL ============ -->
+<div id="demo-shell" hidden>
+  <header class="demo-top">
+    <span class="row"><span class="suite-mark">C</span><span><strong style="font-size:16px;letter-spacing:.1em;">CURAVIA</strong><span class="small muted" style="display:block;font-size:10px;letter-spacing:.22em;">CONNECTED CLINIC SUITE</span></span></span>
+    <span class="pill pill-amber">Demo build · synthetic data only</span>
+    <span class="spacer"></span>
+    <span class="small muted" id="top-user"></span>
+    <button class="btn btn-ghost btn-sm" type="button" id="sign-out-btn">Sign out</button>
+  </header>
+
+  <div class="walkbar">
+    <div class="walk-card">
+      <div class="spread" style="flex-wrap:wrap;gap:12px;">
+        <div>
+          <div class="eyebrow" style="margin:0;">Guided walkthrough</div>
+          <div style="font-weight:800;font-size:17px;" id="walk-title"></div>
+        </div>
+        <div class="walk-nav">
+          <button class="btn btn-ghost btn-sm" type="button" id="walk-back">&larr; Back</button>
+          <button class="btn btn-teal btn-sm" type="button" id="walk-next">Next &rarr;</button>
+          <button class="btn btn-ghost btn-sm" type="button" id="walk-auto" aria-pressed="false">&#9654; Auto-play</button>
+        </div>
+      </div>
+      <div class="walk-dots" id="walk-dots" style="margin-top:12px;"></div>
+      <div class="jump-row" id="jump-row"></div>
+      <div class="jump-row" style="margin-top:10px;align-items:center;">
+        <span class="small muted" style="font-weight:700;">Screen size</span>
+        <button class="jump-btn" type="button" id="stage-zoom-out" aria-label="Zoom the demo out">−</button>
+        <span class="small" id="stage-zoom-pct" style="font-weight:800;min-width:44px;text-align:center;">100%</span>
+        <button class="jump-btn" type="button" id="stage-zoom-in" aria-label="Zoom the demo in">+</button>
+        <button class="jump-btn" type="button" id="stage-zoom-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="stage">
+    <p class="stage-caption" id="stage-caption" style="color:var(--ink-soft);font-size:15.5px;"></p>
+    <div id="stage-body"></div>
+  </main>
+
+  <footer class="demo-footer">
+    <span>CURAVIA — a product of IEC, Inc. (International Empire Consultants, Inc.) · Developed by IEC, Inc.</span>
+    <span><span class="pill pill-amber">SYNTHETIC DEMO DATA</span> Case CURAVIA-TEST-2026-001 · no real patients, clinics, or staff</span>
+  </footer>
+</div>
+
+<script src="/demo/provisioning.js"></script>
+<script>
+"use strict";
+/* =====================================================================
+   CURAVIA Demo — the CURAVIA Suite and the patient app as live HTML
+   (self-contained). Reproduces, from the product source
+   (clinic-platform apps/dash-suite + apps/patient-mobile):
+   - the CURAVIA Suite staff dashboard — Suite Home, Today's Schedule,
+     Patients, Intake, Visit Summaries (the scribe), Billing with its
+     Code Review Queue, Dispatcher (voice front desk), Audit Log,
+     with the real module names (24H Doctor, INSNAPP Medical,
+     Scribe & Billing, Voice Front Desk) and the real nav labels;
+   - the patient app — Appointments, Intake, Messages, Visits (visit
+     summaries), Labs, Medications, Billing — in a phone frame.
+   Step 1 shows both surfaces at once, moving through one synthetic
+   clinic day on a single timeline; the later steps tour each surface
+   on its own. All data is the bundled synthetic case below. No
+   backend, no database, no network calls except demo activity
+   reporting. Session-gated by the Demo Portal.
+   ===================================================================== */
+
+/* ---- Storage: localStorage in the browser, in-memory under test ---- */
+const DemoStore = (() => {
+  let mem = {};
+  const hasLS = typeof localStorage !== "undefined";
+  return {
+    get(k) {
+      if (hasLS) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+      return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null;
+    },
+    set(k, v) {
+      if (hasLS) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } }
+      else { mem[k] = v; }
+    },
+    remove(k) {
+      if (hasLS) { try { localStorage.removeItem(k); } catch (e) { /* noop */ } }
+      else { delete mem[k]; }
+    },
+    _reset() { mem = {}; }
+  };
+})();
+
+const SESSION_KEY = "curavia_demo_session";
+const ACTIVATIONS_KEY = "curavia_demo_activations";
+
+function normalizeEmail(email) { return String(email || "").trim().toLowerCase(); }
+
+function demoSession() { return DemoStore.get(SESSION_KEY); }
+function demoSignOut() { DemoStore.remove(SESSION_KEY); }
+
+/* A status flip (paused/revoked) ends an existing session, exactly as
+   at the portal: control is administrative, in provisioning.js. */
+function sessionAllowed(session) {
+  if (!session || !session.email) return false;
+  const list = typeof DEMO_PROVISIONED_ACCOUNTS !== "undefined" ? DEMO_PROVISIONED_ACCOUNTS : [];
+  const p = list.find(a => normalizeEmail(a.email) === normalizeEmail(session.email));
+  if (!p) return false;
+  const s = String(p.status || "invited").toLowerCase();
+  if (s === "paused" || s === "revoked") return false;
+  return true;
+}
+
+/* Activity monitoring (DrMorgan's order, 2026-11-05): every
+   walkthrough step view and every key demo action is reported to
+   /api/demo-notify, which forwards it to the IEC Office central
+   ingest. Fire-and-forget — monitoring never breaks the demo. */
+function demoActivity(event, detail) {
+  try {
+    const s = demoSession();
+    if (!s || !s.email) return;
+    if (typeof fetch !== "function") return;
+    fetch("/api/demo-notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event, email: s.email, detail: detail || "" }),
+      keepalive: true
+    }).catch(() => {});
+  } catch (e) { /* monitoring never breaks the demo */ }
+}
+
+/* ================= THE SYNTHETIC CASE — CURAVIA-TEST-2026-001 =================
+   One clinic day at a fictional clinic. Every name is synthetic. */
+const CASE = {
+  id: "CURAVIA-TEST-2026-001",
+  clinic: "Harborview Family Clinic (fictional)",
+  dateLabel: "Thursday, November 5, 2026",
+  patient: { name: "Elena Vargas", tag: "Synthetic patient", dob: "03/14/1984", lang: "EN · ES", phone: "(617) 555-0142" },
+  clinician: { name: "Dr. Samuel Ortiz", role: "Family Medicine" },
+  clinician2: { name: "Dr. Grace Chen", role: "Internal Medicine" },
+  frontDesk: { name: "Priya Nair", role: "Front desk" },
+  visit: {
+    time: "10:30 AM", type: "Office visit", reason: "Follow-up — blood pressure check",
+    room: "Exam 3", complaint: "Follow-up for essential hypertension; home readings improved.",
+    hpi: "Patient reports home BP readings 118–128/76–84 over two weeks. No headaches, no chest pain, no shortness of breath. Taking lisinopril 10 mg daily as directed; mild dry cough some mornings.",
+    exam: "BP 124/80 · HR 68 · Wt 68.4 kg. Heart: regular rate and rhythm. Lungs: clear. No edema.",
+    assessment: "Essential hypertension, controlled on current therapy. Mild cough — likely ACE-inhibitor related; monitor.",
+    plan: "Continue lisinopril 10 mg daily. Home BP log twice weekly. Labs: BMP + lipids today. Follow-up in 3 months, sooner if readings exceed 140/90.",
+    cpt: "99213", cptLabel: "Office visit, established patient, low complexity",
+    icd: "I10", icdLabel: "Essential (primary) hypertension",
+    confidence: "96%"
+  },
+  messages: [
+    { from: "clinic", text: "Good morning, Elena — your appointment today at 10:30 AM with Dr. Ortiz is confirmed. Please complete your intake form before you arrive.", who: "Harborview Family Clinic · 8:02 AM" },
+    { from: "patient", text: "Done — intake submitted. See you at 10:30.", who: "Elena Vargas · 9:47 AM" },
+    { from: "clinic", text: "Your visit summary from Dr. Ortiz is ready in the app. Your follow-up is in 3 months — we'll remind you.", who: "Harborview Family Clinic · 11:24 AM" }
+  ],
+  auditTrail: [
+    ["8:01 AM", "Appointment requested in the patient app — today 10:30 AM, Dr. Ortiz"],
+    ["8:02 AM", "Voice Front Desk confirmed the appointment (call, EN) and sent the intake form"],
+    ["9:47 AM", "Intake submitted in the app — medications, allergies, consent on file"],
+    ["10:22 AM", "Patient checked in at the front desk — Exam 3"],
+    ["10:31 AM", "Visit started — Scribe listening with consent on file"],
+    ["11:05 AM", "Scribe draft summary ready for clinician review"],
+    ["11:12 AM", "Dr. Ortiz reviewed, edited, and signed the summary — published to the patient app"],
+    ["11:18 AM", "Code Review Queue: CPT 99213 + ICD-10 I10 suggested (96% confidence)"],
+    ["11:21 AM", "Billing reviewer approved the codes — claim CURAVIA-CLM-001 marked Ready"],
+    ["11:24 AM", "Patient notified — visit summary and statement available in the app"]
+  ]
+};
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function synthPill() { return '<span class="pill pill-amber">SYNTHETIC DEMO DATA</span>'; }
+function statusPill(kind, label) {
+  const map = { ok: "pill-green", info: "pill-teal", wait: "pill-amber", gold: "pill-gold", bad: "pill-red", gray: "pill-gray" };
+  return '<span class="pill ' + (map[kind] || "pill-gray") + '">' + esc(label) + "</span>";
+}
+
+/* Demo interaction state: the two human approval gates in the walkthrough. */
+const demoState = { signed: false, codeApproved: false };
+
+/* ================= THE CURAVIA SUITE (staff web) =================
+   Nav labels and sections are the product's own (dash-suite App.tsx):
+   Workspace / Care / Operations / Insights / Modules. */
+const SUITE_NAV = [
+  ["Workspace", [["home", "⌂ Suite Home"], ["triage", "⚕ Triage"], ["intake", "▤ Intake"], ["visits", "▥ Visit Summaries"], ["labs", "🧪 Lab Results"], ["documents", "🗎 Documents"], ["livesync", "⚡ Live Sync"], ["family", "👪 Family Links"], ["telehealth", "📹 Video Visits"], ["messages", "✉ Messages"], ["teamchat", "◫ Team Chat"]]],
+  ["Operations", [["billing", "$ Billing"], ["timelogs", "◷ Time Logs"], ["rtm", "♥ RTM Monitoring"], ["ehr", "▣ EHR Connections"], ["dispatcher", "◈ Dispatcher"]]],
+  ["Insights", [["analytics", "▦ Analytics"], ["audit", "◉ Audit Log"], ["aisafety", "🛡️ AI Safety"]]],
+  ["Modules", [["m24h", "24H Doctor"], ["mins", "INSNAPP Medical"], ["mscribe", "Scribe & Billing"], ["mvoice", "Voice Front Desk"]]]
+];
+
+function suiteHTML(active, mainHTML) {
+  let nav = "";
+  for (const [sec, items] of SUITE_NAV) {
+    nav += '<div class="suite-sec">' + esc(sec) + "</div>";
+    for (const [key, label] of items) {
+      nav += '<span class="suite-link' + (key === active ? " active" : "") + '">' + esc(label) + "</span>";
+    }
+  }
+  return '<div class="suite">' +
+    '<aside class="suite-side"><div class="suite-brand"><span class="suite-mark">C</span><span><span class="suite-name">CURAVIA Suite</span><br><span class="suite-tag">CONNECTED CLINIC SUITE</span></span></div>' +
+    nav +
+    '<div class="suite-user">' + esc(CASE.clinic) + '<br>' + esc(CASE.frontDesk.name) + ' · ' + esc(CASE.frontDesk.role) + "</div></aside>" +
+    '<div class="suite-main"><div style="margin-bottom:12px;">' + synthPill() + ' <span class="small muted">Case ' + esc(CASE.id) + " · no real patients, clinics, or staff</span></div>" + mainHTML + "</div></div>";
+}
+
+function suiteHead(title, sub) {
+  return '<div class="eyebrow">CURAVIA Suite · ' + esc(CASE.dateLabel) + '</div><h2 class="page">' + esc(title) + "</h2>" +
+    (sub ? '<p class="muted" style="margin:0 0 12px;font-size:13.5px;">' + sub + "</p>" : "");
+}
+
+function suiteHomeHTML() {
+  const main =
+    suiteHead("Suite Home", "The whole clinic at a glance — every module works from the same record.") +
+    '<div class="stat-grid">' +
+    '<div class="stat-card"><div class="stat-label">Appointments today</div><div class="stat-value">18</div><div class="stat-note">2 providers · 1 telehealth</div></div>' +
+    '<div class="stat-card"><div class="stat-label">Checked in</div><div class="stat-value">6</div><div class="stat-note">1 in visit now</div></div>' +
+    '<div class="stat-card gold"><div class="stat-label">Summaries to sign</div><div class="stat-value">3</div><div class="stat-note">Scribe drafts waiting</div></div>' +
+    '<div class="stat-card gold"><div class="stat-label">Codes to review</div><div class="stat-value">5</div><div class="stat-note">Code Review Queue</div></div>' +
+    "</div>" +
+    '<div class="card" style="margin-bottom:14px;"><h3 style="font-size:15px;margin-bottom:8px;">Today at ' + esc(CASE.clinic) + "</h3>" +
+    '<div class="kv"><span>Next appointment</span><b>' + esc(CASE.visit.time) + " · " + esc(CASE.patient.name) + " — " + esc(CASE.visit.reason) + "</b></div>" +
+    '<div class="kv"><span>Voice Front Desk</span><b>14 calls handled · 0 messages waiting</b></div>' +
+    '<div class="kv"><span>INSNAPP recovery</span><b>1 cancelled slot re-offered and filled</b></div>' +
+    '<div class="kv" style="border-bottom:none;"><span>Claims ready</span><b>4 submitted · 1 in review</b></div></div>' +
+    '<div class="tile-grid">' +
+    '<div class="tile"><div class="t-ico">🩺</div><div class="t-name">24H Doctor</div><div class="t-note">After-hours coverage, escalations to the care team</div></div>' +
+    '<div class="tile"><div class="t-ico">⚡</div><div class="t-name">INSNAPP Medical</div><div class="t-note">Cancelled slots re-offered to waiting patients instantly</div></div>' +
+    '<div class="tile"><div class="t-ico">📝</div><div class="t-name">Scribe &amp; Billing</div><div class="t-note">Visit summaries drafted live; codes reviewed by a human</div></div>' +
+    '<div class="tile"><div class="t-ico">☎️</div><div class="t-name">Voice Front Desk</div><div class="t-note">Answers, books, and confirms in EN/ES, 24/7</div></div>' +
+    "</div>";
+  return suiteHTML("home", main);
+}
+
+function apptRow(time, patient, reason, status, hero) {
+  return '<div class="appt' + (hero ? " hero" : "") + '"><span class="time">' + esc(time) + '</span><span style="flex:1;"><strong>' + esc(patient) + '</strong><br><span class="small muted">' + esc(reason) + '</span></span>' + status + "</div>";
+}
+
+function scheduleHTML(heroStatus) {
+  const heroPill = heroStatus === "confirmed" ? statusPill("info", "Confirmed")
+    : heroStatus === "checkedin" ? statusPill("ok", "Checked in · Exam 3")
+    : heroStatus === "invisit" ? statusPill("gold", "In visit")
+    : statusPill("ok", "Completed");
+  const main =
+    suiteHead("Today's Schedule", "Two providers, one shared board — the front desk, the voice agent, and the app all write to the same schedule.") +
+    '<div class="sched"><div><h3 style="font-size:14.5px;margin-bottom:10px;">' + esc(CASE.clinician.name) + ' · ' + esc(CASE.clinician.role) + "</h3>" +
+    apptRow("9:00 AM", "Marcus Bell (synthetic)", "Annual physical", statusPill("ok", "Completed"), false) +
+    apptRow("9:45 AM", "Rosa Jiménez (synthetic)", "Lab review", statusPill("ok", "Completed"), false) +
+    apptRow(CASE.visit.time, CASE.patient.name, CASE.visit.reason, heroPill, true) +
+    apptRow("11:15 AM", "Tomás Rivera (synthetic)", "Telehealth — medication review", statusPill("wait", "Telehealth"), false) +
+    apptRow("12:00 PM", "— slot held —", "INSNAPP recovery offer sent", statusPill("info", "Offer live"), false) +
+    '</div><div><h3 style="font-size:14.5px;margin-bottom:10px;">' + esc(CASE.clinician2.name) + ' · ' + esc(CASE.clinician2.role) + "</h3>" +
+    apptRow("9:15 AM", "Ana Souza (synthetic)", "New patient intake", statusPill("ok", "Completed"), false) +
+    apptRow("10:00 AM", "Peter Novak (synthetic)", "Follow-up — diabetes", statusPill("ok", "Checked in"), false) +
+    apptRow("11:00 AM", "Lucía Fernández (synthetic)", "Video visit — results", statusPill("wait", "Telehealth"), false) +
+    apptRow("11:45 AM", "Omar Haddad (synthetic)", "Same-day — sore throat", statusPill("gray", "Booked"), false) +
+    "</div></div>";
+  return suiteHTML("home", main);
+}
+
+function patientsHTML() {
+  const main =
+    suiteHead("Patients", "The clinic roster — one record per patient, shared by every module.") +
+    '<div class="card" style="margin-bottom:14px;"><table class="data-table"><thead><tr><th>Patient</th><th>DOB</th><th>Language</th><th>Next visit</th><th>Status</th></tr></thead><tbody>' +
+    "<tr><td><strong>" + esc(CASE.patient.name) + '</strong> <span class="pill pill-gold">synthetic</span></td><td>' + esc(CASE.patient.dob) + "</td><td>" + esc(CASE.patient.lang) + "</td><td>Today " + esc(CASE.visit.time) + "</td><td>" + statusPill("ok", "Active") + "</td></tr>" +
+    "<tr><td>Marcus Bell</td><td>06/02/1979</td><td>EN</td><td>Dec 2, 2026</td><td>" + statusPill("ok", "Active") + "</td></tr>" +
+    "<tr><td>Rosa Jiménez</td><td>11/19/1968</td><td>ES · EN</td><td>Nov 19, 2026</td><td>" + statusPill("ok", "Active") + "</td></tr>" +
+    "<tr><td>Peter Novak</td><td>01/27/1975</td><td>EN</td><td>Today 10:00 AM</td><td>" + statusPill("ok", "Active") + "</td></tr>" +
+    "<tr><td>Ana Souza</td><td>09/08/1991</td><td>PT · EN</td><td>Nov 26, 2026</td><td>" + statusPill("wait", "Intake pending") + "</td></tr>" +
+    "</tbody></table></div>" +
+    '<div class="card"><h3 style="font-size:15px;margin-bottom:6px;">' + esc(CASE.patient.name) + ' — patient detail</h3>' +
+    '<div class="kv"><span>Phone</span><b>' + esc(CASE.patient.phone) + "</b></div>" +
+    '<div class="kv"><span>Medications</span><b>Lisinopril 10 mg daily</b></div>' +
+    '<div class="kv"><span>Allergies</span><b>Penicillin (rash)</b></div>' +
+    '<div class="kv"><span>Consent</span><b>Scribe + telehealth consent on file</b></div>' +
+    '<div class="kv" style="border-bottom:none;"><span>Care team</span><b>' + esc(CASE.clinician.name) + " · Harborview Family Clinic</b></div></div>";
+  return suiteHTML("home", main);
+}
+
+function intakeHTML() {
+  const main =
+    suiteHead("Intake", "What the patient sent from the app this morning — already in the chart when she arrives.") +
+    '<div class="card" style="margin-bottom:14px;"><div class="spread"><h3 style="font-size:15px;">Intake — ' + esc(CASE.patient.name) + '</h3>' + statusPill("ok", "Submitted 9:47 AM") + "</div>" +
+    '<div class="kv"><span>Reason for visit</span><b>' + esc(CASE.visit.reason) + "</b></div>" +
+    '<div class="kv"><span>Current medications</span><b>Lisinopril 10 mg daily</b></div>' +
+    '<div class="kv"><span>Allergies</span><b>Penicillin (rash)</b></div>' +
+    '<div class="kv"><span>Home BP log</span><b>118–128 / 76–84 · two weeks</b></div>' +
+    '<div class="kv" style="border-bottom:none;"><span>Consents</span><b>Treatment · Scribe recording · Telehealth</b></div></div>' +
+    '<div class="card"><h3 style="font-size:15px;margin-bottom:8px;">Voice Front Desk — Dispatcher log</h3>' +
+    '<div class="tl-row"><span class="tl-time">8:02 AM</span><span><strong>Call — confirmation.</strong> Appointment confirmed with the patient (EN, 1 min 12 s). Intake form sent to the app.</span></div>' +
+    '<div class="tl-row"><span class="tl-time">8:15 AM</span><span><strong>Call — new booking.</strong> Same-day request booked for 11:45 AM with Dr. Chen.</span></div>' +
+    '<div class="tl-row"><span class="tl-time">9:03 AM</span><span><strong>Message — reminder.</strong> Tomorrow\'s 9:00 AM patient reminded by SMS + app; confirmed.</span></div>' +
+    '<div class="tl-row"><span class="tl-time">9:47 AM</span><span><strong>Intake received.</strong> ' + esc(CASE.patient.name) + ' — attached to today\'s ' + esc(CASE.visit.time) + ' appointment.</span></div></div>';
+  return suiteHTML("intake", main);
+}
+
+function scribeHTML() {
+  const signed = demoState.signed;
+  const main =
+    suiteHead("Visit Summaries", "The scribe drafts during the visit. Nothing reaches the patient until the clinician signs — the human gate is the product.") +
+    '<div class="card"><div class="spread" style="flex-wrap:wrap;"><h3 style="font-size:15.5px;">' + esc(CASE.visit.type) + " — " + esc(CASE.patient.name) + '</h3>' +
+    (signed ? statusPill("ok", "Signed · Published to patient") : statusPill("wait", "Draft — awaiting clinician")) + "</div>" +
+    '<p class="small muted" style="margin:6px 0 12px;">' + esc(CASE.clinician.name) + " · Today " + esc(CASE.visit.time) + " · " + esc(CASE.visit.room) + " · Scribe draft 11:05 AM</p>" +
+    '<div class="summary-sec"><h4>Chief complaint</h4><p>' + esc(CASE.visit.complaint) + "</p></div>" +
+    '<div class="summary-sec"><h4>History of present illness</h4><p>' + esc(CASE.visit.hpi) + "</p></div>" +
+    '<div class="summary-sec"><h4>Examination</h4><p>' + esc(CASE.visit.exam) + "</p></div>" +
+    '<div class="summary-sec"><h4>Assessment</h4><p>' + esc(CASE.visit.assessment) + "</p></div>" +
+    '<div class="summary-sec"><h4>Plan</h4><p>' + esc(CASE.visit.plan) + "</p></div>" +
+    '<div class="divider"></div>' +
+    (signed
+      ? '<p class="notice notice-teal" style="margin:0;">Signed by ' + esc(CASE.clinician.name) + ' at 11:12 AM and published to the patient app. The signed version is locked; edits create a new version in the audit trail.</p>'
+      : '<div class="row" style="flex-wrap:wrap;"><button class="btn btn-teal" type="button" data-action="sign-summary">Review complete — sign &amp; publish</button><span class="small muted">Signing publishes this summary to ' + esc(CASE.patient.name) + "'s app.</span></div>") +
+    "</div>";
+  return suiteHTML("visits", main);
+}
+
+function billingHTML() {
+  const ok = demoState.codeApproved;
+  const main =
+    suiteHead("Billing — Code Review Queue", "The scribe proposes; a human disposes. No code reaches a claim without a reviewer's approval.") +
+    '<div class="card"><table class="data-table"><thead><tr><th>Patient</th><th>Visit</th><th>CPT</th><th>ICD-10</th><th>Confidence</th><th>Status</th><th></th></tr></thead><tbody>' +
+    "<tr><td><strong>" + esc(CASE.patient.name) + "</strong></td><td>Today " + esc(CASE.visit.time) + "</td><td><strong>" + esc(CASE.visit.cpt) + "</strong><br><span class=\"small muted\">" + esc(CASE.visit.cptLabel) + "</span></td><td><strong>" + esc(CASE.visit.icd) + "</strong><br><span class=\"small muted\">" + esc(CASE.visit.icdLabel) + "</span></td><td>" + esc(CASE.visit.confidence) + "</td><td>" +
+    (ok ? statusPill("ok", "Approved") : statusPill("wait", "Pending review")) + "</td><td>" +
+    (ok ? "" : '<button class="btn btn-teal btn-sm" type="button" data-action="approve-code">Approve</button>') + "</td></tr>" +
+    "<tr><td>Marcus Bell</td><td>Today 9:00 AM</td><td><strong>99396</strong></td><td><strong>Z00.00</strong></td><td>98%</td><td>" + statusPill("ok", "Approved") + "</td><td></td></tr>" +
+    "<tr><td>Rosa Jiménez</td><td>Today 9:45 AM</td><td><strong>99213</strong></td><td><strong>E11.9</strong></td><td>91%</td><td>" + statusPill("wait", "Pending review") + "</td><td></td></tr>" +
+    "<tr><td>Peter Novak</td><td>Today 10:00 AM</td><td><strong>99214</strong></td><td><strong>E11.65</strong></td><td>88%</td><td>" + statusPill("gold", "Needs clarification") + "</td><td></td></tr>" +
+    "</tbody></table>" +
+    (ok
+      ? '<p class="notice notice-teal" style="margin:12px 0 0;">Claim <strong>CURAVIA-CLM-001</strong> — ' + esc(CASE.visit.cpt) + " + " + esc(CASE.visit.icd) + ' — marked <strong>Ready</strong> and queued for submission. The approval, the reviewer, and the timestamp are in the audit trail.</p>'
+      : '<p class="small muted" style="margin:12px 0 0;">Approving the highlighted row releases claim CURAVIA-CLM-001 as Ready. Rejected and clarified codes return to the clinician with the reviewer\'s note.</p>') +
+    "</div>";
+  return suiteHTML("billing", main);
+}
+
+function auditHTML() {
+  const rows = CASE.auditTrail.map(function (r) {
+    return '<div class="tl-row"><span class="tl-time">' + esc(r[0]) + "</span><span>" + esc(r[1]) + "</span></div>";
+  }).join("");
+  const main =
+    suiteHead("Audit Log", "Every step of the day, in order — the same trail a compliance review would read.") +
+    '<div class="card"><div class="timeline">' + rows + "</div>" +
+    '<div class="divider"></div><div class="row" style="flex-wrap:wrap;"><button class="btn btn-deep" type="button" data-action="export-audit">Export audit trail</button><span class="small muted">Case ' + esc(CASE.id) + ' · exports are logged here too.</span></div></div>';
+  return suiteHTML("audit", main);
+}
+
+/* ================= THE PATIENT APP (mobile) ================= */
+const PATIENT_TABS = [["home", "⌂", "Home"], ["appts", "📅", "Appointments"], ["msgs", "✉", "Messages"], ["visits", "▥", "Visits"], ["more", "☰", "More"]];
+
+function tabbarHTML(active) {
+  return '<div class="tabbar">' + PATIENT_TABS.map(function (t) {
+    return '<button type="button" class="' + (t[0] === active ? "active" : "") + '"><span class="tab-ico">' + t[1] + "</span>" + t[2] + "</button>";
+  }).join("") + "</div>";
+}
+
+function phoneHTML(label, bodyHTML, tabs) {
+  return '<div><div class="surface-note">' + esc(label) + '</div><div class="phone"><div class="phone-screen"><div class="phone-notch"></div><div class="phone-body">' +
+    bodyHTML + "</div>" + (tabs || "") + "</div></div></div>";
+}
+
+function chatHTML(upto) {
+  return CASE.messages.slice(0, upto).map(function (m) {
+    const mine = m.from === "patient";
+    return '<div style="display:flex;' + (mine ? "justify-content:flex-end;" : "") + 'margin-bottom:10px;"><div class="chat-msg" style="' + (mine ? "background:var(--accent-soft);" : "") + '"><p>' + esc(m.text) + '</p><div class="who">' + esc(m.who) + "</div></div></div>";
+  }).join("");
+}
+
+function patientHTML(stage) {
+  /* stage: booked | intake | checkedin | summary */
+  let body = '<div class="spread"><h2 style="font-size:22px;">Good morning, Elena</h2>' + synthPill() + "</div>";
+  if (stage === "booked") {
+    body += '<div class="card stack" style="gap:8px;margin-top:14px;"><div class="eyebrow" style="margin:0;">Today · ' + esc(CASE.visit.time) + "</div>" +
+      "<div style=\"font-weight:800;font-size:17px;\">" + esc(CASE.clinician.name) + "</div>" +
+      '<p class="muted" style="margin:0;font-size:13.5px;">' + esc(CASE.visit.type) + " · " + esc(CASE.visit.reason) + "<br>" + esc(CASE.clinic) + "</p>" +
+      statusPill("info", "Confirmed by the front desk") +
+      '<button class="btn btn-teal btn-wide" type="button">Complete intake form</button>' +
+      '<p class="small muted" style="margin:0;">The clinic sent your intake form — two minutes, and your visit starts on time.</p></div>' +
+      '<div style="margin-top:16px;">' + chatHTML(1) + "</div>";
+    return phoneHTML("Patient app — phone", body, tabbarHTML("appts"));
+  }
+  if (stage === "intake") {
+    body += '<div class="card stack" style="gap:8px;margin-top:14px;"><div class="eyebrow" style="margin:0;">Intake</div>' +
+      '<div style="font-weight:800;font-size:17px;">Intake submitted ✓</div>' +
+      '<p class="muted" style="margin:0;font-size:13.5px;">Medications, allergies, and consents are in your chart. The front desk has everything for your ' + esc(CASE.visit.time) + " visit.</p>" +
+      statusPill("ok", "Received by the clinic") + "</div>" +
+      '<div style="margin-top:16px;">' + chatHTML(2) + "</div>";
+    return phoneHTML("Patient app — phone", body, tabbarHTML("appts"));
+  }
+  if (stage === "checkedin") {
+    body += '<div class="card stack" style="gap:8px;margin-top:14px;"><div class="eyebrow" style="margin:0;">Checked in · 10:22 AM</div>' +
+      '<div style="font-weight:800;font-size:17px;">You\'re checked in</div>' +
+      '<p class="muted" style="margin:0;font-size:13.5px;">' + esc(CASE.visit.room) + " · " + esc(CASE.clinician.name) + " will see you shortly. Your intake is already in your chart.</p>" +
+      statusPill("ok", "Checked in") + "</div>" +
+      '<div class="card stack" style="gap:6px;margin-top:14px;"><div class="eyebrow" style="margin:0;">While you wait</div><p class="muted" style="margin:0;font-size:13.5px;">Home BP log synced · 14 readings. Your last visit summary is under <strong>Visits</strong>.</p></div>';
+    return phoneHTML("Patient app — phone", body, tabbarHTML("home"));
+  }
+  /* summary */
+  body += '<div class="card stack" style="gap:8px;margin-top:14px;"><div class="eyebrow" style="margin:0;">Visits · Today</div>' +
+    '<div style="font-weight:800;font-size:17px;">Your visit summary is ready</div>' +
+    '<p class="muted" style="margin:0;font-size:13.5px;"><strong>Assessment:</strong> ' + esc(CASE.visit.assessment) + '</p>' +
+    '<p class="muted" style="margin:0;font-size:13.5px;"><strong>Plan:</strong> ' + esc(CASE.visit.plan) + "</p>" +
+    statusPill("ok", "Signed by " + CASE.clinician.name) + "</div>" +
+    '<div class="card stack" style="gap:6px;margin-top:14px;"><div class="eyebrow" style="margin:0;">Billing</div><p class="muted" style="margin:0;font-size:13.5px;">Visit charge reviewed and ready — statement CURAVIA-CLM-001 is in <strong>Billing</strong>. No action needed today.</p></div>' +
+    '<div style="margin-top:16px;">' + chatHTML(3) + "</div>";
+  return phoneHTML("Patient app — phone", body, tabbarHTML("visits"));
+}
+
+/* ================= COMBINED FLOW — one day, two screens ================= */
+const FLOW_BEATS = [
+  { title: "The patient books in the app", text: "Elena opens the patient app and books today at 10:30 AM with Dr. Ortiz — a follow-up blood-pressure check. The request lands on the Suite's schedule as pending.", suite: "request", phone: "booked", hits: ["suite", "phone"], notes: { suite: "Schedule: the request appears, pending confirmation.", phone: "Appointments: today 10:30 AM, Dr. Ortiz." } },
+  { title: "The Voice Front Desk confirms", text: "CURAVIA's voice front desk calls to confirm (EN), and sends the intake form to the app. No staff touched a phone.", suite: "confirmed", phone: "booked", hits: ["suite", "phone"], notes: { suite: "Dispatcher log: confirmation call + intake sent.", phone: "A message from the clinic, and the intake form waiting." } },
+  { title: "Intake is completed before arrival", text: "Elena submits medications, allergies, her home BP log, and consents from her phone. The chart is ready before she walks in.", suite: "intake", phone: "intake", hits: ["suite", "phone"], notes: { suite: "Intake: submitted 9:47 AM, attached to the appointment.", phone: "Intake submitted ✓ — received by the clinic." } },
+  { title: "Check-in", text: "At 10:22 AM the front desk checks her in; the schedule flips to Checked in — Exam 3, and her app says the same.", suite: "checkedin", phone: "checkedin", hits: ["suite", "phone"], notes: { suite: "Schedule: Checked in · Exam 3.", phone: "You're checked in — Exam 3." } },
+  { title: "The visit — the scribe drafts", text: "With consent on file, the scribe drafts the visit summary as Dr. Ortiz works: complaint, history, exam, assessment, plan.", suite: "scribe", phone: "checkedin", hits: ["suite"], notes: { suite: "Visit Summaries: the draft is forming.", phone: "The visit is under way." } },
+  { title: "The clinician signs", text: "Dr. Ortiz reviews the draft, edits, and signs at 11:12 AM. The signed summary publishes straight to Elena's app — the human gate, exactly as the product runs it.", suite: "signed", phone: "summary", hits: ["suite", "phone"], notes: { suite: "Visit Summaries: signed · published.", phone: "Your visit summary is ready." } },
+  { title: "Billing review — a human approves the codes", text: "The scribe proposes CPT 99213 + ICD-10 I10 at 96% confidence. A billing reviewer approves; the claim is marked Ready. Nothing bills itself.", suite: "billed", phone: "summary", hits: ["suite"], notes: { suite: "Code Review Queue: approved — claim Ready.", phone: "Billing: the reviewed statement is in the app." } },
+  { title: "The loop closes", text: "Every step of the day sits in the audit log, in order — booking, intake, visit, signature, codes, notification. One record, every surface, no re-typing.", suite: "audit", phone: "summary", hits: ["suite", "phone"], notes: { suite: "Audit Log: the full day, exportable.", phone: "Summary, plan, and follow-up — in her pocket." } }
+];
+const FLOW_PANE_LABELS = { suite: "Web — CURAVIA Suite", phone: "Mobile — Patient app" };
+const FLOW_ZOOM_STEPS = [60, 80, 100, 125, 150, 175, 200];
+
+function flowSuiteHTML(beat) {
+  switch (beat.suite) {
+    case "request":
+      return suiteHTML("home", suiteHead("Today's Schedule", "") + apptRow(CASE.visit.time, CASE.patient.name, CASE.visit.reason, statusPill("wait", "Request pending"), true) + apptRow("9:00 AM", "Marcus Bell (synthetic)", "Annual physical", statusPill("ok", "Completed"), false));
+    case "confirmed":
+      return suiteHTML("dispatcher", suiteHead("Dispatcher — Voice Front Desk", "") + '<div class="card"><div class="tl-row"><span class="tl-time">8:02 AM</span><span><strong>Call — confirmation.</strong> ' + esc(CASE.patient.name) + ', today ' + esc(CASE.visit.time) + ' (EN, 1 min 12 s). Intake form sent to the app.</span></div><div class="tl-row"><span class="tl-time">8:02 AM</span><span>Schedule: appointment flipped to <strong>Confirmed</strong>.</span></div></div>');
+    case "intake":
+      return intakeHTML();
+    case "checkedin":
+      return scheduleHTML("checkedin");
+    case "scribe":
+      return suiteHTML("visits", suiteHead("Visit Summaries", "") + '<div class="card"><div class="spread"><h3 style="font-size:15.5px;">' + esc(CASE.visit.type) + " — " + esc(CASE.patient.name) + "</h3>" + statusPill("gold", "Scribe drafting…") + '</div><div class="summary-sec" style="margin-top:12px;"><h4>Chief complaint</h4><p>' + esc(CASE.visit.complaint) + '</p></div><div class="summary-sec"><h4>Assessment</h4><p>' + esc(CASE.visit.assessment) + "</p></div></div>");
+    case "signed":
+      return suiteHTML("visits", suiteHead("Visit Summaries", "") + '<div class="card"><div class="spread"><h3 style="font-size:15.5px;">' + esc(CASE.visit.type) + " — " + esc(CASE.patient.name) + "</h3>" + statusPill("ok", "Signed · Published to patient") + '</div><p class="notice notice-teal" style="margin:12px 0 0;">Signed by ' + esc(CASE.clinician.name) + " at 11:12 AM and published to the patient app.</p></div>");
+    case "billed":
+      return suiteHTML("billing", suiteHead("Billing — Code Review Queue", "") + '<div class="card"><table class="data-table"><thead><tr><th>Patient</th><th>CPT</th><th>ICD-10</th><th>Confidence</th><th>Status</th></tr></thead><tbody><tr><td><strong>' + esc(CASE.patient.name) + "</strong></td><td><strong>" + esc(CASE.visit.cpt) + "</strong></td><td><strong>" + esc(CASE.visit.icd) + "</strong></td><td>" + esc(CASE.visit.confidence) + "</td><td>" + statusPill("ok", "Approved — claim Ready") + "</td></tr></tbody></table></div>");
+    default:
+      return auditHTML();
+  }
+}
+
+function flowDefaultView() { return { beat: 0, playing: false, focus: null, zoom: { suite: 100, phone: 100 } }; }
+function flowZoomStep(view, pane, dir) {
+  const cur = view.zoom[pane] || 100;
+  let i = FLOW_ZOOM_STEPS.indexOf(cur);
+  if (i < 0) i = 2;
+  i = Math.max(0, Math.min(FLOW_ZOOM_STEPS.length - 1, i + dir));
+  return FLOW_ZOOM_STEPS[i];
+}
+function flowEffectiveZoom(view, pane) {
+  if (view.focus && view.focus !== pane) return 62;
+  return view.zoom[pane] || 100;
+}
+
+function flowPaneHTML(view, pane, innerHTML, tag) {
+  const focused = view.focus === pane;
+  const mini = view.focus && view.focus !== pane;
+  const z = flowEffectiveZoom(view, pane);
+  return '<div class="flow-col flow-col-' + pane + (focused ? " is-focus" : "") + (mini ? " is-mini" : "") + '">' +
+    '<div class="flow-pane-head"><button type="button" class="flow-pane-label" data-flow-focus="' + pane + '" aria-label="Enlarge the ' + esc(FLOW_PANE_LABELS[pane]) + ' screen">' + esc(FLOW_PANE_LABELS[pane]) + " ⤢</button>" +
+    '<span class="flow-zoomctl"><button type="button" data-flow-zoom="' + pane + ':-1" aria-label="Zoom out">−</button><button type="button" data-flow-zoom="' + pane + ':0" aria-label="Reset zoom">' + z + '%</button><button type="button" data-flow-zoom="' + pane + ':1" aria-label="Zoom in">+</button></span></div>' +
+    '<div class="flow-surface' + (tag.hit ? " hit" : "") + '" style="zoom:' + (z / 100) + ';">' + innerHTML + "</div>" +
+    '<div class="flow-tag' + (tag.hit ? " hit" : "") + '">' + esc(tag.text) + "</div></div>";
+}
+
+function flowHTML(view) {
+  const beat = FLOW_BEATS[view.beat];
+  const dots = FLOW_BEATS.map(function (b, i) {
+    return '<button type="button" class="flow-dot' + (i === view.beat ? " now" : i < view.beat ? " done" : "") + '" data-flow-beat="' + i + '" aria-label="Beat ' + (i + 1) + ": " + esc(b.title) + '">' + (i + 1) + "</button>";
+  }).join("");
+  const suiteTag = { hit: beat.hits.includes("suite"), text: beat.notes.suite };
+  const phoneTag = { hit: beat.hits.includes("phone"), text: beat.notes.phone };
+  return '<div class="flow-wrap"><div class="walk-card">' +
+    '<div class="flow-bar"><div class="flow-bar-main"><div class="eyebrow" style="margin:0;">Step 1 · The combined flow — one day, two screens</div>' +
+    '<div class="flow-title">Beat ' + (view.beat + 1) + " of " + FLOW_BEATS.length + " — " + esc(beat.title) + "</div>" +
+    '<p class="flow-text">' + esc(beat.text) + "</p>" +
+    '<div class="flow-dots">' + dots + "</div></div>" +
+    '<div class="flow-controls"><button class="btn btn-ghost btn-sm" type="button" id="flow-back">&larr; Beat</button>' +
+    '<button class="btn btn-teal btn-sm" type="button" id="flow-next">Beat &rarr;</button>' +
+    '<button class="btn btn-ghost btn-sm" type="button" id="flow-auto" aria-pressed="' + (view.playing ? "true" : "false") + '">' + (view.playing ? "⏸ Pause" : "▶ Play") + "</button>" +
+    (view.focus ? '<button class="btn btn-ghost btn-sm" type="button" id="flow-unfocus">Back to both screens</button>' : "") +
+    "</div></div>" +
+    '<p class="flow-hint">It plays on its own — or step it beat by beat. Click a screen\'s label or ⤢ to enlarge it; + / − zoom that screen and the % resets it. Zooming never disturbs the flow.</p>' +
+    '<div class="flow-grid' + (view.focus ? " has-focus" : "") + '">' +
+    flowPaneHTML(view, "suite", flowSuiteHTML(beat), suiteTag) +
+    flowPaneHTML(view, "phone", patientHTML(beat.phone), phoneTag) +
+    "</div></div></div>";
+}
+
+/* ================= THE WALKTHROUGH — 9 steps, one clinic day ================= */
+const STEPS = [
+  { id: "flow", title: "One clinic day, two screens", caption: "One clinic day, three surfaces, one timeline — the whole product at a glance, and the first thing a signed-in reviewer lands on. The patient books in the app, the Suite's schedule lights up, the voice front desk confirms, the scribe drafts, the clinician signs, billing approves — the same record on both screens the whole way. It plays on its own — pause it, step it beat by beat, zoom or enlarge any screen. The steps after this one tour each surface on its own.", render: function () { return flowHTML(flowView); } },
+  { id: "suite-home", title: "CURAVIA Suite — Home", caption: "The staff home: today's numbers, the module tiles — 24H Doctor, INSNAPP Medical, Scribe & Billing, Voice Front Desk — and everything that needs a human today: 3 summaries to sign, 5 codes to review.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + suiteHomeHTML(); } },
+  { id: "schedule", title: "Today's Schedule", caption: "The shared board both providers work from. Elena's 10:30 is highlighted — booked in the app, confirmed by the voice front desk, intake already attached. The 12:00 slot shows INSNAPP at work: a cancelled slot re-offered to the waitlist.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + scheduleHTML("checkedin"); } },
+  { id: "patients", title: "Patients", caption: "One record per patient, shared by every module — contact, medications, allergies, consents, care team. Elena's detail card is the same one the scribe, billing, and the front desk all read.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + patientsHTML(); } },
+  { id: "intake", title: "Intake & the Voice Front Desk", caption: "What arrived before the patient did: her intake from the app, and the Dispatcher log of the voice front desk's morning — confirmations, a new booking, reminders — in English and Spanish.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + intakeHTML(); } },
+  { id: "scribe", title: "Visit Summaries — the Scribe", caption: "The scribe's draft of today's visit, in the product's own sections. Try the gate: sign & publish it — the button is live, and the step after next shows what lands in Elena's app. Nothing publishes without the clinician.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + scribeHTML(); } },
+  { id: "billing", title: "Billing — Code Review Queue", caption: "The Code Review Queue exactly as billing works it: proposed CPT + ICD-10 with the scribe's confidence, and a human decision on every row. Approve Elena's row — the claim flips to Ready, and the approval lands in the audit trail.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + billingHTML(); } },
+  { id: "patient-app", title: "The Patient App", caption: "Elena's phone at the end of the day: the signed summary, the plan, the follow-up, the reviewed statement, and the clinic's message — the same record the Suite holds, written for the patient.", render: function () { return patientHTML("summary"); } },
+  { id: "audit", title: "Activity & the Audit Trail", caption: "The day, in order, from the Audit Log — and this demo is monitored the same way: your sign-in, the steps you view, and the approvals you click are reported to the IEC Office. Export the trail to close the tour.", render: function () { return '<div class="surface-note">Web — CURAVIA Suite</div>' + auditHTML(); } }
+];
+const JUMPS = [
+  ["Flow", 0], ["Suite Home", 1], ["Schedule", 2], ["Patients", 3], ["Intake", 4], ["Scribe", 5], ["Billing", 6], ["Patient App", 7], ["Audit", 8]
+];
+
+let flowView = flowDefaultView();
+
+function renderStep(i) { return STEPS[i].render(); }
+
+/* Exposed for the node smoke test; harmless in the browser. */
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { CASE, STEPS, JUMPS, renderStep, flowHTML, FLOW_BEATS, FLOW_PANE_LABELS, FLOW_ZOOM_STEPS, flowDefaultView, flowZoomStep, flowEffectiveZoom, suiteHomeHTML, scheduleHTML, patientsHTML, intakeHTML, scribeHTML, billingHTML, patientHTML, auditHTML, sessionAllowed, demoSession, demoSignOut, DemoStore, demoActivity, demoState };
+}
+</script>
+
+<script>
+"use strict";
+/* ===== Demo shell wiring (browser only) ===== */
+if (typeof document !== "undefined") {
+  const $ = id => document.getElementById(id);
+  let current = 0;
+  let autoTimer = null;
+  let flowTimer = null;
+  let stageZoom = 100;
+  const ZOOM_STEPS = [60, 80, 100, 125, 150, 175, 200];
+
+  function showLock() {
+    $("lock-screen").hidden = false;
+    $("demo-shell").hidden = true;
+  }
+
+  function render() {
+    const s = STEPS[current];
+    $("walk-title").textContent = "Step " + (current + 1) + " of " + STEPS.length + " — " + s.title;
+    $("stage-caption").textContent = s.caption;
+    $("walk-dots").innerHTML = STEPS.map(function (st, i) {
+      return '<button type="button" class="walk-dot' + (i === current ? " now" : i < current ? " done" : "") + '" data-step="' + i + '" aria-label="Step ' + (i + 1) + ": " + st.title + '">' + (i + 1) + "</button>";
+    }).join("");
+    $("jump-row").innerHTML = JUMPS.map(function (j) {
+      return '<button type="button" class="jump-btn" data-step="' + j[1] + '">' + j[0] + "</button>";
+    }).join("");
+    $("stage-body").innerHTML = renderStep(current);
+    $("stage-body").style.zoom = stageZoom / 100;
+    $("stage-zoom-pct").textContent = stageZoom + "%";
+    $("walk-back").disabled = current === 0;
+    $("walk-next").disabled = current === STEPS.length - 1;
+    /* Activity monitoring: a step view is an event. */
+    demoActivity("step_view", s.id);
+    wireFlow();
+  }
+
+  function go(i) {
+    current = Math.max(0, Math.min(STEPS.length - 1, i));
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function stopAuto() {
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    const b = $("walk-auto");
+    if (b) { b.setAttribute("aria-pressed", "false"); b.innerHTML = "▶ Auto-play"; }
+  }
+  function stopFlow() {
+    if (flowTimer) { clearInterval(flowTimer); flowTimer = null; }
+    flowView.playing = false;
+  }
+
+  function wireFlow() {
+    stopFlow();
+    if (current !== 0) return;
+    const back = $("flow-back"), next = $("flow-next"), auto = $("flow-auto"), unfocus = $("flow-unfocus");
+    if (back) back.addEventListener("click", () => { flowView.beat = Math.max(0, flowView.beat - 1); render(); });
+    if (next) next.addEventListener("click", () => { flowView.beat = Math.min(FLOW_BEATS.length - 1, flowView.beat + 1); render(); });
+    if (unfocus) unfocus.addEventListener("click", () => { flowView.focus = null; render(); });
+    if (auto) auto.addEventListener("click", () => {
+      flowView.playing = !flowView.playing;
+      render();
+    });
+    document.querySelectorAll("[data-flow-beat]").forEach(b => b.addEventListener("click", () => { flowView.beat = parseInt(b.getAttribute("data-flow-beat"), 10); render(); }));
+    document.querySelectorAll("[data-flow-focus]").forEach(b => b.addEventListener("click", () => {
+      const p = b.getAttribute("data-flow-focus");
+      flowView.focus = flowView.focus === p ? null : p;
+      render();
+    }));
+    document.querySelectorAll("[data-flow-zoom]").forEach(b => b.addEventListener("click", () => {
+      const parts = b.getAttribute("data-flow-zoom").split(":");
+      const dir = parseInt(parts[1], 10);
+      if (dir === 0) flowView.zoom[parts[0]] = 100;
+      else flowView.zoom[parts[0]] = flowZoomStep(flowView, parts[0], dir);
+      render();
+    }));
+    if (flowView.playing) {
+      flowTimer = setInterval(() => {
+        if (flowView.beat >= FLOW_BEATS.length - 1) { stopFlow(); render(); return; }
+        flowView.beat += 1;
+        render();
+      }, 3400);
+    }
+  }
+
+  document.addEventListener("click", e => {
+    const dot = e.target.closest("[data-step]");
+    if (dot) { stopAuto(); go(parseInt(dot.getAttribute("data-step"), 10)); return; }
+    const act = e.target.closest("[data-action]");
+    if (act) {
+      const id = act.getAttribute("data-action");
+      demoActivity("action", id);
+      if (id === "sign-summary") { demoState.signed = true; render(); }
+      if (id === "approve-code") { demoState.codeApproved = true; render(); }
+      if (id === "export-audit") { act.textContent = "Audit trail exported ✓ (demo)"; act.disabled = true; }
+    }
+  });
+
+  $("walk-back").addEventListener("click", () => { stopAuto(); go(current - 1); });
+  $("walk-next").addEventListener("click", () => { stopAuto(); go(current + 1); });
+  $("walk-auto").addEventListener("click", () => {
+    if (autoTimer) { stopAuto(); return; }
+    $("walk-auto").setAttribute("aria-pressed", "true");
+    $("walk-auto").innerHTML = "⏸ Pause";
+    autoTimer = setInterval(() => {
+      if (current >= STEPS.length - 1) { stopAuto(); return; }
+      go(current + 1);
+    }, 6000);
+  });
+  $("stage-zoom-out").addEventListener("click", () => {
+    let i = ZOOM_STEPS.indexOf(stageZoom); if (i < 0) i = 2;
+    stageZoom = ZOOM_STEPS[Math.max(0, i - 1)]; render();
+  });
+  $("stage-zoom-in").addEventListener("click", () => {
+    let i = ZOOM_STEPS.indexOf(stageZoom); if (i < 0) i = 2;
+    stageZoom = ZOOM_STEPS[Math.min(ZOOM_STEPS.length - 1, i + 1)]; render();
+  });
+  $("stage-zoom-reset").addEventListener("click", () => { stageZoom = 100; render(); });
+  $("sign-out-btn").addEventListener("click", () => {
+    demoSignOut();
+    window.location.href = "/demo";
+  });
+
+  /* Session gate: the app opens only for a live portal session. */
+  const session = demoSession();
+  if (!sessionAllowed(session)) {
+    showLock();
+  } else {
+    $("lock-screen").hidden = true;
+    $("demo-shell").hidden = false;
+    $("top-user").textContent = session.name + " · demo access";
+    render();
+  }
+}
+</script>
+</body>
+</html>

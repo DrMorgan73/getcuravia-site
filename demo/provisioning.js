@@ -81,13 +81,6 @@ const DEMO_PROVISIONED_ACCOUNTS = [
     token: "1f0b82606f398096a3c5f0c2d3f6734ca6f6ec8dd410ab4c",
     status: "invited",
     issuedAt: "2026-11-07T15:57:52-05:00"
-  },
-  {
-    email: "claude-nda-test@example.com",
-    name: "Claude Synthetic Signer",
-    token: "b629d4c5faebc9c4fd22bb06a157ec1e0cd9757859574b35",
-    status: "invited",
-    issuedAt: "2026-11-08T16:09:30-05:00"
   }
 ];
 

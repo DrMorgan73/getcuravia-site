@@ -64,16 +64,16 @@ const DEMO_PROVISIONED_ACCOUNTS = [
   {
     email: "mohdology@gmail.com",
     name: "Mohamed Ismael",
-    token: "129ffe80d2611eecd5f26eb9542a59553d3379904f64682d",
-    status: "paused",
-    issuedAt: "2026-11-05T07:44:34-05:00"
+    token: "d59c394085fb0585ed5ffc921d34308a8abd438b0d22bd4c",
+    status: "invited",
+    issuedAt: "2026-11-08T15:14:14-05:00"
   },
   {
     email: "esteadysteps@gmail.com",
     name: "Mohamed Ismail",
-    token: "98be1c733c34c5e595d6f9f94dc2fa566c8939ceb6dccb4f",
+    token: "c3f67cb6193165535770591394e14db81c8851141f8ed10a",
     status: "invited",
-    issuedAt: "2026-11-05T07:50:05-05:00"
+    issuedAt: "2026-11-08T15:14:14-05:00"
   },
   {
     email: "zeeshan@zeeqai.com",

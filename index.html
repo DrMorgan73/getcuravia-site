@@ -561,6 +561,12 @@
     </section>
 
     <section class="legal-section" id="signing" data-page-section data-page-label="Mutual NDA">
+      <div style="border:1.5px solid #034D56;border-radius:14px;padding:22px 24px;background:#EFF7F7;margin-bottom:22px">
+        <p style="font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem;color:#034D56;margin:0 0 6px">Mutual NDA — one agreement for all IEC assets</p>
+        <h2 style="margin:0 0 8px">IEC now signs one universal NDA.</h2>
+        <p style="margin:0">International Empire Consultants, Inc. — owner of CURAVIA and every other IEC asset — uses a single mutual NDA, signed on IEC's central signing page. One signing covers CURAVIA and all IEC assets, and it creates your CURAVIA Demo Portal access exactly as before.</p>
+        <p style="margin:14px 0 0"><a href="https://iecincglobal.com/nda.html?origin=curavia" style="display:inline-block;background:#034D56;color:#fff;font-weight:700;padding:12px 20px;border-radius:10px;text-decoration:none">Continue to the IEC NDA signing page →</a></p>
+      </div>
       <div class="shell">
         <div class="legal-intro">
           <div><div class="section-kicker">Guided NDA review</div><h2>Understand each section before you sign.</h2></div>
@@ -1515,5 +1521,16 @@
       updateFromScroll();
     }());
   </script>
+<script>
+  // IEC's ONE universal NDA (2026-11-08): the CURAVIA signing flow moved
+  // to IEC's central signing page. Any arrival at #signing — direct link
+  // or in-page anchor — continues there with the CURAVIA origin recorded.
+  (function () {
+    var target = "https://iecincglobal.com/nda.html?origin=curavia";
+    function go() { if (window.location.hash === "#signing") window.location.replace(target); }
+    window.addEventListener("hashchange", go);
+    go();
+  })();
+</script>
 </body>
 </html>

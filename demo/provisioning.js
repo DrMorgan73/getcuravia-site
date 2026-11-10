@@ -81,6 +81,13 @@ const DEMO_PROVISIONED_ACCOUNTS = [
     token: "1f0b82606f398096a3c5f0c2d3f6734ca6f6ec8dd410ab4c",
     status: "invited",
     issuedAt: "2026-11-07T15:57:52-05:00"
+  },
+  {
+    email: "drmohdmorgan+canary@gmail.com",
+    name: "Canary Test",
+    token: "b9e448a7ad5fc09be4f3f237dfb58b690ee6a3193a29d238",
+    status: "invited",
+    issuedAt: "2026-11-10T13:34:09-05:00"
   }
 ];
 

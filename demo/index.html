@@ -347,9 +347,74 @@ function demoSignOut() {
   DemoStore.remove(SESSION_KEY);
 }
 
+/* =====================================================================
+   IEC Suite handoff (DrMorgan's order, 2026-11-17): arriving at this
+   portal FROM the IEC Suite Demo Launcher (iecincglobal.com/desk/
+   demos.html) with a valid handoff token takes DrMorgan straight
+   into the demo — no landing page, no sign-in screen. The launcher's
+   /api/demo-handoff endpoint mints a short-lived ECDSA-signed token
+   for his account only, after verifying his Desk session. This portal
+   verifies the signature against the public key below (the private
+   key lives only in the Suite's Vercel env), checks the audience,
+   the expiry, and that his account is provisioned here and not
+   paused/revoked, then establishes his demo session. Any other
+   arrival — no token, an invalid or expired token, another user —
+   follows the normal gate exactly as before.
+   ===================================================================== */
+const HANDOFF_OWNER_EMAIL = "drmohdmorgan@gmail.com";
+const HANDOFF_AUD = "curavia";
+const HANDOFF_PUBLIC_KEY_JWK = {"kty":"EC","crv":"P-256","x":"NsEwoj6wseX2DFfwFj2tI2U3Rir5IZ08OCacWmxIhmM","y":"zp9ZJjWOfB0rVZaeMDaqSR5qm_MDqu2tJK-nPhW7Krg"};
+
+function b64urlToBytes(s) {
+  const b64 = String(s).replace(/-/g, "+").replace(/_/g, "/");
+  const pad = b64.length % 4 ? "=".repeat(4 - (b64.length % 4)) : "";
+  const bin = atob(b64 + pad);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+async function verifyHandoffToken(token) {
+  try {
+    const parts = String(token || "").split(".");
+    if (parts.length !== 3 || parts[0] !== "v1") return null;
+    if (typeof crypto === "undefined" || !crypto.subtle) return null;
+    const key = await crypto.subtle.importKey("jwk", HANDOFF_PUBLIC_KEY_JWK, { name: "ECDSA", namedCurve: "P-256" }, false, ["verify"]);
+    const signed = new TextEncoder().encode(parts[0] + "." + parts[1]);
+    const okSig = await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, key, b64urlToBytes(parts[2]), signed);
+    if (!okSig) return null;
+    const payload = JSON.parse(new TextDecoder().decode(b64urlToBytes(parts[1])));
+    const now = Math.floor(Date.now() / 1000);
+    if (!payload || payload.v !== 1) return null;
+    if (payload.aud !== HANDOFF_AUD) return null;
+    if (normalizeEmail(payload.email) !== HANDOFF_OWNER_EMAIL) return null;
+    if (typeof payload.exp !== "number" || payload.exp < now) return null;
+    if (typeof payload.iat !== "number" || payload.iat > now + 60) return null;
+    return payload;
+  } catch (e) { return null; }
+}
+
+/* On a valid handoff: establish the owner's demo session (his Suite
+   sign-in is the identity proof) and report the access exactly like a
+   login. Returns true when a session was established. Paused/revoked
+   still block — administrative control wins over the handoff. */
+async function handleSuiteHandoff(token) {
+  const payload = await verifyHandoffToken(token);
+  if (!payload) return false;
+  const email = normalizeEmail(payload.email);
+  const provisioned = findProvisioned(email);
+  if (!provisioned) return false;
+  const status = effectiveStatus(email);
+  if (status === "paused" || status === "revoked") return false;
+  const session = { name: provisioned.name || "", email };
+  DemoStore.set(SESSION_KEY, session);
+  try { if (typeof demoActivity === "function") demoActivity("login", "suite_handoff", session.email); } catch (e) { /* monitoring never breaks the demo */ }
+  return true;
+}
+
 /* Exposed for the node smoke test; harmless in the browser. */
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { DEMO_SEED_ACCOUNTS, DemoStore, findProvisioned, effectiveStatus, loadActivations, demoLogin, demoSession, demoSignOut, findAccount, demoActivity };
+  module.exports = { DEMO_SEED_ACCOUNTS, DemoStore, findProvisioned, effectiveStatus, loadActivations, demoLogin, demoSession, demoSignOut, findAccount, demoActivity , verifyHandoffToken, handleSuiteHandoff };
 }
 </script>
 
@@ -364,6 +429,22 @@ if (typeof module !== "undefined" && module.exports) {
    /demo (no trailing slash, via rewrite), where a relative "app/"
    resolves to /app — a 404 (found in InSnap live review, 2026-11-04). */
 const DEMO_APP_URL = "/demo/app/";
+
+/* ===== IEC Suite handoff (2026-11-17) =====
+   A valid ?handoff= token from the Suite launcher sends the owner
+   straight into the demo. Anything else leaves this page exactly as
+   it was: the token is stripped and the normal gate runs. */
+if (typeof document !== "undefined" && DEMO_APP_URL) {
+  const handoffToken = new URLSearchParams(window.location.search).get("handoff");
+  if (handoffToken) {
+    document.body.style.visibility = "hidden";
+    handleSuiteHandoff(handoffToken).then(okHandoff => {
+      if (okHandoff) { window.location.replace(DEMO_APP_URL); return; }
+      document.body.style.visibility = "";
+      try { history.replaceState(null, "", window.location.pathname); } catch (e) { /* noop */ }
+    });
+  }
+}
 
 /* ===== View router + forms (browser only) ===== */
 if (typeof document !== "undefined") {

@@ -95,6 +95,13 @@ const DEMO_PROVISIONED_ACCOUNTS = [
     token: "61495cde3b1170731168d0a592c0cef5fb8b380a2c6ff0e1",
     status: "invited",
     issuedAt: "2026-11-12T14:18:36-05:00"
+  },
+  {
+    email: "drmohdmorgan+cnda-curavia-test@gmail.com",
+    name: "Synthetic Matched Test",
+    token: "a332b0e6251bda8378854ad344ae7c0ed5ff35123c166b8d",
+    status: "invited",
+    issuedAt: "2026-11-21T07:50:38-05:00"
   }
 ];
 

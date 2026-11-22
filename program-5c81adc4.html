@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="robots" content="noindex, nofollow" />
 <meta name="color-scheme" content="light dark" />
+<meta name="robots" content="noindex, nofollow" />
 <link rel="icon" href="data:," />
-<title>CURAVIA Program for Roberto</title>
+<title>CURAVIA CURA6 — Programs by Subspecialty, for Roberto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -78,6 +78,59 @@ p{margin:.5em 0}
 .trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .trust-pill{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:.84rem;font-weight:600}
 .trust-pill svg{width:16px;height:16px;color:var(--teal2)}
+
+/* CURA6 — umbrella name, by subspecialty */
+.bridge-sec{margin:26px 0 4px;background:var(--teal-dark);color:#fff;border-radius:20px;padding:26px;box-shadow:var(--shadow-lg)}
+.bridge-sec .bridge-kicker{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--mint);margin:0}
+.bridge-sec h2{color:#fff;margin:.35em 0 .3em}
+.bridge-sec h2 span{color:var(--mint)}
+.bridge-sec .bridge-lede{color:#d8ebe6;max-width:720px;margin:.3em 0 0;line-height:1.6}
+.bridge-sec .bridge-lede strong{color:#fff}
+.bridge-letters{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:20px 0 16px}
+@media(max-width:700px){.bridge-letters{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:420px){.bridge-letters{grid-template-columns:repeat(2,1fr)}}
+.bridge-letter{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:14px 12px;text-align:center}
+.bridge-letter b{display:block;font-family:"Newsreader",serif;font-size:2rem;line-height:1;color:#fff}
+.bridge-letter span{display:block;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--mint);margin-top:6px;line-height:1.35;text-transform:uppercase}
+.bridge-progs{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.bridge-prog{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--teal-dark);border-radius:999px;padding:8px 12px;font-size:.86rem;font-weight:700;line-height:1.3}
+.bridge-prog small{font-weight:600;color:var(--muted);font-size:.8rem}
+.bridge-prog.first{background:var(--mint);color:var(--teal-dark)}
+.bridge-note{font-size:.9rem;color:#b9d6cf;margin:14px 0 0;line-height:1.55}
+@media(max-width:600px){.bridge-sec{padding:20px}}
+.cura6-word{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
+.cura6-word span{width:52px;height:58px;display:grid;place-items:center;background:#fff;color:var(--teal-dark);border-radius:12px;font-family:"Newsreader",serif;font-size:2rem;font-weight:700;line-height:1}
+.cura6-word span.last{background:var(--mint)}
+.spec-label{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mint);margin:22px 0 10px}
+.spec-picker{display:flex;flex-wrap:wrap;gap:8px}
+.spec-btn{border:1.5px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:10px 15px;font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px}
+.spec-btn small{font-weight:500;color:#b9d6cf;font-size:.78rem}
+.spec-btn[aria-pressed="true"]{background:#fff;color:var(--teal-dark);border-color:#fff}
+.spec-btn[aria-pressed="true"] small{color:var(--muted)}
+.spec-panel{display:none;background:#fff;color:var(--ink);border-radius:16px;padding:20px;margin-top:14px}
+.spec-panel.on{display:block}
+.spec-panel h3{font-size:1.45rem;color:var(--teal-dark)}
+.spec-panel .spec-sub{color:var(--muted);font-size:.95rem;line-height:1.55;margin:.2em 0 10px}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+@media(max-width:700px){.spec-grid{grid-template-columns:1fr}}
+.spec-grid h4{margin:0 0 5px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2)}
+.spec-grid p,.spec-grid li{font-size:.92rem;line-height:1.55;color:var(--ink)}
+.spec-grid ul{margin:0;padding-left:18px}
+.spec-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.spec-chips span{background:var(--mint-bg);color:var(--teal);border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:.82rem;font-weight:700}
+.spec-chips span.first{background:var(--teal);color:#fff;border-color:var(--teal)}
+.consent-sec{padding:28px 0 6px}
+.consent-head{max-width:740px;margin-bottom:18px}
+.consent-head p{color:var(--muted);margin:.4em 0 0}
+.consent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.consent-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.consent-grid{grid-template-columns:1fr}}
+.consent-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.consent-card h3{font-family:"IBM Plex Sans",sans-serif;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.consent-card h3 svg{width:17px;height:17px;color:var(--teal2);flex:none}
+.consent-card p{font-size:.9rem;color:var(--muted);line-height:1.55;margin:.3em 0 0}
+.consent-card .c-status{display:inline-block;margin-top:10px;font-size:.76rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--mint-bg);color:var(--teal);border-radius:999px;padding:5px 9px}
+.consent-rule{margin-top:14px;background:var(--gold-bg);border:1px solid #eadfc6;color:#5c4a1f;border-radius:14px;padding:14px 16px;font-size:.92rem;line-height:1.6}
 
 /* How to use */
 .howto{margin:22px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
@@ -388,6 +441,29 @@ section{padding:18px 0 10px}
 .bpc-grid .bg-item.hl small{color:var(--muted)}
 @media(max-width:600px){.bpc-card{padding:20px}.bpc-math .bm{min-width:100px}}
 
+/* How CURAVIA is paid */
+.pay-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow);margin-top:18px}
+@media(max-width:600px){.pay-card{padding:20px}}
+.pay-card h3{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.pay-card h3 svg{width:18px;height:18px;color:var(--teal2)}
+.pay-card p{font-size:.95rem;line-height:1.6;margin:.3em 0}
+.pay-card p strong{color:var(--ink)}
+.pay-fee-line{font-family:"Newsreader",serif;font-size:clamp(1.35rem,2.6vw,1.7rem);line-height:1.2;margin:8px 0 4px}
+.pay-fee-line strong{color:var(--teal2)}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+@media(max-width:860px){.pay-grid{grid-template-columns:1fr}}
+.pay-split{background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.pay-split h4{margin:0 0 8px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2)}
+.pay-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.95rem;line-height:1.45}
+.pay-row:last-child{border-bottom:none;padding-bottom:2px}
+.pay-row .pl{color:var(--muted)}
+.pay-row .pl small{display:block;font-size:.84rem;line-height:1.4}
+.pay-row .pv{font-family:"IBM Plex Mono",monospace;font-weight:700;white-space:nowrap;text-align:right}
+.pay-row.keeps{font-weight:700}
+.pay-row.keeps .pl{color:var(--ink)}
+.pay-row.keeps .pv{color:var(--teal2)}
+.pay-note{font-size:.88rem;color:var(--muted);margin:14px 0 0;line-height:1.55}
+
 /* Asks */
 .asks-sec{padding:36px 0 18px}
 .asks-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
@@ -426,7 +502,7 @@ section{padding:18px 0 10px}
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 32 32" fill="none"><path d="M22.5 8.5A9 9 0 1 0 22.5 23.5" stroke="white" stroke-width="2.6" stroke-linecap="round"/><path d="M7 16h5l2-5 3 10 2.2-5H25" stroke="#7EC8BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </span>
-      <span class="brand-name"><strong>CURAVIA</strong><span>Remote Therapeutic Monitoring</span></span>
+      <span class="brand-name"><strong>CURAVIA</strong><span>CURA6 · Programs by Subspecialty</span></span>
     </a>
     <div class="brand-meta">
       <div class="partner"><b>Boston Pain Center</b>Prepared for Dr. Roberto Feliz</div>
@@ -440,10 +516,12 @@ section{padding:18px 0 10px}
     <div class="hero-grid">
       <div>
         <div class="eyebrow">For Dr. Roberto Feliz · Boston Pain Center</div>
-        <h1>The CURAVIA <span>RTM Program</span></h1>
-        <p class="lede">How Remote Therapeutic Monitoring works at Boston Pain Center — <strong>step by step, on the patient’s phone and in the Suite, side by side.</strong> A check-in day counts only when the phone’s movement sensor has seen real movement.</p>
+        <h1>CURAVIA <span>CURA6</span></h1>
+        <p class="lede">One short name for <strong>all</strong> the CURAVIA care programs: <strong>CURA6</strong> — CURAVIA’s six core programs between visits. <strong>RTM is the first program inside CURA6</strong>, not the whole story. The whole Suite now starts the same way: <strong>the user chooses their subspecialty first</strong>, and CURA6 matches the programs, check-ins, education, and flags to that profession. <strong>Each program keeps its own consent</strong> — nothing bills without that program’s consent on file. Below, RTM step by step for pain management — on the patient’s phone and in the Suite, side by side.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#live"><i data-lucide="play"></i> Start the walkthrough</a>
+          <a class="btn btn-primary" href="#cura6"><i data-lucide="layers"></i> CURA6 — choose your subspecialty first</a>
+          <a class="btn btn-secondary" href="#live"><i data-lucide="play"></i> Start the walkthrough</a>
+          <a class="btn btn-secondary" href="#consents"><i data-lucide="file-check-2"></i> Each program, its own consent</a>
           <a class="btn btn-secondary" href="#asks"><i data-lucide="check-circle-2"></i> See what I need from you</a>
           <a class="btn btn-secondary" href="#ccm"><i data-lucide="phone"></i> Second program: CCM by phone</a>
           <a class="btn btn-secondary" href="#other-programs"><i data-lucide="phone-call"></i> Other non-mobile programs: CPM · PCM · TCM</a>
@@ -475,11 +553,103 @@ section{padding:18px 0 10px}
 
 <main class="wrap">
 
+<section class="bridge-sec" id="cura6" aria-label="CURA6 — the name for all CURAVIA programs, organized by subspecialty">
+  <p class="bridge-kicker">The name for all the programs · By subspecialty</p>
+  <h2>CURAVIA <span>CURA6</span> — one name, matched to your profession</h2>
+  <p class="bridge-lede"><strong>CURA6</strong> is the umbrella name for every CURAVIA revenue program together — CURAVIA’s six core programs between visits. <strong>RTM is the first program inside CURA6</strong> — the walkthrough below is RTM for pain management — and the rest join it under the same name. CURA6 is <strong>not one-size-fits-all</strong>: the whole CURAVIA Suite is organized <strong>by subspecialty</strong>. The user chooses their subspecialty first, and the build-out is matched to that profession — the programs offered, the check-in questions, the measures tracked, the patient education, and the risk flags are all tailored to that subspecialty.</p>
+  <div class="cura6-word" aria-label="CURA6">
+    <span>C</span><span>U</span><span>R</span><span>A</span><span class="last">6</span>
+  </div>
+  <p class="bridge-note" style="margin-top:4px">Short, one word, easy to say in the clinic and on the phone: <strong style="color:#fff">“Enrolled in CURAVIA CURA6 — in the RTM program, under Pain Management.”</strong> One name for the suite, the subspecialty for the tailoring, the program name for the specific care.</p>
+
+  <p class="spec-label" id="specLabel">Step 1 — Choose your subspecialty first</p>
+  <div class="spec-picker" role="group" aria-labelledby="specLabel">
+    <button type="button" class="spec-btn" data-spec="pain" aria-pressed="true">Pain Management <small>· BPC · current</small></button>
+    <button type="button" class="spec-btn" data-spec="cardio" aria-pressed="false">Cardiology</button>
+    <button type="button" class="spec-btn" data-spec="ortho" aria-pressed="false">Orthopedics</button>
+    <button type="button" class="spec-btn" data-spec="primary" aria-pressed="false">Primary Care / Internal Medicine</button>
+    <button type="button" class="spec-btn" data-spec="neuro" aria-pressed="false">Neurology</button>
+    <button type="button" class="spec-btn" data-spec="endo" aria-pressed="false">Endocrinology</button>
+  </div>
+
+  <div class="spec-panel on" data-specpanel="pain">
+    <h3>Pain Management — the Boston Pain Center build</h3>
+    <p class="spec-sub">This is the build on this page. Everything below — the walkthrough, the codes, and the revenue — is the pain-management tailoring of CURA6.</p>
+    <div class="spec-grid">
+      <div><h4>Programs that fit</h4><div class="spec-chips"><span class="first">RTM · first</span><span>CPM</span><span>CCM</span><span>PCM</span><span>TCM</span><span>PIN / CHI</span></div></div>
+      <div><h4>Matched build-out</h4><ul><li><strong>Check-ins:</strong> pain score, function, home-exercise adherence — sensor-verified in RTM.</li><li><strong>Education:</strong> home program, medication direction, flare guidance.</li><li><strong>Flags:</strong> climbing pain, missed check-ins, sensor goes quiet.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="spec-panel" data-specpanel="cardio">
+    <h3>Cardiology — the cardiology build of CURA6</h3>
+    <p class="spec-sub">Same CURA6 name, same consent and compliance gates — a different build-out, matched to cardiology patients and cardiology work.</p>
+    <div class="spec-grid">
+      <div><h4>Programs that fit</h4><div class="spec-chips"><span class="first">RPM · device readings</span><span>CCM</span><span>PCM</span><span>TCM</span><span>PIN / CHI</span><span>RTM · rehab activity</span></div></div>
+      <div><h4>Matched build-out</h4><ul><li><strong>Measures:</strong> blood pressure, weight, symptoms and activity from connected devices and check-ins.</li><li><strong>Education:</strong> medication adherence, salt / diet, warning symptoms that need a same-day call.</li><li><strong>Flags:</strong> out-of-range readings, rapid weight change, missed readings, post-discharge window after a cardiac hospitalization (TCM).</li></ul></div>
+    </div>
+  </div>
+
+  <div class="spec-panel" data-specpanel="ortho">
+    <h3>Orthopedics — the orthopedics build of CURA6</h3>
+    <p class="spec-sub">Built around recovery: the home exercise program after a procedure or injury, and the discharge window after surgery.</p>
+    <div class="spec-grid">
+      <div><h4>Programs that fit</h4><div class="spec-chips"><span class="first">RTM · first</span><span>TCM</span><span>CCM</span><span>PCM</span><span>PIN / CHI</span></div></div>
+      <div><h4>Matched build-out</h4><ul><li><strong>Check-ins:</strong> pain, range-of-motion progress, home-exercise adherence — sensor-verified in RTM.</li><li><strong>Education:</strong> post-op precautions, rehab milestones, wound / swelling warning signs.</li><li><strong>Flags:</strong> stalled recovery, climbing pain, missed rehab days, discharge follow-up window (TCM).</li></ul></div>
+    </div>
+  </div>
+
+  <div class="spec-panel" data-specpanel="primary">
+    <h3>Primary Care / Internal Medicine — the broad-panel build</h3>
+    <p class="spec-sub">Built for the broad chronic-disease panel: multiple conditions, medication coordination, and navigation to services.</p>
+    <div class="spec-grid">
+      <div><h4>Programs that fit</h4><div class="spec-chips"><span class="first">CCM · first</span><span>RPM</span><span>PCM</span><span>PIN / CHI</span><span>TCM</span><span>RTM</span></div></div>
+      <div><h4>Matched build-out</h4><ul><li><strong>Check-ins &amp; measures:</strong> condition-specific readings and symptom check-ins per patient.</li><li><strong>Education:</strong> care-plan goals, medication coordination, referrals and results follow-up.</li><li><strong>Flags:</strong> missed coordination time, uncontrolled measures, post-discharge window (TCM).</li></ul></div>
+    </div>
+  </div>
+
+  <div class="spec-panel" data-specpanel="neuro">
+    <h3>Neurology — the neurology build of CURA6</h3>
+    <p class="spec-sub">Built around function over time: mobility, adherence, and early warning when a patient’s pattern changes.</p>
+    <div class="spec-grid">
+      <div><h4>Programs that fit</h4><div class="spec-chips"><span class="first">RTM · first</span><span>CCM</span><span>PCM</span><span>TCM</span><span>PIN / CHI</span></div></div>
+      <div><h4>Matched build-out</h4><ul><li><strong>Check-ins:</strong> mobility and daily-activity function, symptom diary, medication adherence.</li><li><strong>Education:</strong> home activity program, fall precautions, when to call the same day.</li><li><strong>Flags:</strong> functional decline, missed check-ins, post-discharge window after a hospital stay (TCM).</li></ul></div>
+    </div>
+  </div>
+
+  <div class="spec-panel" data-specpanel="endo">
+    <h3>Endocrinology — the diabetes &amp; metabolic build</h3>
+    <p class="spec-sub">Built around daily readings and steady coaching between visits, with navigation support where social needs block care.</p>
+    <div class="spec-grid">
+      <div><h4>Programs that fit</h4><div class="spec-chips"><span class="first">RPM · glucose / readings</span><span>CCM</span><span>PCM</span><span>PIN / CHI</span><span>TCM</span></div></div>
+      <div><h4>Matched build-out</h4><ul><li><strong>Measures:</strong> device readings, medication and meal-pattern check-ins.</li><li><strong>Education:</strong> care-plan goals, hypoglycemia warning signs, foot-check reminders.</li><li><strong>Flags:</strong> out-of-range readings, missed readings, medication gaps.</li></ul></div>
+    </div>
+  </div>
+
+  <p class="bridge-note">Every subspecialty runs on the same CURA6 discipline: <strong style="color:#fff">choose the subspecialty first → the Suite loads that profession’s programs and build-out → each program enrolls separately, with its own consent.</strong> Pain management is built and shown on this page; the other subspecialty panels above show how the same suite is tailored, profession by profession.</p>
+</section>
+
+<section class="consent-sec" id="consents" aria-label="Each CURA6 program has its own consent">
+  <div class="consent-head">
+    <h2>Each program has its own consent</h2>
+    <p>Yes — in CURA6, consent is <strong>per program, not one blanket consent</strong>. A patient can say yes to RTM and no to CCM, or yes to RPM and no to the others. Every consent is separate, in plain language (EN / ES), stored on that program’s record — and <strong>nothing bills for a program without that program’s own consent on file</strong>.</p>
+  </div>
+  <div class="consent-grid">
+    <div class="consent-card"><h3><i data-lucide="activity"></i> RTM — its own consent</h3><p>Consent to remote therapeutic monitoring and check-in sharing, <strong>plus a separate movement-sensor consent</strong> — activity only, never location.</p><span class="c-status">Own consent · on file before billing</span></div>
+    <div class="consent-card"><h3><i data-lucide="phone-call"></i> CCM — its own consent</h3><p>Consent to phone care coordination for 2+ chronic conditions, with any patient cost-share explained up front, before enrollment.</p><span class="c-status">Own consent · on file before billing</span></div>
+    <div class="consent-card"><h3><i data-lucide="heart-pulse"></i> CPM — its own consent</h3><p>Consent to chronic pain management services, with the documented pain care plan created at enrollment.</p><span class="c-status">Own consent · on file before billing</span></div>
+    <div class="consent-card"><h3><i data-lucide="crosshair"></i> PCM — its own consent</h3><p>Consent to principal care management for the one high-risk condition, with its disease-specific care plan shared with the patient.</p><span class="c-status">Own consent · on file before billing</span></div>
+    <div class="consent-card"><h3><i data-lucide="hospital"></i> TCM — its own consent</h3><p>Consent for the post-discharge transition: contact within 2 business days, medication reconciliation, and the follow-up visit.</p><span class="c-status">Own consent · per discharge episode</span></div>
+    <div class="consent-card"><h3><i data-lucide="monitor"></i> RPM &amp; PIN / CHI — their own consents</h3><p>RPM: consent to device monitoring, separate from RTM. PIN / CHI navigation: consent to navigation and community-support services, separate from every clinical program.</p><span class="c-status">Each · own consent</span></div>
+  </div>
+  <div class="consent-rule"><strong>The hard rule, program by program:</strong> consent is captured before the program starts, the time / days / readings are evidenced in the Suite, and the program’s billing stays blocked until its own consent is on file. Enrolling in one CURA6 program never enrolls a patient in another — each one is its own yes.</div>
+</section>
+
 <section id="live" aria-label="Live workflow walkthrough">
   <div class="section-head">
     <div>
-      <h2>Watch it work, step by step</h2>
-      <p>Left: what the patient sees. Right: what your team sees in the CURAVIA Suite at the same moment.</p>
+      <h2>CURA6 in action: RTM for Pain Management, step by step</h2>
+      <p>RTM is the first CURA6 program — shown here in its <strong>Pain Management</strong> tailoring, the subspecialty selected above. Left: what the patient sees. Right: what your team sees in the CURAVIA Suite at the same moment. Pick a different subspecialty above and the same CURA6 programs load with that profession’s check-ins, measures, and flags.</p>
     </div>
   </div>
 
@@ -601,6 +771,7 @@ section{padding:18px 0 10px}
               <h3>Enroll a patient</h3>
               <p>Staff open the enrollment form. The patient agrees in the app — in their own language.</p>
               <div style="display:grid;gap:10px;margin-top:14px">
+                <div class="s-field"><small>Subspecialty — chosen first</small>Pain Management · CURA6 tailoring loaded for this profession</div>
                 <div class="s-field"><small>Patient</small>Demo Patient — M. G. · DOB on file</div>
                 <div class="s-field"><small>Diagnosis</small>M54.50 — low back pain</div>
                 <div class="s-field"><small>Ordering practitioner</small>On file · BPC care team</div>
@@ -929,8 +1100,8 @@ section{padding:18px 0 10px}
 
 <section class="rev-sec" id="program-revenue" aria-label="Revenue by program — RTM, CCM, CPM, PCM, TCM, and combined">
   <div class="rev-head">
-    <h2>Revenue by program — and combined</h2>
-    <p>Every program on its own — the mobile program (RTM) and <strong>all four non-mobile programs (CCM, CPM, PCM, TCM)</strong> — then the honest combined view. A patient can be enrolled in <strong>both RTM and one care-management program</strong> (CCM, CPM, or PCM — one of them per month, not all three), and TCM pays per discharge on top. CURAVIA never counts the same minute or day twice, so the combined total is real, billable revenue, not double-counting.</p>
+    <h2>Revenue by program — CURA6, combined</h2>
+    <p>Every CURA6 program on its own — the mobile program (RTM) and <strong>all four non-mobile programs (CCM, CPM, PCM, TCM)</strong> — then the honest combined view, shown for the Pain Management tailoring. A patient can be enrolled in <strong>both RTM and one care-management program</strong> (CCM, CPM, or PCM — one of them per month, not all three), each with <strong>its own consent on file</strong>, and TCM pays per discharge on top. CURAVIA never counts the same minute or day twice, so the combined total is real, billable revenue, not double-counting.</p>
   </div>
 
   <div class="scale-row" role="group" aria-label="Scale the revenue table by patient count, in steps of 100">
@@ -1006,6 +1177,28 @@ section{padding:18px 0 10px}
     <p style="margin-top:14px">Use the table scale button above — <strong style="color:#fff">1,600 — BPC at 20%</strong> — or set both sliders in the calculator below to 1,600 to see the same figures live. Enrollment would phase in over months, not all at once; the figures show the run-rate once 1,600 patients are enrolled and meeting each program&rsquo;s rules.</p>
   </div>
 
+  <div class="pay-card" aria-label="How CURAVIA is paid — flat management fee of $40 per enrolled patient per month">
+    <h3><i data-lucide="hand-coins"></i> How CURAVIA is paid</h3>
+    <p class="pay-fee-line">CURAVIA (IEC MSO) is paid one flat management fee: <strong>$40 per enrolled patient per month</strong>.</p>
+    <p>One fee per enrolled patient — <strong>not per program</strong> — no matter how many CURA6 programs that patient is in. The fee covers CURAVIA running the programs end to end: the care team, the CURAVIA platform, each program&rsquo;s consent, the compliance gates, and the billing evidence and audit trail behind every claim.</p>
+    <p>The clinic keeps <strong>100% of its insurance reimbursement</strong>. The fee is never a percentage of collections and is never tied to referrals — that structure is deliberate, so it stays clear of Massachusetts anti-kickback rules.</p>
+    <div class="pay-grid">
+      <div class="pay-split">
+        <h4>At Boston Pain Center&rsquo;s scale — 1,600 qualified patients</h4>
+        <div class="pay-row"><span class="pl">Gross to the clinic<small>Combined RTM + CCM, per month</small></span><span class="pv">$251,200&ndash;$267,200 / mo</span></div>
+        <div class="pay-row"><span class="pl">CURAVIA fee<small>1,600 &times; $40 — $768,000 per year</small></span><span class="pv">$64,000 / mo</span></div>
+        <div class="pay-row keeps"><span class="pl">What the clinic keeps<small>About $2.25M&ndash;$2.44M per year</small></span><span class="pv">$187,200&ndash;$203,200 / mo</span></div>
+      </div>
+      <div class="pay-split">
+        <h4>Per patient, per month</h4>
+        <div class="pay-row"><span class="pl">Gross to the clinic<small>Combined RTM + CCM</small></span><span class="pv">$157&ndash;$167</span></div>
+        <div class="pay-row"><span class="pl">CURAVIA fee<small>One flat fee, however many programs</small></span><span class="pv">$40</span></div>
+        <div class="pay-row keeps"><span class="pl">What the clinic keeps</span><span class="pv">$117&ndash;$127</span></div>
+      </div>
+    </div>
+    <p class="pay-note">The gross figures are the combined RTM + CCM revenue from the table above, before the CURAVIA fee. The fee is the same $40 whether a patient is in one CURA6 program or several.</p>
+  </div>
+
   <div class="calc" aria-label="Combined program revenue calculator">
     <h4>Combine the programs — try your own mix</h4>
     <p>Set how many patients sit in each program — the sliders move <strong>one patient at a time</strong>, or jump both programs at once with the scale buttons, in steps of 100. For Boston Pain Center at full scale, use <strong>1,600</strong> — that is 20% of BPC&rsquo;s 8,000 patients. Patients enrolled in both are counted once in each program — that is how the billing works, because the work and the time are separate.</p>
@@ -1072,7 +1265,7 @@ section{padding:18px 0 10px}
 
 <footer class="footer">
   <div class="footer-inner">
-    <p><strong>CURAVIA</strong> &nbsp;·&nbsp; An IEC, Inc. program &nbsp;·&nbsp; IEC MSO care team &nbsp;·&nbsp; Boston Pain Center</p>
+    <p><strong>CURAVIA CURA6</strong> &nbsp;·&nbsp; An IEC, Inc. program suite, by subspecialty &nbsp;·&nbsp; IEC MSO care team &nbsp;·&nbsp; Boston Pain Center</p>
     <p>Bilingual EN / ES &nbsp;·&nbsp; Sensor-verified &nbsp;·&nbsp; Clinician-led</p>
   </div>
 </footer>
@@ -1273,6 +1466,21 @@ section{padding:18px 0 10px}
   }
   btns.forEach(function(b){ b.addEventListener('click', function(){ scale(+b.dataset.tscale); }); });
   scale(100);
+})();
+</script>
+<script>
+(function(){
+  if(window.lucide) lucide.createIcons();
+  var btns=document.querySelectorAll('.spec-btn'), panels=document.querySelectorAll('[data-specpanel]');
+  if(!btns.length || !panels.length) return;
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var key=b.dataset.spec;
+      btns.forEach(function(x){ x.setAttribute('aria-pressed', x===b ? 'true':'false'); });
+      panels.forEach(function(p){ p.classList.toggle('on', p.dataset.specpanel===key); });
+      if(window.lucide) lucide.createIcons();
+    });
+  });
 })();
 </script>
 </body>

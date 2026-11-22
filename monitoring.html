@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>CURA6 · Pain Management — The Monitoring System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#f4f6f3; --surface:#ffffff; --surface2:#eef3f0; --surface3:#e6ede9;
+        --ink:#14201d; --muted:#4f615c; --muted2:#6b7f7a; --line:#dde3df; --line2:#cbd8d2;
+        --teal:#0d4a43; --teal2:#14665c; --teal-dark:#082e2a; --teal-mid:#0a3530;
+        --mint:#7ec8bc; --mint-bg:#e6f4f0; --gold:#a07c2c; --gold-bg:#fdf6e9; --gold-line:#eadfc6;
+        --red:#a12c2c; --red-bg:#fdeeee; --red-line:#eec9c9;
+        --radius:18px; --radius-sm:12px;
+        --shadow:0 10px 30px rgba(10,53,48,.08); --shadow-lg:0 20px 50px rgba(10,53,48,.12);
+      }
+      @media (prefers-color-scheme: dark){
+        :root{ --bg:#0c1211; --surface:#17201e; --surface2:#1e2a27; --surface3:#24322e; --ink:#eef4f1; --muted:#b3c4bf; --muted2:#8fa8a1; --line:#2a3733; --line2:#35473f; --teal:#7ec8bc; --teal2:#8fd3c6; --teal-dark:#0a1f1c; --mint-bg:#1a2e2a; --gold:#d9b878; --gold-bg:#2a2416; --gold-line:#4a3f22; --red:#f0a3a3; --red-bg:#2e1a1a; --red-line:#5a2e2e; --shadow:0 10px 30px rgba(0,0,0,.35); --shadow-lg:0 20px 50px rgba(0,0,0,.4); }
+      }
+      * { box-sizing: border-box; }
+      html{ scroll-behavior:smooth; }
+      body{ margin:0; background:var(--bg); color:var(--ink); font-family:"IBM Plex Sans",system-ui,sans-serif; font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+      button, select { font-family:inherit; }
+      button, [role="button"], select, summary { min-height:44px; }
+      .es{ display:none; }
+      body.lang-es .es{ display:revert; }
+      body.lang-es .en{ display:none; }
+      span.es{ display:none; }
+      body.lang-es span.es{ display:inline; }
+      body.lang-es span.en{ display:none; }
+
+      /* Brand bar */
+      .brandbar{ background:var(--teal-dark); color:#fff; }
+      .brandbar-in{ max-width:1120px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+      .brand{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+      .brand b{ font-family:"Newsreader",serif; font-size:1.45rem; letter-spacing:.14em; font-weight:700; }
+      .brand small{ font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; opacity:.75; font-weight:600; }
+      .lang-toggle{ display:flex; border:1px solid rgba(255,255,255,.35); border-radius:999px; overflow:hidden; }
+      .lang-toggle button{ min-height:44px; border:none; background:transparent; color:#fff; font-size:.85rem; font-weight:700; padding:8px 18px; cursor:pointer; }
+      .lang-toggle button[aria-pressed="true"]{ background:var(--mint); color:#082e2a; }
+
+      .wrap{ max-width:1120px; margin:0 auto; padding:0 20px 64px; }
+      section{ margin-top:44px; }
+      h1{ font-family:"Newsreader",serif; font-weight:600; font-size:clamp(1.9rem,4.5vw,2.9rem); line-height:1.12; margin:0 0 10px; }
+      h2{ font-family:"Newsreader",serif; font-weight:600; font-size:clamp(1.45rem,3vw,2rem); line-height:1.2; margin:0 0 8px; }
+      h3{ font-size:1.08rem; margin:0 0 6px; }
+      p{ margin:.45em 0; }
+      .lede{ font-size:1.08rem; color:var(--muted); max-width:70ch; }
+      .kicker{ font-size:.78rem; letter-spacing:.13em; text-transform:uppercase; font-weight:700; color:var(--teal2); margin:0 0 8px; }
+      .doctrine{ margin-top:18px; background:var(--mint-bg); border:1px solid var(--line2); border-radius:var(--radius-sm); padding:14px 18px; font-size:1rem; }
+      .doctrine strong{ color:var(--teal); }
+      @media (prefers-color-scheme: dark){ .doctrine strong{ color:var(--mint); } }
+
+      header.hero{ padding-top:34px; }
+      .spec-strip{ display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+      .spec-chip{ border:1px solid var(--line2); background:var(--surface); color:var(--muted); border-radius:999px; padding:10px 16px; font-size:.9rem; font-weight:600; min-height:44px; display:inline-flex; align-items:center; }
+      .spec-chip.active{ background:var(--teal); border-color:var(--teal); color:#fff; }
+      @media (prefers-color-scheme: dark){ .spec-chip.active{ color:#082e2a; background:var(--mint); border-color:var(--mint); } }
+      .spec-note{ font-size:.92rem; color:var(--muted); margin-top:10px; max-width:72ch; }
+
+      /* Dropdown explorer */
+      .explorer{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; }
+      .dd-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+      @media(max-width:640px){ .dd-grid{ grid-template-columns:1fr; } }
+      .dd-field label{ display:block; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--teal2); margin-bottom:8px; }
+      .dd-field select{ width:100%; min-height:52px; font-size:1rem; font-weight:600; color:var(--ink); background:var(--surface2); border:1px solid var(--line2); border-radius:var(--radius-sm); padding:10px 14px; cursor:pointer; }
+      .detail{ margin-top:20px; border-top:1px solid var(--line); padding-top:20px; }
+      .detail-head{ display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:space-between; gap:12px; }
+      .detail-head h3{ font-family:"Newsreader",serif; font-size:1.5rem; font-weight:600; line-height:1.2; }
+      .mode-pill{ display:inline-flex; align-items:center; min-height:36px; padding:6px 14px; border-radius:999px; font-size:.82rem; font-weight:700; letter-spacing:.04em; white-space:nowrap; }
+      .mode-mobile{ background:var(--mint-bg); color:var(--teal); border:1px solid var(--line2); }
+      .mode-nonmobile{ background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-line); }
+      @media (prefers-color-scheme: dark){ .mode-mobile{ color:var(--mint); } }
+      .detail-summary{ color:var(--muted); max-width:74ch; margin-top:6px; }
+      .detail-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px 26px; margin-top:18px; }
+      @media(max-width:640px){ .detail-grid{ grid-template-columns:1fr; } }
+      .detail-item h4{ margin:0 0 3px; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--teal2); font-weight:700; }
+      .detail-item p{ margin:0; font-size:.97rem; }
+      .detail-item.full{ grid-column:1 / -1; }
+
+      /* Lane sections */
+      .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+      @media(max-width:820px){ .grid2{ grid-template-columns:1fr; } }
+      .card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); }
+      .card h3{ font-family:"Newsreader",serif; font-size:1.25rem; font-weight:600; }
+      .checklist{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:12px; }
+      .checklist li{ padding-left:26px; position:relative; }
+      .checklist li::before{ content:""; position:absolute; left:2px; top:.42em; width:9px; height:9px; border-radius:50%; background:var(--mint); }
+      .checklist b{ display:block; }
+      .checklist span{ color:var(--muted); font-size:.95rem; }
+      .flag-list{ list-style:none; margin:12px 0 0; padding:0; display:grid; gap:10px; }
+      .flag-list li{ display:flex; gap:12px; align-items:flex-start; background:var(--surface2); border-radius:var(--radius-sm); padding:12px 14px; }
+      .review-tag{ flex:none; background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-line); font-size:.72rem; font-weight:700; letter-spacing:.08em; padding:4px 9px; border-radius:6px; margin-top:2px; }
+      .flag-list p{ margin:0; font-size:.96rem; }
+      .tier-box{ margin-top:18px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); }
+      .tier-rows{ display:grid; gap:0; margin-top:10px; }
+      .tier-row{ display:flex; gap:14px; padding:11px 0; border-top:1px solid var(--line); align-items:baseline; flex-wrap:wrap; }
+      .tier-row:first-child{ border-top:none; }
+      .tier-when{ font-weight:700; color:var(--teal); min-width:170px; }
+      @media (prefers-color-scheme: dark){ .tier-when{ color:var(--mint); } }
+      .note-line{ margin-top:14px; font-size:.95rem; color:var(--muted); }
+      .prog-cards{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+      @media(max-width:820px){ .prog-cards{ grid-template-columns:1fr; } }
+      .prog-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); }
+      .prog-card h3{ font-family:"Newsreader",serif; font-size:1.3rem; font-weight:600; margin-bottom:2px; }
+      .prog-card .abbr{ color:var(--teal2); font-weight:700; font-size:.85rem; letter-spacing:.08em; }
+      .prog-card dl{ margin:12px 0 0; display:grid; gap:9px; }
+      .prog-card dt{ font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--teal2); }
+      .prog-card dd{ margin:1px 0 0; font-size:.96rem; }
+      .stack-note{ margin-top:18px; background:var(--gold-bg); border:1px solid var(--gold-line); border-radius:var(--radius-sm); padding:14px 18px; font-size:.98rem; }
+
+      /* Red flags */
+      .red-panel{ background:var(--red-bg); border:1px solid var(--red-line); border-radius:var(--radius); padding:22px; }
+      .red-panel h2{ color:var(--red); }
+      .red-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:14px; }
+      @media(max-width:640px){ .red-grid{ grid-template-columns:1fr; } }
+      .red-item{ background:var(--surface); border:1px solid var(--red-line); border-radius:var(--radius-sm); padding:14px 16px; }
+      .red-item b{ display:block; margin-bottom:3px; }
+      .red-item p{ margin:0; color:var(--muted); font-size:.95rem; }
+
+      /* Board */
+      .board{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-lg); overflow:hidden; }
+      .board-head{ padding:18px 22px; border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; }
+      .demo-label{ display:inline-flex; align-items:center; background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-line); font-weight:700; font-size:.85rem; border-radius:999px; padding:8px 14px; min-height:36px; }
+      .filter-btn{ min-height:44px; border:1px solid var(--line2); background:var(--surface2); color:var(--ink); border-radius:999px; padding:8px 18px; font-weight:700; font-size:.9rem; cursor:pointer; }
+      .filter-btn[aria-pressed="true"]{ background:var(--teal); color:#fff; border-color:var(--teal); }
+      @media (prefers-color-scheme: dark){ .filter-btn[aria-pressed="true"]{ background:var(--mint); color:#082e2a; border-color:var(--mint); } }
+      .prow{ border-bottom:1px solid var(--line); }
+      .prow:last-child{ border-bottom:none; }
+      .prow-main{ width:100%; display:grid; grid-template-columns:1.5fr .8fr .7fr .8fr 1.2fr; gap:10px 14px; align-items:center; background:none; border:none; text-align:left; padding:16px 22px; cursor:pointer; color:var(--ink); font-size:.97rem; min-height:56px; }
+      @media(max-width:760px){ .prow-main{ grid-template-columns:1fr auto; } .prow-main .hide-m{ display:none; } }
+      .prow-main:hover{ background:var(--surface2); }
+      .pname b{ display:block; font-size:1rem; }
+      .pname small{ color:var(--muted); font-size:.82rem; }
+      .m-meta{ display:none; }
+      @media(max-width:760px){ .m-meta{ display:block; margin-top:2px; font-weight:600; color:var(--ink); font-size:.86rem; } }
+      .status-dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:7px; vertical-align:1px; }
+      .dot-in{ background:#2e9e6b; } .dot-wait{ background:#c9a227; } .dot-call{ background:var(--teal2); }
+      .pain-score{ font-weight:700; font-size:1.05rem; white-space:nowrap; }
+      .trend-up{ color:var(--red); } .trend-down{ color:#2e9e6b; } .trend-flat{ color:var(--muted); }
+      .badges{ display:flex; flex-wrap:wrap; gap:5px; }
+      .badge{ font-size:.72rem; font-weight:700; letter-spacing:.05em; background:var(--mint-bg); color:var(--teal); border:1px solid var(--line2); border-radius:6px; padding:3px 8px; }
+      @media (prefers-color-scheme: dark){ .badge{ color:var(--mint); } }
+      .flag-count{ font-weight:700; color:var(--gold); font-size:.9rem; }
+      .flag-none{ color:var(--muted2); font-size:.9rem; }
+      .week{ display:none; padding:4px 22px 20px; background:var(--surface2); }
+      .prow.open .week{ display:block; }
+      .week h4{ margin:12px 0 8px; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase; color:var(--teal2); }
+      .week-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
+      @media(max-width:560px){ .week-grid{ grid-template-columns:repeat(4,1fr); } }
+      .day{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:9px 6px; text-align:center; }
+      .day small{ display:block; font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted2); font-weight:700; }
+      .day .ds{ font-family:"Newsreader",serif; font-size:1.25rem; font-weight:700; display:block; margin:2px 0; }
+      .day .sess{ font-size:.72rem; font-weight:600; }
+      .sess-done{ color:#2e9e6b; } .sess-missed{ color:var(--red); } .sess-na{ color:var(--muted2); }
+      .week-flag{ margin-top:12px; background:var(--gold-bg); border:1px solid var(--gold-line); border-radius:var(--radius-sm); padding:12px 14px; font-size:.94rem; }
+      .week-note{ margin-top:10px; color:var(--muted); font-size:.92rem; }
+      .board-empty{ padding:22px; color:var(--muted); display:none; }
+
+      /* Compliance */
+      .compliance{ background:var(--teal-dark); color:#eaf4f1; border-radius:var(--radius); padding:24px 26px; }
+      .compliance h2{ color:#fff; }
+      .compliance ul{ list-style:none; margin:14px 0 0; padding:0; display:grid; gap:0; }
+      .compliance li{ padding:11px 0 11px 26px; position:relative; border-top:1px solid rgba(255,255,255,.16); font-size:1rem; }
+      .compliance li:first-child{ border-top:none; }
+      .compliance li::before{ content:""; position:absolute; left:2px; top:1.15em; width:9px; height:9px; border-radius:50%; background:var(--mint); }
+      footer{ margin-top:44px; color:var(--muted2); font-size:.88rem; }
+      @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+    </style>
+  </head>
+  <body>
+    <div class="brandbar">
+      <div class="brandbar-in">
+        <div class="brand"><b>CURAVIA</b><small>CURA6 · IEC MSO</small></div>
+        <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+          <button type="button" id="langEn" aria-pressed="true">EN</button>
+          <button type="button" id="langEs" aria-pressed="false">ES</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <header class="hero">
+        <p class="kicker"><span class="en">CURA6 — the general monitoring system</span><span class="es">CURA6 — el sistema general de monitoreo</span></p>
+        <h1><span class="en">CURA6 · Pain Management — The Monitoring System</span><span class="es">CURA6 · Manejo del Dolor — El Sistema de Monitoreo</span></h1>
+        <p class="lede"><span class="en">Pain Management is the reference implementation of the CURA6 monitoring system: the first subspecialty built on the shared spine, with its first cohort in low back pain. Every other subspecialty runs the same spine with its own program set and its own monitored content.</span><span class="es">El Manejo del Dolor es la implementación de referencia del sistema de monitoreo CURA6: la primera subespecialidad construida sobre la estructura común, con su primera cohorte en dolor lumbar. Cada otra subespecialidad usa la misma estructura con su propio conjunto de programas y su propio contenido de monitoreo.</span></p>
+        <div class="doctrine"><strong><span class="en">The doctrine:</span><span class="es">La doctrina:</span></strong> <span class="en">the system monitors, records, and flags; a named clinician decides — it never diagnoses or orders on its own.</span><span class="es">el sistema monitorea, registra y marca; un clínico identificado decide — nunca diagnostica ni ordena por su cuenta.</span></div>
+
+        <div class="spec-strip" aria-label="Subspecialties">
+          <span class="spec-chip active"><span class="en">Pain Management — active</span><span class="es">Manejo del Dolor — activo</span></span>
+          <span class="spec-chip"><span class="en">Cardiology</span><span class="es">Cardiología</span></span>
+          <span class="spec-chip"><span class="en">Orthopedics</span><span class="es">Ortopedia</span></span>
+          <span class="spec-chip"><span class="en">Primary Care / Internal Medicine</span><span class="es">Atención Primaria / Medicina Interna</span></span>
+          <span class="spec-chip"><span class="en">Neurology</span><span class="es">Neurología</span></span>
+          <span class="spec-chip"><span class="en">Endocrinology</span><span class="es">Endocrinología</span></span>
+        </div>
+        <p class="spec-note"><span class="en">The framework: pick the subspecialty first, and the build-out — programs, parameters, cadence, education, flags — is matched to that profession. Pain Management is fully built out below; the other monitoring sets follow on the same spine.</span><span class="es">El marco: primero se elige la subespecialidad, y la configuración — programas, parámetros, cadencia, educación, alertas — se adapta a esa profesión. El Manejo del Dolor está completamente desarrollado abajo; los demás conjuntos de monitoreo siguen la misma estructura.</span></p>
+      </header>
+
+      <section aria-labelledby="explorerH">
+        <p class="kicker"><span class="en">Explore the system</span><span class="es">Explore el sistema</span></p>
+        <h2 id="explorerH"><span class="en">Pick a subspecialty, then a program</span><span class="es">Elija una subespecialidad y luego un programa</span></h2>
+        <p class="lede"><span class="en">The program list changes with the subspecialty. The panel below shows each program as it is tailored to that practice — what is monitored, how often, from what source, what raises a flag, who acts, and the consent and gates that stand behind it.</span><span class="es">La lista de programas cambia según la subespecialidad. El panel siguiente muestra cada programa tal como se adapta a esa práctica: qué se monitorea, con qué frecuencia, de qué fuente, qué genera una alerta, quién actúa, y el consentimiento y los controles que lo respaldan.</span></p>
+        <div class="explorer" style="margin-top:18px">
+          <div class="dd-grid">
+            <div class="dd-field">
+              <label for="specSelect"><span class="en">1 · Subspecialty</span><span class="es">1 · Subespecialidad</span></label>
+              <select id="specSelect"></select>
+            </div>
+            <div class="dd-field">
+              <label for="progSelect"><span class="en">2 · Program</span><span class="es">2 · Programa</span></label>
+              <select id="progSelect"></select>
+            </div>
+          </div>
+          <div class="detail" id="detailPanel" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="mobileH">
+        <p class="kicker"><span class="en">Pain Management · Lane one</span><span class="es">Manejo del Dolor · Vía uno</span></p>
+        <h2 id="mobileH"><span class="en">Mobile-based monitoring — RTM</span><span class="es">Monitoreo móvil — RTM</span></h2>
+        <p class="lede"><span class="en">Remote Therapeutic Monitoring is the headline program for pain. The patient checks in daily in the app; the record builds day by day, and the clinician reviews the trend — not a single day's number.</span><span class="es">El Monitoreo Terapéutico Remoto es el programa principal para el dolor. El paciente registra su estado a diario en la aplicación; el registro se construye día a día y el clínico revisa la tendencia, no el número de un solo día.</span></p>
+
+        <div class="grid2" style="margin-top:18px">
+          <div class="card">
+            <h3><span class="en">What the patient does each day</span><span class="es">Lo que el paciente hace cada día</span></h3>
+            <ul class="checklist">
+              <li><b><span class="en">Pain score, 0–10</span><span class="es">Puntuación de dolor, 0–10</span></b><span><span class="en">One number each day, building the pain trend the clinician reviews.</span><span class="es">Un número cada día, que construye la tendencia de dolor que revisa el clínico.</span></span></li>
+              <li><b><span class="en">Function check-in</span><span class="es">Registro de función</span></b><span><span class="en">What the patient could and could not do today, in structured form.</span><span class="es">Lo que el paciente pudo y no pudo hacer hoy, en forma estructurada.</span></span></li>
+              <li><b><span class="en">Guided home-exercise session, with movement verification</span><span class="es">Sesión guiada de ejercicios en casa, con verificación de movimiento</span></b><span><span class="en">The prescribed session runs in the app. The phone senses real movement during the session, and a check-in counts only when movement happens. Only short activity summaries and a status leave the device — activity only, never location — and the sensing runs only under the patient's separate activity consent.</span><span class="es">La sesión prescrita se realiza en la aplicación. El teléfono detecta movimiento real durante la sesión, y un registro solo cuenta cuando hay movimiento. Del dispositivo solo salen resúmenes breves de actividad y un estado — solo actividad, nunca ubicación — y la detección funciona únicamente con el consentimiento de actividad separado del paciente.</span></span></li>
+              <li><b><span class="en">Medication adherence check-in</span><span class="es">Registro de adherencia a la medicación</span></b><span><span class="en">Taken / not taken, against the current plan.</span><span class="es">Tomado / no tomado, según el plan actual.</span></span></li>
+              <li><b><span class="en">Sleep report</span><span class="es">Reporte de sueño</span></b><span><span class="en">A short daily report, because pain and sleep move together.</span><span class="es">Un reporte diario breve, porque el dolor y el sueño se mueven juntos.</span></span></li>
+              <li><b><span class="en">Flare detection</span><span class="es">Detección de brotes</span></b><span><span class="en">A sharp rise against the patient's own recent pattern raises a flag for clinician review.</span><span class="es">Un aumento brusco frente al patrón reciente del propio paciente genera una alerta para revisión del clínico.</span></span></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3><span class="en">The five anomaly flags — REVIEW</span><span class="es">Las cinco alertas de anomalía — REVISIÓN</span></h3>
+            <p style="color:var(--muted);font-size:.95rem"><span class="en">Each flag is labeled REVIEW and routed to a named clinician, who reads it against the record and decides. A flag is never an accusation and never triggers an automatic action.</span><span class="es">Cada alerta lleva la etiqueta REVISIÓN y se dirige a un clínico identificado, que la lee junto al registro y decide. Una alerta nunca es una acusación y nunca activa una acción automática.</span></p>
+            <ul class="flag-list">
+              <li><span class="review-tag">REVIEW</span><p><span class="en"><b>Identical-score run</b> — the same pain score five or more days in a row.</span><span class="es"><b>Serie de puntuaciones idénticas</b> — la misma puntuación de dolor cinco o más días seguidos.</span></p></li>
+              <li><span class="review-tag">REVIEW</span><p><span class="en"><b>Machine-regular check-in times</b> — check-ins at near-identical times across five or more days.</span><span class="es"><b>Horarios de registro mecánicamente regulares</b> — registros a horas casi idénticas durante cinco o más días.</span></p></li>
+              <li><span class="review-tag">REVIEW</span><p><span class="en"><b>Completed session, zero movement</b> — a session marked complete with no movement sensed.</span><span class="es"><b>Sesión completada sin movimiento</b> — una sesión marcada completa sin movimiento detectado.</span></p></li>
+              <li><span class="review-tag">REVIEW</span><p><span class="en"><b>Too-fast completion</b> — a completion attempt faster than the session can honestly run.</span><span class="es"><b>Finalización demasiado rápida</b> — un intento de finalización más rápido de lo que la sesión puede durar honestamente.</span></p></li>
+              <li><span class="review-tag">REVIEW</span><p><span class="en"><b>Perfect streak</b> — fourteen or more perfect days inside the first thirty days.</span><span class="es"><b>Racha perfecta</b> — catorce o más días perfectos dentro de los primeros treinta días.</span></p></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tier-box">
+          <h3><span class="en">How the period is counted — exact data days</span><span class="es">Cómo se cuenta el período — días de datos exactos</span></h3>
+          <div class="tier-rows">
+            <div class="tier-row"><span class="tier-when"><span class="en">16+ check-in days</span><span class="es">16+ días de registro</span></span><span><span class="en">Full tier for the period.</span><span class="es">Nivel completo para el período.</span></span></div>
+            <div class="tier-row"><span class="tier-when"><span class="en">2–15 check-in days</span><span class="es">2–15 días de registro</span></span><span><span class="en">Lower tier for the period.</span><span class="es">Nivel inferior para el período.</span></span></div>
+            <div class="tier-row"><span class="tier-when"><span class="en">0–1 days</span><span class="es">0–1 días</span></span><span><span class="en">Not a billable period.</span><span class="es">No es un período facturable.</span></span></div>
+            <div class="tier-row"><span class="tier-when"><span class="en">Setup</span><span class="es">Configuración</span></span><span><span class="en">Once per episode, and only after the education steps are complete.</span><span class="es">Una vez por episodio, y solo después de completar los pasos de educación.</span></span></div>
+            <div class="tier-row"><span class="tier-when"><span class="en">Live interaction</span><span class="es">Interacción en vivo</span></span><span><span class="en">At least one live interaction with the patient is required each month.</span><span class="es">Se requiere al menos una interacción en vivo con el paciente cada mes.</span></span></div>
+          </div>
+          <p class="note-line"><span class="en"><b>RPM — available, secondary for pain.</b> Remote Patient Monitoring streams device data where a device is genuinely in play. For pain, the evidence is the daily check-in and the guided session, not a device stream — so RPM sits behind RTM here. It keeps its own consent and its own rules.</span><span class="es"><b>RPM — disponible, secundario para el dolor.</b> El Monitoreo Remoto del Paciente transmite datos de dispositivos cuando un dispositivo está realmente en uso. Para el dolor, la evidencia es el registro diario y la sesión guiada, no un flujo de dispositivo — por eso RPM queda detrás de RTM aquí. Mantiene su propio consentimiento y sus propias reglas.</span></p>
+        </div>
+      </section>
+
+      <section aria-labelledby="nonmobileH">
+        <p class="kicker"><span class="en">Pain Management · Lane two</span><span class="es">Manejo del Dolor · Vía dos</span></p>
+        <h2 id="nonmobileH"><span class="en">Non-mobile monitoring — phone and chart</span><span class="es">Monitoreo no móvil — teléfono e historia clínica</span></h2>
+        <p class="lede"><span class="en">No app, no sensor. These programs run by scheduled phone care and chart documentation, under the same consent and server-stamp rules. A patient can be in one mobile and one non-mobile program at the same time; their days and minutes are never counted twice.</span><span class="es">Sin aplicación, sin sensor. Estos programas funcionan mediante atención telefónica programada y documentación en la historia clínica, bajo las mismas reglas de consentimiento y sello de tiempo del servidor. Un paciente puede estar en un programa móvil y uno no móvil al mismo tiempo; sus días y minutos nunca se cuentan dos veces.</span></p>
+
+        <div class="prog-cards" style="margin-top:18px">
+          <div class="prog-card">
+            <span class="abbr">CCM</span>
+            <h3><span class="en">Chronic Care Management</span><span class="es">Manejo de Cuidados Crónicos</span></h3>
+            <dl>
+              <div><dt><span class="en">What is monitored</span><span class="es">Qué se monitorea</span></dt><dd><span class="en">The care plan, medication reconciliation, coordination with the patient's other providers, and symptom review between visits — for pain patients with two or more chronic conditions.</span><span class="es">El plan de cuidados, la reconciliación de medicamentos, la coordinación con los demás proveedores del paciente y la revisión de síntomas entre visitas — para pacientes con dolor con dos o más condiciones crónicas.</span></dd></div>
+              <div><dt><span class="en">Cadence</span><span class="es">Cadencia</span></dt><dd><span class="en">Monthly phone care management; 20+ documented minutes in the month.</span><span class="es">Manejo telefónico mensual; 20+ minutos documentados en el mes.</span></dd></div>
+              <div><dt><span class="en">Who acts</span><span class="es">Quién actúa</span></dt><dd><span class="en">The care team, under the treating clinician's plan.</span><span class="es">El equipo de cuidados, bajo el plan del clínico tratante.</span></dd></div>
+              <div><dt><span class="en">Consent</span><span class="es">Consentimiento</span></dt><dd><span class="en">CCM has its own consent, taken before any CCM time is tracked.</span><span class="es">CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM.</span></dd></div>
+            </dl>
+          </div>
+          <div class="prog-card">
+            <span class="abbr">CPM</span>
+            <h3><span class="en">Chronic Pain Management</span><span class="es">Manejo del Dolor Crónico</span></h3>
+            <dl>
+              <div><dt><span class="en">What is monitored</span><span class="es">Qué se monitorea</span></dt><dd><span class="en">The chronic pain plan itself: the monitoring record, response to treatment, and plan adjustments.</span><span class="es">El propio plan de dolor crónico: el registro de monitoreo, la respuesta al tratamiento y los ajustes del plan.</span></dd></div>
+              <div><dt><span class="en">Cadence</span><span class="es">Cadencia</span></dt><dd><span class="en">Monthly, physician-led.</span><span class="es">Mensual, dirigido por el médico.</span></dd></div>
+              <div><dt><span class="en">Who acts</span><span class="es">Quién actúa</span></dt><dd><span class="en">The physician reviews the record and documents management time.</span><span class="es">El médico revisa el registro y documenta el tiempo de manejo.</span></dd></div>
+              <div><dt><span class="en">Consent</span><span class="es">Consentimiento</span></dt><dd><span class="en">CPM has its own consent, separate from CCM and RTM.</span><span class="es">CPM tiene su propio consentimiento, separado de CCM y RTM.</span></dd></div>
+            </dl>
+          </div>
+          <div class="prog-card">
+            <span class="abbr">PCM</span>
+            <h3><span class="en">Principal Care Management</span><span class="es">Manejo de Cuidado Principal</span></h3>
+            <dl>
+              <div><dt><span class="en">What is monitored</span><span class="es">Qué se monitorea</span></dt><dd><span class="en">One single complex pain condition — one condition, one care plan — managed intensively for the months that condition needs it.</span><span class="es">Una sola condición de dolor compleja — una condición, un plan de cuidados — manejada intensivamente durante los meses que esa condición lo necesite.</span></dd></div>
+              <div><dt><span class="en">Cadence</span><span class="es">Cadencia</span></dt><dd><span class="en">Monthly, intensive, physician-led.</span><span class="es">Mensual, intensivo, dirigido por el médico.</span></dd></div>
+              <div><dt><span class="en">Who acts</span><span class="es">Quién actúa</span></dt><dd><span class="en">The physician and care team on the single-condition plan.</span><span class="es">El médico y el equipo de cuidados sobre el plan de la condición única.</span></dd></div>
+              <div><dt><span class="en">Consent</span><span class="es">Consentimiento</span></dt><dd><span class="en">PCM has its own consent for that condition's episode of care.</span><span class="es">PCM tiene su propio consentimiento para el episodio de cuidado de esa condición.</span></dd></div>
+            </dl>
+          </div>
+          <div class="prog-card">
+            <span class="abbr">TCM</span>
+            <h3><span class="en">Transitional Care Management</span><span class="es">Manejo de Cuidados Transicionales</span></h3>
+            <dl>
+              <div><dt><span class="en">What is monitored</span><span class="es">Qué se monitorea</span></dt><dd><span class="en">The post-discharge window: recovery after a hospital or facility stay, and medication reconciliation no later than the follow-up visit.</span><span class="es">El período posterior al alta: la recuperación tras una estancia en hospital o centro, y la reconciliación de medicamentos a más tardar en la visita de seguimiento.</span></dd></div>
+              <div><dt><span class="en">Cadence</span><span class="es">Cadencia</span></dt><dd><span class="en">Per discharge: interactive contact within 2 business days; a visit within 7 or 14 days, by complexity.</span><span class="es">Por cada alta: contacto interactivo dentro de 2 días laborables; una visita dentro de 7 o 14 días, según la complejidad.</span></dd></div>
+              <div><dt><span class="en">Who acts</span><span class="es">Quién actúa</span></dt><dd><span class="en">The care team makes contact; the clinician holds the visit.</span><span class="es">El equipo de cuidados hace el contacto; el clínico realiza la visita.</span></dd></div>
+              <div><dt><span class="en">Consent</span><span class="es">Consentimiento</span></dt><dd><span class="en">TCM has its own consent, taken at enrollment into the discharge episode.</span><span class="es">TCM tiene su propio consentimiento, obtenido al inscribirse en el episodio de alta.</span></dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="stack-note"><strong><span class="en">Stacking, stated plainly:</span><span class="es">Combinación, dicho con claridad:</span></strong> <span class="en">RTM stacks with only ONE care-management program per patient per month — CCM, CPM, and PCM are alternatives for the same patient-month, never layers. TCM is per discharge, on top. No minute or day is ever counted in two places.</span><span class="es">RTM se combina con solo UN programa de manejo de cuidados por paciente por mes — CCM, CPM y PCM son alternativas para el mismo paciente-mes, nunca capas. TCM es por cada alta, adicional. Ningún minuto ni día se cuenta jamás en dos lugares.</span></div>
+      </section>
+
+      <section aria-labelledby="redH">
+        <div class="red-panel">
+          <p class="kicker" style="color:var(--red)"><span class="en">Safety flags — immediate routing</span><span class="es">Alertas de seguridad — derivación inmediata</span></p>
+          <h2 id="redH"><span class="en">Red flags in pain care</span><span class="es">Señales de alarma en el cuidado del dolor</span></h2>
+          <p style="max-width:72ch"><span class="en">Reported on a check-in or a call, these route to a clinician immediately, ahead of routine review. They are flags only — the system sends no diagnosis and no automated message to the patient. The clinician decides and acts.</span><span class="es">Reportadas en un registro o una llamada, estas alertas se dirigen a un clínico de inmediato, antes de la revisión rutinaria. Son solo alertas — el sistema no envía ningún diagnóstico ni mensaje automático al paciente. El clínico decide y actúa.</span></p>
+          <div class="red-grid">
+            <div class="red-item"><b><span class="en">New bowel or bladder changes, or saddle numbness</span><span class="es">Cambios nuevos en intestino o vejiga, o entumecimiento en silla de montar</span></b><p><span class="en">Warning signs that need same-day clinician review.</span><span class="es">Signos de advertencia que necesitan revisión del clínico el mismo día.</span></p></div>
+            <div class="red-item"><b><span class="en">Sudden severe pain escalation</span><span class="es">Escalada repentina y severa del dolor</span></b><p><span class="en">A sharp, unexplained jump — especially after trauma — goes straight to the clinician.</span><span class="es">Un aumento brusco e inexplicable — especialmente tras un trauma — va directo al clínico.</span></p></div>
+            <div class="red-item"><b><span class="en">Self-harm signals on screening</span><span class="es">Señales de autolesión en la evaluación</span></b><p><span class="en">Any signal on a screening answer is routed at once, not held for routine review.</span><span class="es">Cualquier señal en una respuesta de evaluación se deriva de inmediato, sin esperar la revisión rutinaria.</span></p></div>
+            <div class="red-item"><b><span class="en">Opioid-risk signals</span><span class="es">Señales de riesgo con opioides</span></b><p><span class="en">Sedation reports, early-refill patterns, or adherence check-ins that stop abruptly.</span><span class="es">Reportes de sedación, patrones de resurtido anticipado, o registros de adherencia que se detienen de forma abrupta.</span></p></div>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="boardH">
+        <p class="kicker"><span class="en">The clinic day, as the care team sees it</span><span class="es">El día de la clínica, como lo ve el equipo de cuidados</span></p>
+        <h2 id="boardH"><span class="en">Monitoring board — demo</span><span class="es">Tablero de monitoreo — demostración</span></h2>
+        <p class="lede"><span class="en">A working mock of the daily board: who has checked in, where each pain trend is moving, how many data days each patient has this period, and which flags are waiting for a named clinician. Select a patient to open their week.</span><span class="es">Una maqueta funcional del tablero diario: quién ha registrado su estado, hacia dónde se mueve cada tendencia de dolor, cuántos días de datos tiene cada paciente en este período y qué alertas esperan a un clínico identificado. Seleccione un paciente para abrir su semana.</span></p>
+
+        <div class="board" style="margin-top:18px">
+          <div class="board-head">
+            <span class="demo-label"><span class="en">Synthetic demo data — no real patients</span><span class="es">Datos de demostración sintéticos — sin pacientes reales</span></span>
+            <button type="button" class="filter-btn" id="flagFilter" aria-pressed="false"><span class="en">Show only flags needing review</span><span class="es">Mostrar solo alertas por revisar</span></button>
+          </div>
+          <div id="boardRows"></div>
+          <div class="board-empty" id="boardEmpty"><span class="en">No patients match this filter.</span><span class="es">Ningún paciente coincide con este filtro.</span></div>
+        </div>
+        <p class="note-line"><span class="en">Every name and number on this board is invented for demonstration. Trend arrows compare today's score with the patient's own recent pattern — up is worse for pain, down is better, flat is steady.</span><span class="es">Cada nombre y número en este tablero es inventado para demostración. Las flechas de tendencia comparan la puntuación de hoy con el patrón reciente del propio paciente: subir es peor para el dolor, bajar es mejor, plano es estable.</span></p>
+      </section>
+
+      <section aria-labelledby="compH">
+        <div class="compliance">
+          <h2 id="compH"><span class="en">The compliance spine</span><span class="es">La estructura de cumplimiento</span></h2>
+          <ul>
+            <li><span class="en">Every program has its own consent — nothing bills without it.</span><span class="es">Cada programa tiene su propio consentimiento — nada se factura sin él.</span></li>
+            <li><span class="en">All time is server-stamped — nothing can be backdated.</span><span class="es">Todo el tiempo lleva el sello del servidor — nada puede fecharse hacia atrás.</span></li>
+            <li><span class="en">No minute or day is counted twice across programs.</span><span class="es">Ningún minuto ni día se cuenta dos veces entre programas.</span></li>
+            <li><span class="en">A named human reviewer signs off before any claim.</span><span class="es">Un revisor humano identificado aprueba antes de cualquier reclamación.</span></li>
+            <li><span class="en">HIPAA — data encrypted, access logged.</span><span class="es">HIPAA — datos cifrados, acceso registrado.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>
+        <p><span class="en">CURA6 · Pain Management monitoring — the reference implementation of the CURA6 general monitoring system. First deployed at the pilot clinic, starting with the low back pain cohort. The system monitors, records, and flags; clinicians decide.</span><span class="es">CURA6 · Monitoreo de Manejo del Dolor — la implementación de referencia del sistema general de monitoreo CURA6. Desplegado primero en la clínica piloto, comenzando con la cohorte de dolor lumbar. El sistema monitorea, registra y marca; los clínicos deciden.</span></p>
+      </footer>
+    </div>
+
+    <script>
+    (function(){
+      "use strict";
+      var lang = "en";
+      function L(en, es){ return lang === "es" ? es : en; }
+
+      /* ---------- Dropdown data ---------- */
+      var F = { /* field labels */
+        monitors: ["What is monitored","Qué se monitorea"],
+        cadence: ["Cadence","Cadencia"],
+        source: ["Data source","Fuente de datos"],
+        flags: ["Alert / flag rules","Reglas de alerta"],
+        who: ["Who acts","Quién actúa"],
+        consent: ["Its own consent","Su propio consentimiento"],
+        gates: ["Compliance gates","Controles de cumplimiento"]
+      };
+      var GATES = ["Consent on file before tracking or billing; every entry server-stamped; no day or minute counted twice; a named human reviewer signs off before any claim.",
+                   "Consentimiento en archivo antes del seguimiento o la facturación; cada registro con sello del servidor; ningún día ni minuto contado dos veces; un revisor humano identificado aprueba antes de cualquier reclamación."];
+      function P(nameEn, nameEs, mode, sumEn, sumEs, mon, cad, src, flg, who, con){
+        return { name:[nameEn,nameEs], mode:mode, summary:[sumEn,sumEs], monitors:mon, cadence:cad, source:src, flags:flg, who:who, consent:con, gates:GATES };
+      }
+      var MOBILE = ["Mobile-based","Móvil"], NONMOBILE = ["Non-mobile — phone + chart","No móvil — teléfono e historia"];
+
+      var DATA = {
+        pain: { label:["Pain Management","Manejo del Dolor"], programs:{
+          rtm: P("RTM — Remote Therapeutic Monitoring","RTM — Monitoreo Terapéutico Remoto", MOBILE,
+            "The headline pain program. The patient checks in daily in the app, and guided home-exercise sessions count only when the phone senses real movement during the session.",
+            "El programa principal para el dolor. El paciente registra su estado a diario en la aplicación, y las sesiones guiadas de ejercicio en casa solo cuentan cuando el teléfono detecta movimiento real durante la sesión.",
+            ["Daily pain score 0–10, function check-in, guided home-exercise completion with movement verification, medication adherence, sleep report, and flare pattern against the patient's own baseline.","Puntuación diaria de dolor 0–10, registro de función, finalización de ejercicios guiados en casa con verificación de movimiento, adherencia a la medicación, reporte de sueño y patrón de brotes frente a la línea base del propio paciente."],
+            ["Daily check-ins; period counted in exact data days — 16+ days full tier, 2–15 lower tier, setup once per episode after the education steps, at least one live interaction monthly.","Registros diarios; el período se cuenta en días de datos exactos — 16+ días nivel completo, 2–15 nivel inferior, configuración una vez por episodio tras los pasos de educación, al menos una interacción en vivo al mes."],
+            ["Patient mobile app, with the movement-sensor proof layer (activity summaries only — never location, never raw motion).","Aplicación móvil del paciente, con la capa de prueba por sensor de movimiento (solo resúmenes de actividad — nunca ubicación, nunca movimiento en bruto)."],
+            ["The five REVIEW flags (identical-score run 5+ days, machine-regular times, zero-movement completion, too-fast completion, perfect streak 14+ in the first 30), plus flare detection. Every flag routes to a named clinician — never an accusation.","Las cinco alertas de REVISIÓN (serie idéntica de 5+ días, horarios mecánicamente regulares, finalización sin movimiento, finalización demasiado rápida, racha perfecta de 14+ en los primeros 30), más la detección de brotes. Cada alerta va a un clínico identificado — nunca una acusación."],
+            ["The care team reviews trends and flags; the treating clinician decides on any change.","El equipo de cuidados revisa tendencias y alertas; el clínico tratante decide cualquier cambio."],
+            ["RTM has its own consent, plus a separate activity consent for movement sensing. Revocation ends RTM tracking and billing at once.","RTM tiene su propio consentimiento, más un consentimiento de actividad separado para la detección de movimiento. La revocación detiene el seguimiento y la facturación de RTM de inmediato."]),
+          ccm: P("CCM — Chronic Care Management","CCM — Manejo de Cuidados Crónicos", NONMOBILE,
+            "Monthly phone care management for pain patients with two or more chronic conditions.",
+            "Manejo telefónico mensual para pacientes con dolor con dos o más condiciones crónicas.",
+            ["Care-plan progress, medication reconciliation, coordination with other providers, symptom review between visits.","Avance del plan de cuidados, reconciliación de medicamentos, coordinación con otros proveedores, revisión de síntomas entre visitas."],
+            ["Monthly; 20+ documented minutes in the month.","Mensual; 20+ minutos documentados en el mes."],
+            ["Scheduled phone calls and the chart — no app, no sensor.","Llamadas telefónicas programadas y la historia clínica — sin aplicación, sin sensor."],
+            ["Missed monthly contact, medication discrepancies found on reconciliation, symptom worsening reported on a call.","Contacto mensual perdido, discrepancias de medicación halladas en la reconciliación, empeoramiento de síntomas reportado en una llamada."],
+            ["The care team, under the treating clinician's plan.","El equipo de cuidados, bajo el plan del clínico tratante."],
+            ["CCM has its own consent, taken before any CCM time is tracked.","CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM."]),
+          cpm: P("CPM — Chronic Pain Management","CPM — Manejo del Dolor Crónico", NONMOBILE,
+            "Monthly physician-led management of the chronic pain plan itself.",
+            "Manejo mensual dirigido por el médico del propio plan de dolor crónico.",
+            ["The monitoring record, response to treatment, and adjustments to the pain plan.","El registro de monitoreo, la respuesta al tratamiento y los ajustes al plan de dolor."],
+            ["Monthly, physician-led.","Mensual, dirigido por el médico."],
+            ["Chart review and documented physician management time — no app, no sensor.","Revisión de la historia y tiempo de manejo médico documentado — sin aplicación, sin sensor."],
+            ["Plan not working as expected, escalation pattern in the monitoring record, adherence breakdown.","Plan que no funciona como se esperaba, patrón de escalada en el registro de monitoreo, ruptura de la adherencia."],
+            ["The physician reviews the record, adjusts the plan, and documents management time.","El médico revisa el registro, ajusta el plan y documenta el tiempo de manejo."],
+            ["CPM has its own consent, separate from CCM and RTM.","CPM tiene su propio consentimiento, separado de CCM y RTM."]),
+          pcm: P("PCM — Principal Care Management","PCM — Manejo de Cuidado Principal", NONMOBILE,
+            "Intensive management of one single complex pain condition — one condition, one care plan.",
+            "Manejo intensivo de una sola condición de dolor compleja — una condición, un plan de cuidados.",
+            ["The single complex condition: its course, its treatment response, and its one care plan.","La condición compleja única: su evolución, su respuesta al tratamiento y su único plan de cuidados."],
+            ["Monthly, intensive, for the months the condition needs it.","Mensual, intensivo, durante los meses que la condición lo necesite."],
+            ["Phone management and chart documentation — no app, no sensor.","Manejo telefónico y documentación en la historia — sin aplicación, sin sensor."],
+            ["Condition destabilizing, plan milestones missed, new symptoms reported between contacts.","Condición que se desestabiliza, hitos del plan no cumplidos, síntomas nuevos reportados entre contactos."],
+            ["The physician and care team on the single-condition plan.","El médico y el equipo de cuidados sobre el plan de la condición única."],
+            ["PCM has its own consent for that condition's episode of care.","PCM tiene su propio consentimiento para el episodio de cuidado de esa condición."]),
+          tcm: P("TCM — Transitional Care Management","TCM — Manejo de Cuidados Transicionales", NONMOBILE,
+            "Post-discharge follow-up: the days right after a hospital or facility stay are watched closely.",
+            "Seguimiento tras el alta: los días justo después de una estancia en hospital o centro se vigilan de cerca.",
+            ["Recovery after discharge, and medication reconciliation no later than the follow-up visit.","La recuperación tras el alta, y la reconciliación de medicamentos a más tardar en la visita de seguimiento."],
+            ["Per discharge: interactive contact within 2 business days; a visit within 7 or 14 days, by complexity.","Por cada alta: contacto interactivo dentro de 2 días laborables; una visita dentro de 7 o 14 días, según la complejidad."],
+            ["Phone contact and the chart — no app, no sensor.","Contacto telefónico y la historia clínica — sin aplicación, sin sensor."],
+            ["Contact window missed, visit window at risk, medication list not reconciled by the visit.","Ventana de contacto perdida, ventana de visita en riesgo, lista de medicamentos no reconciliada para la visita."],
+            ["The care team makes contact; the clinician holds the visit.","El equipo de cuidados hace el contacto; el clínico realiza la visita."],
+            ["TCM has its own consent, taken at enrollment into the discharge episode. It runs per discharge, on top of any monthly program.","TCM tiene su propio consentimiento, obtenido al inscribirse en el episodio de alta. Funciona por cada alta, adicional a cualquier programa mensual."]),
+          rpm: P("RPM — Remote Patient Monitoring (secondary for pain)","RPM — Monitoreo Remoto del Paciente (secundario para el dolor)", MOBILE,
+            "Device data, available where a device is genuinely in play — secondary for pain, where the daily check-in and guided session carry the evidence.",
+            "Datos de dispositivos, disponibles cuando un dispositivo está realmente en uso — secundario para el dolor, donde el registro diario y la sesión guiada aportan la evidencia.",
+            ["Measurements transmitted by a patient's connected devices into the record.","Mediciones transmitidas por los dispositivos conectados del paciente al registro."],
+            ["Continuous device stream, reviewed on the care team's schedule.","Flujo continuo de dispositivos, revisado según el calendario del equipo de cuidados."],
+            ["Connected devices — not the phone check-in.","Dispositivos conectados — no el registro telefónico."],
+            ["Out-of-range readings, missed transmissions, a device gone silent.","Lecturas fuera de rango, transmisiones perdidas, un dispositivo que deja de transmitir."],
+            ["The care team reviews device data; the clinician decides.","El equipo de cuidados revisa los datos de dispositivos; el clínico decide."],
+            ["RPM has its own consent and its own rules; a patient is never billed under RPM and RTM for the same period.","RPM tiene su propio consentimiento y sus propias reglas; un paciente nunca se factura bajo RPM y RTM en el mismo período."])
+        }},
+        cardio: { label:["Cardiology","Cardiología"], programs:{
+          rpm: P("RPM — Remote Patient Monitoring","RPM — Monitoreo Remoto del Paciente", MOBILE,
+            "The headline device program for cardiology: readings stream in from the patient's own devices.",
+            "El programa de dispositivos principal para cardiología: las lecturas llegan desde los dispositivos del propio paciente.",
+            ["Home blood pressure readings, daily weight for heart-failure surveillance, activity.","Lecturas de presión arterial en casa, peso diario para vigilancia de insuficiencia cardíaca, actividad."],
+            ["Continuous device stream; daily weight and scheduled blood-pressure readings.","Flujo continuo de dispositivos; peso diario y lecturas programadas de presión arterial."],
+            ["Connected blood-pressure cuff and scale.","Manguito de presión arterial y báscula conectados."],
+            ["Out-of-range readings, rapid weight change, missed readings.","Lecturas fuera de rango, cambio rápido de peso, lecturas perdidas."],
+            ["The care team reviews; the cardiologist decides.","El equipo de cuidados revisa; el cardiólogo decide."],
+            ["RPM has its own consent, taken before any device data is tracked for billing.","RPM tiene su propio consentimiento, obtenido antes de seguir cualquier dato de dispositivo para facturación."]),
+          ccm: P("CCM — Chronic Care Management","CCM — Manejo de Cuidados Crónicos", NONMOBILE,
+            "Monthly phone care management for cardiology patients with two or more chronic conditions.",
+            "Manejo telefónico mensual para pacientes de cardiología con dos o más condiciones crónicas.",
+            ["Symptom review — breathlessness, chest discomfort, swelling — medication reconciliation, and care-plan coordination.","Revisión de síntomas — falta de aire, molestia en el pecho, hinchazón — reconciliación de medicamentos y coordinación del plan de cuidados."],
+            ["Monthly; 20+ documented minutes in the month.","Mensual; 20+ minutos documentados en el mes."],
+            ["Scheduled phone calls and the chart.","Llamadas telefónicas programadas y la historia clínica."],
+            ["New or worsening symptoms on a call, medication discrepancies, missed monthly contact.","Síntomas nuevos o que empeoran en una llamada, discrepancias de medicación, contacto mensual perdido."],
+            ["The care team, under the cardiologist's plan.","El equipo de cuidados, bajo el plan del cardiólogo."],
+            ["CCM has its own consent, taken before any CCM time is tracked.","CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM."]),
+          pcm: P("PCM — Principal Care Management","PCM — Manejo de Cuidado Principal", NONMOBILE,
+            "Intensive management of one single complex cardiac condition.",
+            "Manejo intensivo de una sola condición cardíaca compleja.",
+            ["The single condition's course, treatment response, and care plan.","La evolución de la condición única, la respuesta al tratamiento y el plan de cuidados."],
+            ["Monthly, intensive, physician-led.","Mensual, intensivo, dirigido por el médico."],
+            ["Phone management and chart documentation.","Manejo telefónico y documentación en la historia."],
+            ["Condition destabilizing, missed plan milestones.","Condición que se desestabiliza, hitos del plan no cumplidos."],
+            ["The cardiologist and care team.","El cardiólogo y el equipo de cuidados."],
+            ["PCM has its own consent for that condition's episode of care.","PCM tiene su propio consentimiento para el episodio de cuidado de esa condición."]),
+          tcm: P("TCM — Transitional Care Management","TCM — Manejo de Cuidados Transicionales", NONMOBILE,
+            "Post-discharge follow-up after cardiac events and procedures.",
+            "Seguimiento tras el alta después de eventos y procedimientos cardíacos.",
+            ["Recovery after discharge and medication reconciliation by the follow-up visit.","La recuperación tras el alta y la reconciliación de medicamentos para la visita de seguimiento."],
+            ["Per discharge: contact within 2 business days; visit within 7 or 14 days, by complexity.","Por cada alta: contacto dentro de 2 días laborables; visita dentro de 7 o 14 días, según la complejidad."],
+            ["Phone contact and the chart.","Contacto telefónico y la historia clínica."],
+            ["Contact or visit window at risk, medication list not reconciled.","Ventana de contacto o visita en riesgo, lista de medicamentos no reconciliada."],
+            ["The care team makes contact; the clinician holds the visit.","El equipo de cuidados hace el contacto; el clínico realiza la visita."],
+            ["TCM has its own consent, taken at enrollment into the discharge episode.","TCM tiene su propio consentimiento, obtenido al inscribirse en el episodio de alta."]),
+          rtm: P("RTM — Remote Therapeutic Monitoring","RTM — Monitoreo Terapéutico Remoto", MOBILE,
+            "Used in cardiology where a musculoskeletal rehabilitation program applies — for example, alongside cardiac recovery.",
+            "Usado en cardiología cuando aplica un programa de rehabilitación musculoesquelética — por ejemplo, junto a la recuperación cardíaca.",
+            ["Pain and function check-ins and guided home sessions with movement verification, where a rehab program is prescribed.","Registros de dolor y función y sesiones guiadas en casa con verificación de movimiento, cuando se prescribe un programa de rehabilitación."],
+            ["Daily check-ins; period counted in exact data days.","Registros diarios; el período se cuenta en días de datos exactos."],
+            ["Patient mobile app with the movement-sensor proof layer (activity only, never location).","Aplicación móvil del paciente con la capa de prueba por sensor de movimiento (solo actividad, nunca ubicación)."],
+            ["The five REVIEW flags, plus flare detection against the patient's own pattern.","Las cinco alertas de REVISIÓN, más la detección de brotes frente al patrón del propio paciente."],
+            ["The care team reviews; the clinician decides.","El equipo de cuidados revisa; el clínico decide."],
+            ["RTM has its own consent, plus a separate activity consent for movement sensing.","RTM tiene su propio consentimiento, más un consentimiento de actividad separado para la detección de movimiento."])
+        }},
+        ortho: { label:["Orthopedics","Ortopedia"], programs:{
+          rtm: P("RTM — Remote Therapeutic Monitoring","RTM — Monitoreo Terapéutico Remoto", MOBILE,
+            "The headline orthopedics program: recovery after a procedure or injury runs through the app, at home.",
+            "El programa principal de ortopedia: la recuperación tras un procedimiento o lesión se realiza en la aplicación, en casa.",
+            ["Guided home-exercise sessions with movement verification, pain and function scores through recovery, adherence.","Sesiones guiadas de ejercicio en casa con verificación de movimiento, puntuaciones de dolor y función durante la recuperación, adherencia."],
+            ["Daily check-ins; period counted in exact data days — 16+ full tier, 2–15 lower tier.","Registros diarios; el período se cuenta en días de datos exactos — 16+ nivel completo, 2–15 nivel inferior."],
+            ["Patient mobile app with the movement-sensor proof layer (activity only, never location).","Aplicación móvil del paciente con la capa de prueba por sensor de movimiento (solo actividad, nunca ubicación)."],
+            ["The five REVIEW flags, plus stalled-recovery and climbing-pain patterns.","Las cinco alertas de REVISIÓN, más patrones de recuperación estancada y dolor en aumento."],
+            ["The care team reviews; the surgeon or treating clinician decides.","El equipo de cuidados revisa; el cirujano o clínico tratante decide."],
+            ["RTM has its own consent, plus a separate activity consent for movement sensing.","RTM tiene su propio consentimiento, más un consentimiento de actividad separado para la detección de movimiento."]),
+          tcm: P("TCM — Transitional Care Management","TCM — Manejo de Cuidados Transicionales", NONMOBILE,
+            "The discharge window after surgery, watched closely.",
+            "La ventana de alta tras la cirugía, vigilada de cerca.",
+            ["Post-surgical recovery and medication reconciliation by the follow-up visit.","La recuperación posquirúrgica y la reconciliación de medicamentos para la visita de seguimiento."],
+            ["Per discharge: contact within 2 business days; visit within 7 or 14 days, by complexity.","Por cada alta: contacto dentro de 2 días laborables; visita dentro de 7 o 14 días, según la complejidad."],
+            ["Phone contact and the chart.","Contacto telefónico y la historia clínica."],
+            ["Contact or visit window at risk, wound or swelling concerns reported on contact.","Ventana de contacto o visita en riesgo, preocupaciones de herida o hinchazón reportadas en el contacto."],
+            ["The care team makes contact; the clinician holds the visit.","El equipo de cuidados hace el contacto; el clínico realiza la visita."],
+            ["TCM has its own consent, taken at enrollment into the discharge episode.","TCM tiene su propio consentimiento, obtenido al inscribirse en el episodio de alta."]),
+          ccm: P("CCM — Chronic Care Management","CCM — Manejo de Cuidados Crónicos", NONMOBILE,
+            "Monthly phone care management for orthopedic patients with two or more chronic conditions.",
+            "Manejo telefónico mensual para pacientes ortopédicos con dos o más condiciones crónicas.",
+            ["Care-plan progress, medication reconciliation, coordination, symptom review between visits.","Avance del plan de cuidados, reconciliación de medicamentos, coordinación, revisión de síntomas entre visitas."],
+            ["Monthly; 20+ documented minutes in the month.","Mensual; 20+ minutos documentados en el mes."],
+            ["Scheduled phone calls and the chart.","Llamadas telefónicas programadas y la historia clínica."],
+            ["Missed monthly contact, medication discrepancies, worsening symptoms.","Contacto mensual perdido, discrepancias de medicación, síntomas que empeoran."],
+            ["The care team, under the treating clinician's plan.","El equipo de cuidados, bajo el plan del clínico tratante."],
+            ["CCM has its own consent, taken before any CCM time is tracked.","CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM."]),
+          pcm: P("PCM — Principal Care Management","PCM — Manejo de Cuidado Principal", NONMOBILE,
+            "Intensive management of one single complex orthopedic condition.",
+            "Manejo intensivo de una sola condición ortopédica compleja.",
+            ["The single condition's recovery course and care plan.","La evolución de recuperación de la condición única y su plan de cuidados."],
+            ["Monthly, intensive, physician-led.","Mensual, intensivo, dirigido por el médico."],
+            ["Phone management and chart documentation.","Manejo telefónico y documentación en la historia."],
+            ["Recovery off plan, missed milestones.","Recuperación fuera del plan, hitos no cumplidos."],
+            ["The physician and care team.","El médico y el equipo de cuidados."],
+            ["PCM has its own consent for that condition's episode of care.","PCM tiene su propio consentimiento para el episodio de cuidado de esa condición."])
+        }},
+        primary: { label:["Primary Care / Internal Medicine","Atención Primaria / Medicina Interna"], programs:{
+          ccm: P("CCM — Chronic Care Management","CCM — Manejo de Cuidados Crónicos", NONMOBILE,
+            "The headline program for primary care: patients with two or more chronic conditions, managed monthly by phone.",
+            "El programa principal de atención primaria: pacientes con dos o más condiciones crónicas, manejados mensualmente por teléfono.",
+            ["Chronic-condition symptom review, medication reconciliation, care-plan progress, coordination across providers.","Revisión de síntomas de condiciones crónicas, reconciliación de medicamentos, avance del plan de cuidados, coordinación entre proveedores."],
+            ["Monthly; 20+ documented minutes in the month.","Mensual; 20+ minutos documentados en el mes."],
+            ["Scheduled phone calls and the chart.","Llamadas telefónicas programadas y la historia clínica."],
+            ["Missed monthly contact, medication discrepancies, worsening symptoms.","Contacto mensual perdido, discrepancias de medicación, síntomas que empeoran."],
+            ["The care team, under the primary clinician's plan.","El equipo de cuidados, bajo el plan del clínico de atención primaria."],
+            ["CCM has its own consent, taken before any CCM time is tracked.","CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM."]),
+          rpm: P("RPM — Remote Patient Monitoring","RPM — Monitoreo Remoto del Paciente", MOBILE,
+            "Device data for the panels primary care follows day to day.",
+            "Datos de dispositivos para los paneles que la atención primaria sigue día a día.",
+            ["Blood pressure for hypertension panels, weight, and other device measures in the record.","Presión arterial para paneles de hipertensión, peso y otras mediciones de dispositivos en el registro."],
+            ["Continuous device stream, reviewed on the care team's schedule.","Flujo continuo de dispositivos, revisado según el calendario del equipo de cuidados."],
+            ["Connected home devices.","Dispositivos domésticos conectados."],
+            ["Out-of-range readings, rapid weight change, missed readings.","Lecturas fuera de rango, cambio rápido de peso, lecturas perdidas."],
+            ["The care team reviews; the clinician decides.","El equipo de cuidados revisa; el clínico decide."],
+            ["RPM has its own consent, taken before any device data is tracked for billing.","RPM tiene su propio consentimiento, obtenido antes de seguir cualquier dato de dispositivo para facturación."]),
+          pcm: P("PCM — Principal Care Management","PCM — Manejo de Cuidado Principal", NONMOBILE,
+            "Intensive management of one single complex condition.",
+            "Manejo intensivo de una sola condición compleja.",
+            ["The single condition's course, treatment response, and care plan.","La evolución de la condición única, la respuesta al tratamiento y el plan de cuidados."],
+            ["Monthly, intensive, physician-led.","Mensual, intensivo, dirigido por el médico."],
+            ["Phone management and chart documentation.","Manejo telefónico y documentación en la historia."],
+            ["Condition destabilizing, missed plan milestones.","Condición que se desestabiliza, hitos del plan no cumplidos."],
+            ["The physician and care team.","El médico y el equipo de cuidados."],
+            ["PCM has its own consent for that condition's episode of care.","PCM tiene su propio consentimiento para el episodio de cuidado de esa condición."]),
+          tcm: P("TCM — Transitional Care Management","TCM — Manejo de Cuidados Transicionales", NONMOBILE,
+            "Post-discharge follow-up for the practice's own patients after a hospital stay.",
+            "Seguimiento tras el alta para los pacientes propios de la práctica después de una estancia hospitalaria.",
+            ["Recovery after discharge and medication reconciliation by the follow-up visit.","La recuperación tras el alta y la reconciliación de medicamentos para la visita de seguimiento."],
+            ["Per discharge: contact within 2 business days; visit within 7 or 14 days, by complexity.","Por cada alta: contacto dentro de 2 días laborables; visita dentro de 7 o 14 días, según la complejidad."],
+            ["Phone contact and the chart.","Contacto telefónico y la historia clínica."],
+            ["Contact or visit window at risk, medication list not reconciled.","Ventana de contacto o visita en riesgo, lista de medicamentos no reconciliada."],
+            ["The care team makes contact; the clinician holds the visit.","El equipo de cuidados hace el contacto; el clínico realiza la visita."],
+            ["TCM has its own consent, taken at enrollment into the discharge episode.","TCM tiene su propio consentimiento, obtenido al inscribirse en el episodio de alta."]),
+          pinchi: P("PIN / CHI — Navigation","PIN / CHI — Navegación", NONMOBILE,
+            "Principal Illness Navigation and Community Health Integration: guided support for patients facing a serious illness or unmet social needs.",
+            "Navegación de Enfermedad Principal e Integración de Salud Comunitaria: apoyo guiado para pacientes con una enfermedad grave o necesidades sociales no cubiertas.",
+            ["Navigation needs, barriers to care, and community-resource connections, reviewed on scheduled contacts.","Necesidades de navegación, barreras para la atención y conexiones con recursos comunitarios, revisados en contactos programados."],
+            ["Monthly navigation contacts, documented as time entries.","Contactos mensuales de navegación, documentados como registros de tiempo."],
+            ["Phone contacts and the chart.","Contactos telefónicos y la historia clínica."],
+            ["Barrier unresolved, referral not completed, patient unreachable.","Barrera sin resolver, derivación no completada, paciente incontactable."],
+            ["The navigation team, under the treating clinician.","El equipo de navegación, bajo el clínico tratante."],
+            ["PIN/CHI has its own consent, taken before navigation begins.","PIN/CHI tiene su propio consentimiento, obtenido antes de que comience la navegación."])
+        }},
+        neuro: { label:["Neurology","Neurología"], programs:{
+          ccm: P("CCM — Chronic Care Management","CCM — Manejo de Cuidados Crónicos", NONMOBILE,
+            "Monthly phone care management for patients with chronic neurological conditions and other chronic conditions alongside.",
+            "Manejo telefónico mensual para pacientes con condiciones neurológicas crónicas y otras condiciones crónicas asociadas.",
+            ["Symptom and function tracking, medication adherence and reconciliation, care-plan coordination.","Seguimiento de síntomas y función, adherencia y reconciliación de medicamentos, coordinación del plan de cuidados."],
+            ["Monthly; 20+ documented minutes in the month.","Mensual; 20+ minutos documentados en el mes."],
+            ["Scheduled phone calls and the chart.","Llamadas telefónicas programadas y la historia clínica."],
+            ["Symptom change reported on a call, adherence breakdown, missed contact.","Cambio de síntomas reportado en una llamada, ruptura de la adherencia, contacto perdido."],
+            ["The care team, under the neurologist's plan.","El equipo de cuidados, bajo el plan del neurólogo."],
+            ["CCM has its own consent, taken before any CCM time is tracked.","CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM."]),
+          pcm: P("PCM — Principal Care Management","PCM — Manejo de Cuidado Principal", NONMOBILE,
+            "Intensive management of one single complex neurological condition.",
+            "Manejo intensivo de una sola condición neurológica compleja.",
+            ["The single condition's course, function, treatment response, and care plan.","La evolución de la condición única, la función, la respuesta al tratamiento y el plan de cuidados."],
+            ["Monthly, intensive, physician-led.","Mensual, intensivo, dirigido por el médico."],
+            ["Phone management and chart documentation.","Manejo telefónico y documentación en la historia."],
+            ["Function declining, plan milestones missed.","Función en declive, hitos del plan no cumplidos."],
+            ["The neurologist and care team.","El neurólogo y el equipo de cuidados."],
+            ["PCM has its own consent for that condition's episode of care.","PCM tiene su propio consentimiento para el episodio de cuidado de esa condición."]),
+          rtm: P("RTM — Remote Therapeutic Monitoring","RTM — Monitoreo Terapéutico Remoto", MOBILE,
+            "Mobility and rehabilitation check-ins where a home program is prescribed.",
+            "Registros de movilidad y rehabilitación cuando se prescribe un programa en casa.",
+            ["Guided mobility and rehabilitation sessions with movement verification, function check-ins, adherence.","Sesiones guiadas de movilidad y rehabilitación con verificación de movimiento, registros de función, adherencia."],
+            ["Daily check-ins; period counted in exact data days.","Registros diarios; el período se cuenta en días de datos exactos."],
+            ["Patient mobile app with the movement-sensor proof layer (activity only, never location).","Aplicación móvil del paciente con la capa de prueba por sensor de movimiento (solo actividad, nunca ubicación)."],
+            ["The five REVIEW flags, plus function-decline patterns against the patient's own baseline.","Las cinco alertas de REVISIÓN, más patrones de declive funcional frente a la línea base del propio paciente."],
+            ["The care team reviews; the neurologist decides.","El equipo de cuidados revisa; el neurólogo decide."],
+            ["RTM has its own consent, plus a separate activity consent for movement sensing.","RTM tiene su propio consentimiento, más un consentimiento de actividad separado para la detección de movimiento."]),
+          tcm: P("TCM — Transitional Care Management","TCM — Manejo de Cuidados Transicionales", NONMOBILE,
+            "Post-discharge follow-up after stroke and other acute events.",
+            "Seguimiento tras el alta después de un accidente cerebrovascular y otros eventos agudos.",
+            ["Recovery after discharge and medication reconciliation by the follow-up visit.","La recuperación tras el alta y la reconciliación de medicamentos para la visita de seguimiento."],
+            ["Per discharge: contact within 2 business days; visit within 7 or 14 days, by complexity.","Por cada alta: contacto dentro de 2 días laborables; visita dentro de 7 o 14 días, según la complejidad."],
+            ["Phone contact and the chart.","Contacto telefónico y la historia clínica."],
+            ["Contact or visit window at risk, new symptoms reported on contact.","Ventana de contacto o visita en riesgo, síntomas nuevos reportados en el contacto."],
+            ["The care team makes contact; the clinician holds the visit.","El equipo de cuidados hace el contacto; el clínico realiza la visita."],
+            ["TCM has its own consent, taken at enrollment into the discharge episode.","TCM tiene su propio consentimiento, obtenido al inscribirse en el episodio de alta."])
+        }},
+        endo: { label:["Endocrinology","Endocrinología"], programs:{
+          ccm: P("CCM — Chronic Care Management","CCM — Manejo de Cuidados Crónicos", NONMOBILE,
+            "Monthly phone care management, including diabetes care-management review on scheduled calls.",
+            "Manejo telefónico mensual, incluida la revisión del manejo de la diabetes en llamadas programadas.",
+            ["Diabetes care-management review, medication reconciliation, symptom review, care-plan coordination.","Revisión del manejo de la diabetes, reconciliación de medicamentos, revisión de síntomas, coordinación del plan de cuidados."],
+            ["Monthly; 20+ documented minutes in the month.","Mensual; 20+ minutos documentados en el mes."],
+            ["Scheduled phone calls and the chart.","Llamadas telefónicas programadas y la historia clínica."],
+            ["Missed monthly contact, medication discrepancies, symptoms worsening.","Contacto mensual perdido, discrepancias de medicación, síntomas que empeoran."],
+            ["The care team, under the endocrinologist's plan.","El equipo de cuidados, bajo el plan del endocrinólogo."],
+            ["CCM has its own consent, taken before any CCM time is tracked.","CCM tiene su propio consentimiento, obtenido antes de registrar cualquier tiempo de CCM."]),
+          rpm: P("RPM — Remote Patient Monitoring","RPM — Monitoreo Remoto del Paciente", MOBILE,
+            "Device measures the endocrine panel depends on, streamed into the record.",
+            "Mediciones de dispositivos de las que depende el panel endocrino, transmitidas al registro.",
+            ["Weight and blood pressure via connected devices.","Peso y presión arterial mediante dispositivos conectados."],
+            ["Continuous device stream, reviewed on the care team's schedule.","Flujo continuo de dispositivos, revisado según el calendario del equipo de cuidados."],
+            ["Connected home devices.","Dispositivos domésticos conectados."],
+            ["Out-of-range readings, rapid weight change, missed readings.","Lecturas fuera de rango, cambio rápido de peso, lecturas perdidas."],
+            ["The care team reviews; the endocrinologist decides.","El equipo de cuidados revisa; el endocrinólogo decide."],
+            ["RPM has its own consent, taken before any device data is tracked for billing.","RPM tiene su propio consentimiento, obtenido antes de seguir cualquier dato de dispositivo para facturación."]),
+          pcm: P("PCM — Principal Care Management","PCM — Manejo de Cuidado Principal", NONMOBILE,
+            "Intensive management of one single complex endocrine condition.",
+            "Manejo intensivo de una sola condición endocrina compleja.",
+            ["The single condition's course, treatment response, and care plan.","La evolución de la condición única, la respuesta al tratamiento y el plan de cuidados."],
+            ["Monthly, intensive, physician-led.","Mensual, intensivo, dirigido por el médico."],
+            ["Phone management and chart documentation.","Manejo telefónico y documentación en la historia."],
+            ["Condition destabilizing, missed plan milestones.","Condición que se desestabiliza, hitos del plan no cumplidos."],
+            ["The endocrinologist and care team.","El endocrinólogo y el equipo de cuidados."],
+            ["PCM has its own consent for that condition's episode of care.","PCM tiene su propio consentimiento para el episodio de cuidado de esa condición."]),
+          cgm: P("CGM — Continuous Glucose Monitoring (placed, not yet built)","CGM — Monitoreo Continuo de Glucosa (ubicado, aún no construido)", MOBILE,
+            "CGM belongs to Endocrinology inside CURA6 by placement. It is recorded here as part of this subspecialty's framework; its monitoring set is built when the subspecialty build-out reaches it.",
+            "El CGM pertenece a Endocrinología dentro de CURA6 por ubicación. Se registra aquí como parte del marco de esta subespecialidad; su conjunto de monitoreo se construye cuando la configuración de la subespecialidad llegue a él.",
+            ["Glucose readings from a continuous sensor, day and night, for patients whose treatment depends on them.","Lecturas de glucosa de un sensor continuo, día y noche, para pacientes cuyo tratamiento depende de ellas."],
+            ["Continuous sensor stream with scheduled clinician review and interpretation.","Flujo continuo del sensor con revisión e interpretación clínica programada."],
+            ["Continuous glucose sensor worn by the patient.","Sensor continuo de glucosa que lleva el paciente."],
+            ["Sustained out-of-range glucose patterns, sensor gaps, readings needing clinician interpretation.","Patrones sostenidos de glucosa fuera de rango, interrupciones del sensor, lecturas que necesitan interpretación clínica."],
+            ["The endocrinology care team reviews; the clinician interprets and decides.","El equipo de endocrinología revisa; el clínico interpreta y decide."],
+            ["CGM will carry its own consent, like every CURA6 program, before any tracking or billing.","El CGM tendrá su propio consentimiento, como cada programa de CURA6, antes de cualquier seguimiento o facturación."])
+        }}
+      };
+      var ORDER = ["pain","cardio","ortho","primary","neuro","endo"];
+
+      var specSelect = document.getElementById("specSelect");
+      var progSelect = document.getElementById("progSelect");
+      var panel = document.getElementById("detailPanel");
+
+      function fillSpecs(){
+        specSelect.innerHTML = "";
+        ORDER.forEach(function(k){
+          var o = document.createElement("option");
+          o.value = k; o.textContent = L(DATA[k].label[0], DATA[k].label[1]);
+          specSelect.appendChild(o);
+        });
+      }
+      function fillProgs(){
+        var progs = DATA[specSelect.value].programs;
+        progSelect.innerHTML = "";
+        Object.keys(progs).forEach(function(k){
+          var o = document.createElement("option");
+          o.value = k; o.textContent = L(progs[k].name[0], progs[k].name[1]);
+          progSelect.appendChild(o);
+        });
+      }
+      function item(labelPair, valPair, full){
+        return '<div class="detail-item' + (full ? " full" : "") + '"><h4>' + L(labelPair[0], labelPair[1]) + '</h4><p>' + L(valPair[0], valPair[1]) + '</p></div>';
+      }
+      function renderDetail(){
+        var p = DATA[specSelect.value].programs[progSelect.value];
+        var modeCls = p.mode === MOBILE ? "mode-mobile" : "mode-nonmobile";
+        panel.innerHTML =
+          '<div class="detail-head"><h3>' + L(p.name[0], p.name[1]) + '</h3>' +
+          '<span class="mode-pill ' + modeCls + '">' + L(p.mode[0], p.mode[1]) + '</span></div>' +
+          '<p class="detail-summary">' + L(p.summary[0], p.summary[1]) + '</p>' +
+          '<div class="detail-grid">' +
+          item(F.monitors, p.monitors) + item(F.cadence, p.cadence) +
+          item(F.source, p.source) + item(F.flags, p.flags) +
+          item(F.who, p.who) + item(F.consent, p.consent) +
+          item(F.gates, p.gates, true) +
+          '</div>';
+      }
+      specSelect.addEventListener("change", function(){ fillProgs(); progSelect.selectedIndex = 0; renderDetail(); });
+      progSelect.addEventListener("change", renderDetail);
+
+      /* ---------- Monitoring board (synthetic) ---------- */
+      var DAYS = [["Mon","lun"],["Tue","mar"],["Wed","mié"],["Thu","jue"],["Fri","vie"],["Sat","sáb"],["Sun","dom"]];
+      var PATIENTS = [
+        { name:"Rosa Delgado", cohort:["Low back pain · week 4","Dolor lumbar · semana 4"], status:"in", statusText:["Checked in today","Registró hoy"], pain:4, trend:"down", days:18, badges:["RTM","CCM"], flag:null,
+          week:[6,5,5,4,5,4,4], sess:["done","done","done","done","missed","done","done"], note:["Steady improvement. Sessions completed 6 of 7 days; the missed day matches a reported poor night's sleep.","Mejora constante. Sesiones completadas 6 de 7 días; el día perdido coincide con una mala noche de sueño reportada."] },
+        { name:"James Whitfield", cohort:["Low back pain · week 2","Dolor lumbar · semana 2"], status:"in", statusText:["Checked in today","Registró hoy"], pain:7, trend:"up", days:11, badges:["RTM"], flag:["REVIEW — Flare: pain up sharply against his own recent pattern (4–5 range to 7). Routed to the named clinician for review.","REVISIÓN — Brote: el dolor subió bruscamente frente a su propio patrón reciente (rango 4–5 a 7). Dirigido al clínico identificado para revisión."],
+          week:[4,5,4,5,5,6,7], sess:["done","done","done","done","done","done","done"], note:["Three-day climb after a stable week. Flag waits for clinician review; no message has gone to the patient from the system.","Subida de tres días tras una semana estable. La alerta espera la revisión del clínico; el sistema no ha enviado ningún mensaje al paciente."] },
+        { name:"Amara Osei", cohort:["Chronic neck pain · week 3","Dolor cervical crónico · semana 3"], status:"wait", statusText:["Not yet today","Aún no hoy"], pain:5, trend:"flat", days:12, badges:["RTM","CPM"], flag:["REVIEW — Identical-score run: pain score of 5 for six days in a row. A clinician reviews it against the record — it is not an accusation.","REVISIÓN — Serie de puntuaciones idénticas: puntuación de dolor de 5 durante seis días seguidos. Un clínico la revisa junto al registro — no es una acusación."],
+          week:[5,5,5,5,5,5,null], sess:["done","done","done","done","done","done","na"], note:["Scores identical for six days. Today's check-in is still outstanding.","Puntuaciones idénticas durante seis días. El registro de hoy aún está pendiente."] },
+        { name:"Tomás Herrera", cohort:["Post-discharge · day 9","Tras el alta · día 9"], status:"in", statusText:["Checked in today","Registró hoy"], pain:3, trend:"down", days:9, badges:["RTM","TCM"], flag:null,
+          week:[5,4,4,3,4,3,3], sess:["done","done","done","done","done","done","done"], note:["Inside the TCM window: contact was made within 2 business days of discharge and the follow-up visit is booked inside 14 days.","Dentro de la ventana TCM: el contacto se hizo dentro de 2 días laborables tras el alta y la visita de seguimiento está reservada dentro de 14 días."] },
+        { name:"Grace Lindqvist", cohort:["Low back pain · week 2","Dolor lumbar · semana 2"], status:"in", statusText:["Checked in today","Registró hoy"], pain:6, trend:"flat", days:9, badges:["RTM","PCM"], flag:["REVIEW — Completed session with zero movement sensed on Tuesday. Routed to a named clinician to review with the patient.","REVISIÓN — Sesión completada sin movimiento detectado el martes. Dirigida a un clínico identificado para revisarla con la paciente."],
+          week:[6,6,5,6,6,5,6], sess:["done","done","done","done","done","done","done"], note:["Tuesday's session was marked complete with no movement recorded. All other days show normal movement.","La sesión del martes se marcó completa sin movimiento registrado. Los demás días muestran movimiento normal."] },
+        { name:"David Okafor", cohort:["CCM by phone · month 3","CCM por teléfono · mes 3"], status:"call", statusText:["Monthly call completed","Llamada mensual completada"], pain:5, trend:"down", days:null, badges:["CCM"], flag:null,
+          week:[null,null,null,null,null,null,null], sess:["na","na","na","na","na","na","na"], note:["Non-mobile patient — no app, no sensor. This month's call is documented: care plan reviewed, medications reconciled, 24 minutes recorded and server-stamped.","Paciente no móvil — sin aplicación, sin sensor. La llamada de este mes está documentada: plan de cuidados revisado, medicamentos reconciliados, 24 minutos registrados con sello del servidor."] },
+        { name:"Mei-Lin Chao", cohort:["Low back pain · week 3","Dolor lumbar · semana 3"], status:"in", statusText:["Checked in today","Registró hoy"], pain:2, trend:"down", days:20, badges:["RTM"], flag:["REVIEW — Perfect streak: 14 or more perfect days inside the first 30. Flagged for clinician review like any other anomaly — a perfect record is checked, not assumed.","REVISIÓN — Racha perfecta: 14 o más días perfectos dentro de los primeros 30. Marcada para revisión del clínico como cualquier otra anomalía — un registro perfecto se comprueba, no se asume."],
+          week:[3,2,2,3,2,2,2], sess:["done","done","done","done","done","done","done"], note:["Strong downward trend with full adherence. The perfect-streak flag is a routine review item, not a concern raised with the patient.","Tendencia descendente marcada con adherencia completa. La alerta de racha perfecta es un elemento de revisión rutinaria, no una preocupación planteada a la paciente."] }
+      ];
+      var boardRows = document.getElementById("boardRows");
+      var boardEmpty = document.getElementById("boardEmpty");
+      var flagsOnly = false;
+
+      function trendHTML(t){
+        if(t === "up") return '<span class="trend-up" aria-label="trending up">▲</span>';
+        if(t === "down") return '<span class="trend-down" aria-label="trending down">▼</span>';
+        return '<span class="trend-flat" aria-label="flat">→</span>';
+      }
+      function renderBoard(){
+        boardRows.innerHTML = "";
+        var shown = 0;
+        PATIENTS.forEach(function(pt, idx){
+          if(flagsOnly && !pt.flag) return;
+          shown++;
+          var row = document.createElement("div");
+          row.className = "prow";
+          var dotCls = pt.status === "in" ? "dot-in" : (pt.status === "call" ? "dot-call" : "dot-wait");
+          var daysText = pt.days === null ? L("Phone program","Programa telefónico") : pt.days + " " + L("days this period","días en este período");
+          var painText = pt.pain === null ? "—" : pt.pain + " / 10 " + trendHTML(pt.trend);
+          var badges = pt.badges.map(function(b){ return '<span class="badge">' + b + '</span>'; }).join("");
+          var flagCell = pt.flag ? '<span class="flag-count">1 ' + L("flag — review","alerta — revisar") + '</span>' : '<span class="flag-none">' + L("No flags","Sin alertas") + '</span>';
+          var weekCells = pt.week.map(function(s, i){
+            var sess = pt.sess[i];
+            var sessTxt = sess === "done" ? '<span class="sess sess-done">' + L("Session ✓","Sesión ✓") + '</span>'
+                        : sess === "missed" ? '<span class="sess sess-missed">' + L("Missed","Perdida") + '</span>'
+                        : '<span class="sess sess-na">—</span>';
+            return '<div class="day"><small>' + L(DAYS[i][0], DAYS[i][1]) + '</small><span class="ds">' + (s === null ? "—" : s) + '</span>' + sessTxt + '</div>';
+          }).join("");
+          row.innerHTML =
+            '<button type="button" class="prow-main" aria-expanded="false">' +
+              '<span class="pname"><b>' + pt.name + ' <span style="font-weight:400;color:var(--muted2);font-size:.8rem">(demo)</span></b><small>' + L(pt.cohort[0], pt.cohort[1]) + '</small><small class="m-meta">' + L(pt.statusText[0], pt.statusText[1]) + ' · ' + L("Pain","Dolor") + ' ' + painText + ' · ' + daysText + '</small></span>' +
+              '<span class="hide-m"><span class="status-dot ' + dotCls + '"></span>' + L(pt.statusText[0], pt.statusText[1]) + '</span>' +
+              '<span class="pain-score hide-m">' + painText + '</span>' +
+              '<span class="hide-m">' + daysText + '</span>' +
+              '<span style="display:flex;flex-direction:column;gap:5px"><span class="badges">' + badges + '</span>' + flagCell + '</span>' +
+            '</button>' +
+            '<div class="week"><h4>' + L("This week — daily pain score and session","Esta semana — puntuación diaria de dolor y sesión") + '</h4>' +
+              '<div class="week-grid">' + weekCells + '</div>' +
+              (pt.flag ? '<div class="week-flag">' + L(pt.flag[0], pt.flag[1]) + '</div>' : '') +
+              '<p class="week-note">' + L(pt.note[0], pt.note[1]) + '</p>' +
+            '</div>';
+          var btn = row.querySelector(".prow-main");
+          btn.addEventListener("click", function(){
+            var open = row.classList.toggle("open");
+            btn.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+          boardRows.appendChild(row);
+        });
+        boardEmpty.style.display = shown === 0 ? "block" : "none";
+      }
+      var filterBtn = document.getElementById("flagFilter");
+      filterBtn.addEventListener("click", function(){
+        flagsOnly = !flagsOnly;
+        filterBtn.setAttribute("aria-pressed", flagsOnly ? "true" : "false");
+        renderBoard();
+      });
+
+      /* ---------- Language toggle ---------- */
+      var enBtn = document.getElementById("langEn"), esBtn = document.getElementById("langEs");
+      function setLang(es){
+        lang = es ? "es" : "en";
+        document.body.classList.toggle("lang-es", es);
+        document.documentElement.lang = es ? "es" : "en";
+        enBtn.setAttribute("aria-pressed", es ? "false" : "true");
+        esBtn.setAttribute("aria-pressed", es ? "true" : "false");
+        var sv = specSelect.value, pv = progSelect.value;
+        fillSpecs(); specSelect.value = sv;
+        fillProgs(); progSelect.value = pv;
+        renderDetail(); renderBoard();
+      }
+      enBtn.addEventListener("click", function(){ setLang(false); });
+      esBtn.addEventListener("click", function(){ setLang(true); });
+
+      fillSpecs(); fillProgs(); renderDetail(); renderBoard();
+    })();
+    </script>
+  </body>
+</html>

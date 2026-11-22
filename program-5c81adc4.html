@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>CURAVIA Program for Roberto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+:root{
+  --bg:#f4f6f3; --surface:#ffffff; --surface2:#eef3f0; --surface3:#e6ede9;
+  --ink:#14201d; --muted:#5b6d69; --muted2:#6b7f7a; --line:#dde3df; --line2:#cbd8d2;
+  --teal:#0d4a43; --teal2:#14665c; --teal-dark:#082e2a; --teal-mid:#0a3530;
+  --mint:#7ec8bc; --mint-bg:#e6f4f0; --gold:#b9976a; --gold-bg:#fdf6e9;
+  --radius:18px; --radius-sm:12px;
+  --shadow:0 10px 30px rgba(10,53,48,.08); --shadow-lg:0 20px 50px rgba(10,53,48,.12);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0c1211; --surface:#17201e; --surface2:#1e2a27; --surface3:#24322e; --ink:#eef4f1; --muted:#a7b8b3; --muted2:#8fa8a1; --line:#2a3733; --line2:#35473f; --teal:#7ec8bc; --teal2:#8fd3c6; --teal-dark:#0a1f1c; --mint-bg:#1a2e2a; --shadow:0 10px 30px rgba(0,0,0,.35); --shadow-lg:0 20px 50px rgba(0,0,0,.4); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.6;font-size:16.5px;-webkit-font-smoothing:antialiased}
+a{color:var(--teal2)}
+button{font-family:inherit}
+button:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:2px;border-radius:8px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;line-height:1.05;letter-spacing:-.02em;font-weight:700}
+h1{font-size:clamp(2.4rem,5.5vw,3.7rem);margin:0}
+h2{font-size:clamp(1.7rem,3.2vw,2.2rem);margin:0 0 .35em}
+h3{font-size:1.28rem;margin:0 0 .3em}
+p{margin:.5em 0}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+@media(max-width:600px){.wrap{padding:0 16px}}
+
+/* Brand bar */
+.brandbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb, var(--surface) 92%, transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brandbar-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand-lockup{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand-mark{width:42px;height:42px;border-radius:11px;background:var(--teal-dark);display:grid;place-items:center;flex:none;box-shadow:0 4px 14px rgba(10,53,48,.25)}
+.brand-mark svg{width:26px;height:26px}
+.brand-name{line-height:1}
+.brand-name strong{display:block;font-size:1.28rem;letter-spacing:.14em;font-weight:800}
+.brand-name span{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:3px}
+.brand-meta{display:flex;align-items:center;gap:10px}
+.brand-meta .partner{font-size:.82rem;font-weight:600;color:var(--muted);text-align:right;line-height:1.3}
+.brand-meta .partner b{color:var(--ink);display:block;font-size:.88rem}
+.badge-live{display:inline-flex;align-items:center;gap:6px;background:var(--mint-bg);color:var(--teal);border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.badge-live i{width:7px;height:7px;background:#1a9e7a;border-radius:50%;display:block;box-shadow:0 0 0 3px rgba(26,158,122,.18)}
+@media(max-width:640px){.brand-meta .partner{display:none}.brand-name strong{font-size:1.1rem}}
+
+/* Hero */
+.hero{padding:36px 0 8px}
+.hero-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:28px;align-items:start}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--teal2);background:var(--surface);border:1px solid var(--line);padding:7px 11px;border-radius:999px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal2);display:block}
+.hero h1 span{color:var(--teal2)}
+.lede{font-size:1.18rem;color:var(--muted);max-width:640px;line-height:1.6;margin-top:14px}
+.lede strong{color:var(--ink)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:12px 18px;border-radius:999px;font-weight:700;font-size:.95rem;text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.btn-primary:hover{background:var(--teal-mid)}
+.btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn svg{width:18px;height:18px}
+.hero-card{background:var(--teal-dark);color:#fff;border-radius:20px;padding:20px;box-shadow:var(--shadow-lg)}
+.hero-card h3{color:#fff;font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase}
+.hero-card ul{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:12px}
+.hero-card li{display:flex;gap:12px;align-items:flex-start;font-size:.94rem;line-height:1.45;color:#d8ebe6}
+.hero-card li b{color:#fff}
+.hero-card .hc-icon{width:36px;height:36px;flex:none;border-radius:10px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+.hero-card .hc-icon svg{width:18px;height:18px;color:#fff}
+.trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.trust-pill{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:.84rem;font-weight:600}
+.trust-pill svg{width:16px;height:16px;color:var(--teal2)}
+
+/* How to use */
+.howto{margin:22px 0 6px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+.howto-icon{width:40px;height:40px;flex:none;border-radius:50%;background:var(--mint-bg);display:grid;place-items:center;color:var(--teal)}
+.howto-icon svg{width:20px;height:20px}
+.howto p{margin:0;font-size:.94rem;color:var(--muted)}
+.howto p strong{color:var(--ink)}
+.howto kbd{font-family:"IBM Plex Mono",monospace;font-size:.78rem;background:var(--surface2);border:1px solid var(--line);border-bottom-width:2px;padding:1px 6px;border-radius:6px;color:var(--ink)}
+
+/* Workflow */
+section{padding:18px 0 10px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.section-head p{color:var(--muted);max-width:560px;margin:0}
+.progress-wrap{margin:16px 0 12px}
+.progress-top{display:flex;justify-content:space-between;align-items:center;font-size:.84rem;font-weight:700}
+.progress-top span:last-child{color:var(--muted);font-weight:600}
+.progress-track{height:8px;background:var(--surface3);border-radius:999px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;background:var(--teal);border-radius:999px;transition:width .35s ease;width:16.6%}
+.wf-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0 6px}
+@media(max-width:900px){.wf-bar{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:560px){.wf-bar{grid-template-columns:repeat(2,1fr)}}
+.wf-btn{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:13px 13px 12px;font-size:.88rem;font-weight:700;color:var(--ink);cursor:pointer;min-height:76px;transition:.15s;line-height:1.3}
+.wf-btn:hover{border-color:var(--line2);transform:translateY(-1px)}
+.wf-btn i{width:32px;height:32px;flex:none;border-radius:50%;background:var(--surface2);color:var(--teal2);display:grid;place-items:center;font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:.88rem;font-weight:700}
+.wf-btn small{font-weight:500;color:var(--muted);font-size:.78rem;line-height:1.35;display:block}
+.wf-btn[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 8px 20px rgba(13,74,67,.22)}
+.wf-btn[aria-pressed="true"] i{background:rgba(255,255,255,.22);color:#fff}
+.wf-btn[aria-pressed="true"] small{color:#cfe3de}
+.live-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 18px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:var(--shadow)}
+.live-controls button{border:1px solid transparent;background:transparent;color:var(--ink);border-radius:999px;padding:10px 16px;font-size:.92rem;font-weight:700;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:7px}
+.live-controls button:hover{background:var(--surface2)}
+.live-controls button.primary{background:var(--teal);color:#fff}
+.live-controls button.primary:hover{background:var(--teal-mid)}
+.live-controls .spacer{flex:1}
+.live-controls .note{padding-right:10px}
+.note{font-size:.86rem;color:var(--muted)}
+.live-grid{display:grid;grid-template-columns:360px 1fr;gap:22px;align-items:start}
+@media(max-width:900px){.live-grid{grid-template-columns:1fr}}
+.col-label{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--teal2);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.col-label-left{display:flex;align-items:center;gap:8px}
+.col-label-left svg{width:16px;height:16px}
+.lang-toggle{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.lang-toggle button{min-height:36px;border:none;background:transparent;color:var(--ink);font-size:.82rem;font-weight:700;padding:6px 14px;cursor:pointer}
+.lang-toggle button[aria-pressed="true"]{background:var(--teal);color:#fff}
+
+/* Phone */
+.phone{background:#0f1a18;border-radius:42px;padding:11px;box-shadow:0 22px 50px rgba(10,53,48,.22);max-width:360px;margin:0 auto;width:100%;border:1px solid rgba(255,255,255,.08)}
+.phone-inner{background:#f4f7f5;border-radius:32px;overflow:hidden;min-height:560px;display:flex;flex-direction:column;color:#17211f}
+.phone-notch{height:22px;display:flex;justify-content:center;align-items:flex-start;padding-top:6px;background:#0a3530}
+.phone-notch i{width:74px;height:6px;border-radius:99px;background:rgba(255,255,255,.22);display:block}
+.phone-top{background:var(--teal-dark);color:#fff;padding:10px 18px 16px}
+.phone-top small{opacity:.78;font-size:.70rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:6px}
+.phone-top b{display:block;font-family:"Newsreader",serif;font-size:1.4rem;line-height:1.1;margin-top:3px;font-weight:700}
+.phone-body{padding:16px;display:grid;gap:12px;align-content:start;flex:1}
+.p-card{background:#fff;border:1px solid #e0e7e2;border-radius:16px;padding:14px 16px}
+.p-card h4{margin:0 0 4px;font-size:1rem;line-height:1.3}
+.p-card p{margin:.2em 0;font-size:.88rem;color:#5b6d69;line-height:1.5}
+.p-btn{display:block;width:100%;text-align:center;background:#0d4a43;color:#fff;border:none;border-radius:12px;padding:13px;font-weight:700;font-size:.94rem;cursor:pointer;min-height:48px}
+.p-btn.ghost{background:#fff;color:#0d4a43;border:1.5px solid #0d4a43}
+.p-check{display:flex;gap:10px;align-items:flex-start;font-size:.90rem;padding:8px 0;border-bottom:1px dashed #e0e7e2;line-height:1.45}
+.p-check:last-child{border-bottom:none}
+.tick{width:22px;height:22px;flex:none;border-radius:50%;background:#e5f2ec;color:#14665c;display:grid;place-items:center;font-size:.8rem;font-weight:800;margin-top:1px}
+.tick.wait{background:#fdf6e9;color:#a07c2c}
+.pain-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.pain-row button{width:36px;height:38px;min-height:38px;border-radius:10px;border:1px solid #cfdcd6;background:#fff;font-weight:700;font-size:.86rem;color:#17211f;cursor:pointer;padding:0}
+.pain-row button.sel{background:#0d4a43;color:#fff;border-color:#0d4a43}
+.p-progress{height:10px;background:#e3ebe6;border-radius:99px;overflow:hidden;margin-top:8px}
+.p-progress i{display:block;height:100%;background:#14665c;border-radius:99px}
+.p-msg{background:#e9f3ef;border-radius:14px 14px 14px 4px;padding:11px 13px;font-size:.88rem;line-height:1.5}
+.p-msg.me{background:#0d4a43;color:#fff;border-radius:14px 14px 4px 14px;margin-left:34px}
+.p-nav{display:flex;justify-content:space-around;border-top:1px solid #e0e7e2;background:#fff;padding:10px 6px 12px;font-size:.68rem;color:#5b6d69;text-align:center}
+.p-nav b{color:#0d4a43;font-size:1rem;line-height:1}
+.ppanel{display:none}.ppanel.on{display:grid;gap:0;align-content:start;flex:1}
+#live.lang-es .en{display:none}
+#live .es{display:none}
+#live.lang-es .es{display:revert}
+#live.lang-es span.es{display:inline}
+
+/* Suite */
+.suite-window{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-lg)}
+.suite-chrome{display:flex;align-items:center;gap:7px;background:var(--teal-dark);color:#fff;padding:11px 14px;font-size:.82rem}
+.suite-chrome i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.28);display:block;flex:none}
+.suite-chrome span{margin-left:8px;opacity:.92;font-family:"IBM Plex Mono",monospace;font-size:.75rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.suite-body{display:grid;grid-template-columns:168px 1fr;min-height:560px}
+.suite-side{background:var(--surface2);padding:16px 10px;display:grid;gap:2px;align-content:start;font-size:.85rem;border-right:1px solid var(--line)}
+.suite-side a{color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:9px;display:flex;align-items:center;gap:8px}
+.suite-side a.on{background:var(--surface);font-weight:700;color:var(--teal2);box-shadow:inset 3px 0 0 var(--teal)}
+.suite-side small{letter-spacing:.12em;font-size:.68rem;color:var(--muted);padding:12px 10px 4px;font-weight:700}
+.suite-main{padding:20px}
+.suite-main h3{font-size:1.5rem}
+.suite-main p{color:var(--muted);font-size:.94rem}
+.spanel{display:none}.spanel.on{display:block}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.mini-stat{background:var(--surface2);border-radius:14px;padding:13px}
+.mini-stat b{display:block;font-family:"Newsreader",serif;font-size:1.65rem;line-height:1;color:var(--teal2)}
+.mini-stat span{font-size:.78rem;color:var(--muted);line-height:1.3;display:block;margin-top:4px}
+.s-row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.91rem;flex-wrap:wrap;align-items:center}
+.s-row:last-child{border-bottom:none}
+.pill{font-size:.74rem;font-weight:700;border-radius:999px;padding:4px 10px;background:#e5f2ec;color:#14665c;white-space:nowrap}
+.pill.amber{background:#fdf6e9;color:#8a6420}.pill.red{background:#fdeeee;color:#a12c2c}.pill.grey{background:var(--surface2);color:var(--muted)}
+.s-field{border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:.91rem;background:var(--surface)}
+.s-field small{display:block;color:var(--muted);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:2px}
+.daydots{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.daydots i{width:20px;height:20px;border-radius:6px;background:#dce7e1;display:block}
+.daydots i.full{background:#14665c}
+.daydots i.today{background:#b9976a;box-shadow:0 0 0 2px #fff,0 0 0 4px #b9976a}
+.live-caption{background:var(--teal-dark);color:#fff;border-radius:18px;padding:20px;margin-top:20px;display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:start;box-shadow:var(--shadow)}
+.live-caption .n{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.14);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:1.05rem;border:1px solid rgba(255,255,255,.18)}
+.live-caption h3{color:#fff;margin:0 0 .2em;font-size:1.25rem}
+.live-caption p{color:#cfe3de;margin:.2em 0;font-size:.96rem;line-height:1.55;max-width:680px}
+.cap-panel{display:none}.cap-panel.on{display:block}
+.cap-nav{display:flex;gap:6px}
+.cap-nav button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:grid;place-items:center}
+.cap-nav button:hover{background:rgba(255,255,255,.16)}
+.toast{font-size:.88rem;font-weight:700;color:var(--teal2);min-height:1.4em}
+.toast.warn{color:#a12c2c}
+
+/* Sensor */
+.sensor-card{background:#0a3530;color:#fff;border-radius:16px;padding:15px 16px}
+.sensor-head{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.95rem}
+.sensor-dot{width:10px;height:10px;flex:none;border-radius:50%;background:#7ec8bc;box-shadow:0 0 0 0 rgba(126,200,188,.4);animation:sensorPulse 2s infinite}
+@keyframes sensorPulse{0%{box-shadow:0 0 0 0 rgba(126,200,188,.4)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion: reduce){.sensor-dot{animation:none}.sensor-bars i{animation:none!important}*{scroll-behavior:auto!important}}
+.sensor-card p{color:#cfe3de;font-size:.86rem;margin:.35em 0;line-height:1.5}
+.sensor-bars{display:flex;gap:4px;align-items:flex-end;height:30px;margin:10px 0 4px}
+.sensor-bars i{flex:1;background:rgba(255,255,255,.18);border-radius:3px;height:35%;display:block;transition:height .3s}
+.sensor-card.live .sensor-bars i{background:#7ec8bc;animation:sensorWave .9s ease-in-out infinite alternate}
+.sensor-card.live .sensor-bars i:nth-child(2n){animation-delay:.15s}.sensor-card.live .sensor-bars i:nth-child(3n){animation-delay:.3s}.sensor-card.live .sensor-bars i:nth-child(4n){animation-delay:.45s}
+@keyframes sensorWave{from{height:22%}to{height:96%}}
+.sensor-meta{display:flex;justify-content:space-between;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:#cfe3de;margin-top:6px}
+.sensor-btn{display:block;width:100%;margin-top:10px;background:#fff;color:#0a3530;border:none;border-radius:12px;padding:12px;font-weight:700;font-size:.92rem;cursor:pointer;min-height:48px}
+.sensor-btn[disabled]{opacity:.7;cursor:default}
+.sensor-status{font-weight:700;font-size:.86rem;color:#fff;min-height:1.3em;margin:.45em 0 0}
+.sensor-status.ok{color:#9fe3d3}
+
+/* Who qualifies */
+.qualify-sec{padding:28px 0 6px}
+.qualify-head{max-width:680px;margin-bottom:18px}
+.qualify-head p{color:var(--muted);margin:.4em 0 0}
+.qualify-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media(max-width:860px){.qualify-grid{grid-template-columns:1fr}}
+.qualify-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.qualify-card.accent{background:var(--teal-dark);color:#fff;border-color:var(--teal-dark)}
+.qualify-card.accent h3{color:#fff}
+.qualify-card h3{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.qualify-card h3 svg{width:18px;height:18px;color:var(--teal2)}
+.qualify-card.accent h3 svg{color:var(--mint)}
+.qualify-card .qc-sub{font-size:.94rem;color:var(--muted);margin:0 0 8px;line-height:1.5}
+.qualify-card.accent .qc-sub{color:#cfe3de}
+.qc-list{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:0}
+.qc-list li{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px dashed var(--line);font-size:.96rem;line-height:1.5}
+.qc-list li:last-child{border-bottom:none;padding-bottom:2px}
+.qualify-card.accent .qc-list li{border-bottom-color:rgba(255,255,255,.16)}
+.qc-list li b{font-weight:700}
+.qc-list li span{display:block}
+.qc-list li small{display:block;color:var(--muted);font-size:.86rem;margin-top:1px;line-height:1.45}
+.qualify-card.accent .qc-list li small{color:#b9d6cf}
+.qc-tick{width:24px;height:24px;flex:none;border-radius:50%;background:var(--mint-bg);color:var(--teal2);display:grid;place-items:center;margin-top:1px}
+.qc-tick svg{width:13px;height:13px}
+.qualify-card.accent .qc-tick{background:rgba(255,255,255,.14);color:#fff}
+.qc-note{margin-top:14px;border-radius:12px;padding:12px 14px;font-size:.88rem;line-height:1.55}
+.qc-note.light{background:var(--gold-bg);border:1px solid #eadfc6;color:#5c4a1f}
+.qc-note.dark{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#d8ebe6}
+.qc-note strong{font-weight:700}
+@media(max-width:600px){.qualify-card{padding:20px}}
+
+/* Codes & revenue */
+.rev-sec{padding:28px 0 6px}
+.rev-head{max-width:700px;margin-bottom:18px}
+.rev-head p{color:var(--muted);margin:.4em 0 0}
+.rev-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+@media(max-width:600px){.rev-card{padding:20px}}
+.rev-card h3{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.rev-card h3 svg{width:18px;height:18px;color:var(--teal2)}
+.code-group{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--teal2);margin:16px 0 2px}
+.code-group:first-of-type{margin-top:8px}
+.code-row{display:grid;grid-template-columns:86px 1fr auto;gap:14px;align-items:baseline;padding:11px 0;border-bottom:1px dashed var(--line);font-size:.96rem;line-height:1.45}
+.code-row:last-of-type{border-bottom:none}
+.code-row .code{font-family:"IBM Plex Mono",monospace;font-weight:700;font-size:1rem;color:var(--teal2)}
+.code-row .amt{font-family:"IBM Plex Mono",monospace;font-weight:700;white-space:nowrap}
+.code-row .what small{display:block;color:var(--muted);font-size:.86rem;margin-top:1px;line-height:1.45}
+@media(max-width:560px){.code-row{grid-template-columns:1fr auto}.code-row .what{grid-column:1/-1;order:3}}
+.rev-note{font-size:.86rem;color:var(--muted);margin:14px 0 0;line-height:1.55}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+@media(max-width:860px){.rev-grid{grid-template-columns:1fr}}
+.rev-stat{background:var(--teal-dark);color:#fff;border-radius:16px;padding:20px}
+.rev-stat .rs-label{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--mint);display:block}
+.rev-stat b{display:block;font-family:"Newsreader",serif;font-size:1.9rem;line-height:1.1;margin:8px 0 4px;color:#fff}
+.rev-stat p{margin:0;font-size:.9rem;color:#cfe3de;line-height:1.5}
+.calc{margin-top:18px;background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:20px}
+.calc h4{margin:0 0 4px;font-size:1.05rem}
+.calc p{font-size:.9rem;color:var(--muted);margin:.2em 0 12px}
+.calc-controls{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px}
+@media(max-width:860px){.calc-controls{grid-template-columns:1fr}}
+.calc label{font-size:.82rem;font-weight:700;display:block;margin-bottom:6px}
+.calc label output{color:var(--teal2);font-family:"IBM Plex Mono",monospace}
+.calc input[type="range"]{width:100%;accent-color:var(--teal);min-height:32px}
+.calc select{width:100%;min-height:48px;border:1px solid var(--line2);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:.92rem;padding:8px 10px}
+.calc-out{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:560px){.calc-out{grid-template-columns:1fr}}
+.calc-out .co{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.calc-out .co span{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);display:block}
+.calc-out .co b{display:block;font-family:"Newsreader",serif;font-size:1.7rem;line-height:1.15;color:var(--teal2);margin-top:4px}
+.calc-out .co small{color:var(--muted);font-size:.84rem;line-height:1.45;display:block;margin-top:2px}
+
+/* Second program — CCM */
+.ccm-sec{padding:28px 0 6px}
+.ccm-head{max-width:720px;margin-bottom:18px}
+.ccm-head p{color:var(--muted);margin:.4em 0 0}
+.ccm-badge{display:inline-flex;align-items:center;gap:7px;background:var(--gold-bg);border:1px solid #eadfc6;color:#5c4a1f;border-radius:999px;padding:6px 11px;font-size:.78rem;font-weight:700;margin-bottom:12px}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;margin-bottom:18px}
+@media(max-width:860px){.compare-grid{grid-template-columns:1fr}}
+.compare-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+.compare-card.next{background:var(--teal-dark);color:#fff;border-color:var(--teal-dark)}
+.compare-card h3{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.compare-card h3 svg{width:18px;height:18px;color:var(--teal2)}
+.compare-card.next h3{color:#fff}.compare-card.next h3 svg{color:var(--mint)}
+.compare-card .cc-sub{font-size:.94rem;color:var(--muted);margin:0 0 6px;line-height:1.5}
+.compare-card.next .cc-sub{color:#cfe3de}
+.compare-card .cc-big{font-family:"Newsreader",serif;font-size:1.55rem;line-height:1.15;margin:6px 0 4px}
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+@media(max-width:860px){.roadmap{grid-template-columns:1fr}}
+.roadmap-item{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.roadmap-item h4{margin:0 0 4px;font-size:1rem;display:flex;align-items:center;gap:8px}
+.roadmap-item h4 svg{width:17px;height:17px;color:var(--teal2);flex:none}
+.roadmap-item p{margin:0;font-size:.9rem;color:var(--muted);line-height:1.55}
+.roadmap-item .rm-code{font-family:"IBM Plex Mono",monospace;font-size:.8rem;font-weight:700;color:var(--teal2);display:block;margin-top:8px}
+
+/* Other non-mobile programs — CPM / PCM / TCM */
+.other-sec{padding:28px 0 6px}
+.other-head{max-width:740px;margin-bottom:18px}
+.other-head p{color:var(--muted);margin:.4em 0 0}
+.detail-block{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow);margin-bottom:18px}
+@media(max-width:600px){.detail-block{padding:20px}}
+.detail-top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:start;margin-bottom:6px}
+.detail-top h3{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:9px}
+.detail-top h3 svg{width:18px;height:18px;color:var(--teal2)}
+.detail-big{font-family:"Newsreader",serif;font-size:1.55rem;line-height:1.15;margin:2px 0 4px}
+.detail-sub{font-size:.95rem;color:var(--muted);line-height:1.55;max-width:720px;margin:0}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+@media(max-width:860px){.detail-grid{grid-template-columns:1fr}}
+.detail-grid h4{margin:0 0 6px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal2)}
+.stack-note{background:var(--gold-bg);border:1px solid #eadfc6;color:#5c4a1f;border-radius:14px;padding:14px 16px;font-size:.92rem;line-height:1.6;margin-top:4px}
+.stack-note strong{color:#3d3010}
+
+/* Revenue by program — combined */
+.prog-table{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:6px 24px;box-shadow:var(--shadow)}
+@media(max-width:600px){.prog-table{padding:6px 18px}}
+.prog-row{display:grid;grid-template-columns:1.35fr 1fr 1fr 1fr;gap:14px;padding:15px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+.prog-row:last-child{border-bottom:none}
+.prog-row.head{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding:12px 0}
+.prog-row .pname{font-weight:700;font-size:1rem}
+.prog-row .pname small{display:block;font-weight:500;color:var(--muted);font-size:.85rem;margin-top:1px;line-height:1.45}
+.prog-row .pval{font-family:"IBM Plex Mono",monospace;font-weight:700;white-space:nowrap;font-size:1rem}
+.prog-row.total{background:var(--mint-bg);border:1px solid var(--line);border-radius:14px;padding:15px 14px;margin:10px -14px 14px}
+.prog-row.total .pval{color:var(--teal2)}
+@media(max-width:640px){
+  .prog-row{grid-template-columns:1fr 1fr}
+  .prog-row.head{display:none}
+  .prog-row .pname{grid-column:1/-1}
+  .prog-row .pval::before{content:attr(data-label);display:block;font-family:"IBM Plex Sans",sans-serif;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:2px}
+  .prog-row.total{margin:10px -8px 12px}
+}
+.comb-out{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+@media(max-width:860px){.comb-out{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.comb-out{grid-template-columns:1fr}}
+.comb-out.three{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.comb-out.three{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.comb-out.three{grid-template-columns:1fr}}
+.comb-out .co{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.comb-out .co span{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);display:block}
+.comb-out .co b{display:block;font-family:"Newsreader",serif;font-size:1.6rem;line-height:1.15;color:var(--teal2);margin-top:4px}
+.comb-out .co small{color:var(--muted);font-size:.84rem;line-height:1.45;display:block;margin-top:2px}
+.comb-out .co.grand{background:var(--teal-dark);border-color:var(--teal-dark)}
+.comb-out .co.grand span{color:var(--mint)}
+.comb-out .co.grand b{color:#fff}
+.comb-out .co.grand small{color:#cfe3de}
+.scale-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}
+.scale-row .scale-label{font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+.scale-btn{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:9px 15px;font-size:.88rem;font-weight:700;cursor:pointer;min-height:42px}
+.scale-btn:hover{border-color:var(--line2)}
+.scale-btn[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.calc .scale-row{margin:2px 0 14px}
+
+.bpc-card{background:var(--teal-dark);color:#fff;border-radius:20px;padding:26px;box-shadow:var(--shadow-lg);margin-top:18px}
+.bpc-card h3{font-family:"IBM Plex Sans",sans-serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mint);display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.bpc-card h3 svg{width:18px;height:18px;color:var(--mint)}
+.bpc-card .bpc-big{font-family:"Newsreader",serif;font-size:clamp(1.6rem,3vw,2.1rem);line-height:1.15;margin:4px 0 6px;color:#fff}
+.bpc-card .bpc-big strong{color:#fff}
+.bpc-card p{color:#cfe3de;font-size:.95rem;line-height:1.6;margin:.3em 0}
+.bpc-math{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 6px}
+.bpc-math .bm{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px 16px;text-align:center;min-width:130px;flex:1}
+.bpc-math .bm b{display:block;font-family:"Newsreader",serif;font-size:1.7rem;line-height:1.1;color:#fff}
+.bpc-math .bm span{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--mint);display:block;margin-top:3px;line-height:1.35}
+.bpc-math .bm-op{font-family:"Newsreader",serif;font-size:1.5rem;color:var(--mint);flex:none}
+.bpc-math .bm.result{background:#fff;border-color:#fff}
+.bpc-math .bm.result b{color:var(--teal-dark)}
+.bpc-math .bm.result span{color:var(--teal2)}
+.bpc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+@media(max-width:860px){.bpc-grid{grid-template-columns:1fr}}
+.bpc-grid .bg-item{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px}
+.bpc-grid .bg-item.hl{background:#fff;border-color:#fff}
+.bpc-grid .bg-item span{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--mint);display:block}
+.bpc-grid .bg-item.hl span{color:var(--teal2)}
+.bpc-grid .bg-item b{display:block;font-family:"Newsreader",serif;font-size:1.55rem;line-height:1.15;margin:6px 0 3px;color:#fff}
+.bpc-grid .bg-item.hl b{color:var(--teal-dark)}
+.bpc-grid .bg-item small{color:#b9d6cf;font-size:.86rem;line-height:1.5;display:block}
+.bpc-grid .bg-item.hl small{color:var(--muted)}
+@media(max-width:600px){.bpc-card{padding:20px}.bpc-math .bm{min-width:100px}}
+
+/* Asks */
+.asks-sec{padding:36px 0 18px}
+.asks-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+@media(max-width:600px){.asks-card{padding:20px}}
+.asks-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;justify-content:space-between}
+.asks-head p{color:var(--muted);max-width:560px}
+.ask-line{display:grid;grid-template-columns:48px 1fr auto;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);align-items:center}
+.ask-line:last-of-type{border-bottom:none}
+.ask-line .num{width:40px;height:40px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:700}
+.ask-line p{margin:0;font-size:1.05rem;line-height:1.5}
+.ask-line p span{display:block;font-size:.88rem;color:var(--muted);margin-top:2px}
+.ask-tag{font-size:.76rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal2);background:var(--mint-bg);padding:6px 9px;border-radius:999px;white-space:nowrap}
+@media(max-width:600px){.ask-line{grid-template-columns:40px 1fr}.ask-tag{display:none}}
+.sig{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.sig-left{display:flex;gap:12px;align-items:center}
+.sig-avatar{width:44px;height:44px;border-radius:50%;background:var(--teal-dark);color:#fff;display:grid;place-items:center;font-weight:800;letter-spacing:.04em}
+.sig p{margin:0;color:var(--muted);font-size:.92rem;line-height:1.45}
+.sig p b{color:var(--ink)}
+.sig a{font-weight:700;text-decoration:none}
+
+/* Footer */
+.footer{margin-top:28px;border-top:1px solid var(--line);background:var(--surface)}
+.footer-inner{max-width:1100px;margin:0 auto;padding:22px 20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.footer p{margin:0;font-size:.86rem;color:var(--muted)}
+.footer strong{color:var(--ink);letter-spacing:.1em}
+@media(max-width:560px){.suite-body{grid-template-columns:1fr}.suite-side{grid-template-columns:1fr 1fr;display:grid;border-right:none;border-bottom:1px solid var(--line)}.suite-side small{grid-column:1/-1}.mini-stats{grid-template-columns:1fr 1fr}.live-caption{grid-template-columns:1fr}.cap-nav{display:none}.live-controls{border-radius:16px}.live-controls .spacer{display:none}}
+@media print{ body{background:#fff}.brandbar{position:static}.live-controls,.howto{display:none} }
+</style>
+</head>
+<body>
+
+<!-- CURAVIA brand bar -->
+<header class="brandbar">
+  <div class="brandbar-inner">
+    <a class="brand-lockup" href="#top" aria-label="CURAVIA home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M22.5 8.5A9 9 0 1 0 22.5 23.5" stroke="white" stroke-width="2.6" stroke-linecap="round"/><path d="M7 16h5l2-5 3 10 2.2-5H25" stroke="#7EC8BC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand-name"><strong>CURAVIA</strong><span>Remote Therapeutic Monitoring</span></span>
+    </a>
+    <div class="brand-meta">
+      <div class="partner"><b>Boston Pain Center</b>Prepared for Dr. Roberto Feliz</div>
+      <span class="badge-live"><i></i> Live walkthrough</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">For Dr. Roberto Feliz · Boston Pain Center</div>
+        <h1>The CURAVIA <span>RTM Program</span></h1>
+        <p class="lede">How Remote Therapeutic Monitoring works at Boston Pain Center — <strong>step by step, on the patient’s phone and in the Suite, side by side.</strong> A check-in day counts only when the phone’s movement sensor has seen real movement.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#live"><i data-lucide="play"></i> Start the walkthrough</a>
+          <a class="btn btn-secondary" href="#asks"><i data-lucide="check-circle-2"></i> See what I need from you</a>
+          <a class="btn btn-secondary" href="#ccm"><i data-lucide="phone"></i> Second program: CCM by phone</a>
+          <a class="btn btn-secondary" href="#other-programs"><i data-lucide="phone-call"></i> Other non-mobile programs: CPM · PCM · TCM</a>
+          <a class="btn btn-secondary" href="#program-revenue"><i data-lucide="calculator"></i> Revenue by program &amp; combined</a>
+        </div>
+        <div class="trust-row" aria-label="Program highlights">
+          <span class="trust-pill"><i data-lucide="languages"></i> Bilingual EN / ES</span>
+          <span class="trust-pill"><i data-lucide="activity"></i> Sensor-verified days</span>
+          <span class="trust-pill"><i data-lucide="shield-check"></i> Clinician-led, always</span>
+          <span class="trust-pill"><i data-lucide="smartphone"></i> No extra device</span>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="At a glance">
+        <h3>At a glance</h3>
+        <ul>
+          <li><span class="hc-icon"><i data-lucide="user-plus"></i></span><span><b>Enroll &amp; educate first</b><br>Consent + sensor permission on the patient’s own phone, in their language.</span></li>
+          <li><span class="hc-icon"><i data-lucide="calendar-check"></i></span><span><b>16+ days = full tier</b><br>2–15 days still counts. The system tracks it — no paper.</span></li>
+          <li><span class="hc-icon"><i data-lucide="phone-call"></i></span><span><b>One live call a month</b><br>Review, manage, and talk. Minutes log themselves.</span></li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="howto" role="note">
+      <span class="howto-icon"><i data-lucide="mouse-pointer-click"></i></span>
+      <p><strong>How to use this page:</strong> Tap any step below, use <kbd>←</kbd> <kbd>→</kbd> Back / Next, or press <strong>Play</strong> to watch it run. On Step 3, try the phone yourself — start the movement session, pick a pain score, then send the check-in and watch the Suite update.</p>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section id="live" aria-label="Live workflow walkthrough">
+  <div class="section-head">
+    <div>
+      <h2>Watch it work, step by step</h2>
+      <p>Left: what the patient sees. Right: what your team sees in the CURAVIA Suite at the same moment.</p>
+    </div>
+  </div>
+
+  <div class="progress-wrap" aria-hidden="true">
+    <div class="progress-top"><span id="progressLabel">Step 1 — Enrollment</span><span id="stepCount">Step 1 of 6</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="wf-bar" role="group" aria-label="Workflow steps">
+    <button class="wf-btn" data-step="1" aria-pressed="true"><i>1</i><span>Enrollment<small>Patient agrees in the app</small></span></button>
+    <button class="wf-btn" data-step="2" aria-pressed="false"><i>2</i><span>Education first<small>Setup done together</small></span></button>
+    <button class="wf-btn" data-step="3" aria-pressed="false"><i>3</i><span>Daily check-ins · sensor<small>Try it on the phone</small></span></button>
+    <button class="wf-btn" data-step="4" aria-pressed="false"><i>4</i><span>Monthly tier<small>Days set the tier</small></span></button>
+    <button class="wf-btn" data-step="5" aria-pressed="false"><i>5</i><span>Management &amp; live call<small>Review + one real call</small></span></button>
+    <button class="wf-btn" data-step="6" aria-pressed="false"><i>6</i><span>Risk flag<small>Act this week, not next visit</small></span></button>
+  </div>
+
+  <div class="live-controls">
+    <button class="primary" id="playBtn" type="button">▶&nbsp; Play the workflow</button>
+    <button id="prevBtn" type="button">← Back</button>
+    <button id="nextBtn" type="button">Next step →</button>
+    <span class="spacer"></span>
+    <span class="note">Tip: Step 3 is interactive</span>
+  </div>
+
+  <div class="live-grid">
+    <!-- PATIENT APP -->
+    <div>
+      <div class="col-label"><span class="col-label-left"><i data-lucide="smartphone"></i> Patient app — patient’s phone</span>
+        <span class="lang-toggle" aria-label="Patient language"><button id="langEn" type="button" aria-pressed="true">EN</button><button id="langEs" type="button" aria-pressed="false">ES</button></span>
+      </div>
+      <div class="phone"><div class="phone-inner">
+        <div class="phone-notch"><i></i></div>
+        <div class="phone-top"><small><span class="en">CURAVIA · Boston Pain Center</span><span class="es">CURAVIA · Boston Pain Center</span></small><b><span class="en">Hello, Maria</span><span class="es">Hola, María</span></b></div>
+
+        <div class="ppanel on" data-ppanel="1"><div class="phone-body">
+          <div class="p-card"><h4><span class="en">You've been invited to your care program</span><span class="es">Te han invitado a tu programa de cuidado</span></h4><p><span class="en">Your care team at Boston Pain Center would like to stay connected with you between visits — check-ins, messages, and video visits, right here.</span><span class="es">Tu equipo de Boston Pain Center quiere mantenerse conectado contigo entre visitas: registros, mensajes y videovisitas, aquí mismo.</span></p></div>
+          <div class="p-card"><div class="p-check"><span class="tick">✓</span><span><span class="en">I agree to take part and to share my check-ins with my care team.</span><span class="es">Acepto participar y compartir mis registros con mi equipo de cuidado.</span></span></div><div class="p-check"><span class="tick">✓</span><span><span class="en">I allow the app to use my phone's movement sensor, so my team can see I was active — never my location.</span><span class="es">Permito que la aplicación use el sensor de movimiento de mi teléfono, para que mi equipo vea que estuve activo, nunca mi ubicación.</span></span></div></div>
+          <button class="p-btn" type="button"><span class="en">Join my care program</span><span class="es">Unirme a mi programa</span></button>
+          <p style="text-align:center;font-size:.8rem;color:#5b6d69;margin:0"><span class="en">Takes about 10 minutes with a team member</span><span class="es">Toma unos 10 minutos con un miembro del equipo</span></p>
+        </div></div>
+
+        <div class="ppanel" data-ppanel="2"><div class="phone-body">
+          <div class="p-card"><h4><span class="en">Let's get you set up — together</span><span class="es">Vamos a configurarlo, juntos</span></h4><p><span class="en">A team member walks through these things with you before anything starts:</span><span class="es">Un miembro del equipo repasa estas cosas contigo antes de empezar:</span></p>
+            <div class="p-check"><span class="tick">✓</span><span><span class="en">How the app works, on your own phone</span><span class="es">Cómo funciona la aplicación, en tu propio teléfono</span></span></div>
+            <div class="p-check"><span class="tick">✓</span><span><span class="en">How to send a check-in — and what counts as a check-in day</span><span class="es">Cómo enviar un registro y qué cuenta como día de registro</span></span></div>
+            <div class="p-check"><span class="tick">✓</span><span><span class="en">How often, any cost-share, and what to do if symptoms feel urgent</span><span class="es">Con qué frecuencia, si hay copago, y qué hacer si los síntomas son urgentes</span></span></div>
+            <div class="p-check"><span class="tick">✓</span><span><span class="en">Turn on the movement sensor — one tap to allow it. It confirms your exercises and walking, right from your phone. No extra device to wear or charge.</span><span class="es">Activa el sensor de movimiento con un toque. Confirma tus ejercicios y caminatas desde tu teléfono. Sin ningún aparato extra que llevar o cargar.</span></span></div>
+          </div>
+          <div class="p-card" style="background:#fdf6e9;border-color:#eadfc6"><p><strong><span class="en">Urgent symptoms?</span><span class="es">¿Síntomas urgentes?</span></strong> <span class="en">Don't wait for a check-in — call the clinic or 911.</span><span class="es">No esperes al registro: llama a la clínica o al 911.</span></p></div>
+        </div></div>
+
+        <div class="ppanel" data-ppanel="3"><div class="phone-body">
+          <div class="sensor-card" id="sensorCard">
+            <div class="sensor-head"><span class="sensor-dot" aria-hidden="true"></span><span><span class="en">Movement sensor — in this app</span><span class="es">Sensor de movimiento, en esta aplicación</span></span></div>
+            <p><span class="en">Permission on. The sensor runs while you do your home exercises and walk — it proves the activity really happened.</span><span class="es">Permiso activado. El sensor funciona mientras haces tus ejercicios en casa y caminas: confirma que la actividad realmente ocurrió.</span></p>
+            <div class="sensor-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="sensor-meta"><span><span class="en">Session</span><span class="es">Sesión</span> <span id="sensorClock">00:00</span></span><span id="sensorMoves">0 <span class="en">movements</span><span class="es">movimientos</span></span></div>
+            <button class="sensor-btn" id="sensorBtn" type="button"><span class="en">▶ Start my movement session</span><span class="es">▶ Iniciar mi sesión de movimiento</span></button>
+            <p class="sensor-status" id="sensorStatus" role="status"><span class="en">Not started yet — today's check-in counts once the sensor sees movement.</span><span class="es">Aún no inicia: el registro de hoy cuenta cuando el sensor detecte movimiento.</span></p>
+          </div>
+          <div class="p-card"><h4><span class="en">Today's check-in</span><span class="es">Registro de hoy</span></h4>
+            <p><span class="en">How is your pain right now?</span><span class="es">¿Cómo está tu dolor ahora?</span> &nbsp;<strong id="painVal">4</strong>/10</p>
+            <div class="pain-row" id="painRow" role="group" aria-label="Pain score">
+              <button type="button" data-pain="0">0</button><button type="button" data-pain="1">1</button><button type="button" data-pain="2">2</button><button type="button" data-pain="3">3</button><button type="button" data-pain="4" class="sel">4</button><button type="button" data-pain="5">5</button><button type="button" data-pain="6">6</button><button type="button" data-pain="7">7</button><button type="button" data-pain="8">8</button><button type="button" data-pain="9">9</button><button type="button" data-pain="10">10</button>
+            </div>
+            <div class="p-check"><span class="tick">✓</span><span><span class="en">I did my home exercises today</span><span class="es">Hoy hice mis ejercicios en casa</span></span></div>
+            <div class="p-check"><span class="tick">✓</span><span><span class="en">I took my medication as directed</span><span class="es">Tomé mi medicamento según lo indicado</span></span></div>
+            <div class="p-check"><span class="tick wait">·</span><span><span class="en">Walking and daily activities: a little harder today</span><span class="es">Caminar y actividades diarias: un poco más difícil hoy</span></span></div>
+          </div>
+          <button class="p-btn" id="sendCheckin" type="button"><span class="en">Send today's check-in</span><span class="es">Enviar el registro de hoy</span></button>
+          <p class="toast" id="checkinToast" role="status" aria-live="polite"></p>
+          <p style="text-align:center;font-size:.85rem;color:#5b6d69;margin:0"><span class="en">Check-in days this month:</span><span class="es">Días de registro este mes:</span> <strong id="daysPhone">17</strong></p>
+        </div></div>
+
+        <div class="ppanel" data-ppanel="4"><div class="phone-body">
+          <div class="p-card"><h4><span class="en">Your month so far</span><span class="es">Tu mes hasta ahora</span></h4>
+            <p><span class="en">You've checked in on</span><span class="es">Has registrado en</span> <strong>18 <span class="en">days</span><span class="es">días</span></strong></p>
+            <div class="p-progress"><i style="width:82%"></i></div>
+            <p><span class="en">Steady check-ins help your team see what's working — and catch problems early.</span><span class="es">Los registros constantes ayudan a tu equipo a ver qué funciona y detectar problemas temprano.</span></p>
+          </div>
+          <div class="p-card"><h4><span class="en">Keep it going</span><span class="es">Sigue así</span></h4><p><span class="en">A check-in takes under a minute. Missed a day? No problem — just pick it back up tomorrow.</span><span class="es">Un registro toma menos de un minuto. ¿Perdiste un día? No hay problema, retómalo mañana.</span></p></div>
+          <div class="p-card"><h4><span class="en">Your movement this month</span><span class="es">Tu movimiento este mes</span></h4><p><span class="en">The sensor confirmed activity on</span><span class="es">El sensor confirmó actividad en</span> <strong>16 <span class="en">of your 18 check-in days</span><span class="es">de tus 18 días de registro</span></strong>. <span class="en">Those are the days that count.</span><span class="es">Esos son los días que cuentan.</span></p></div>
+        </div></div>
+
+        <div class="ppanel" data-ppanel="5"><div class="phone-body">
+          <div class="p-msg"><span class="en">Hi Maria — this is your care team. We reviewed your check-ins this week. Your pain is trending down. Can we talk for a few minutes Thursday?</span><span class="es">Hola María, soy tu equipo de cuidado. Revisamos tus registros esta semana. Tu dolor va bajando. ¿Podemos hablar unos minutos el jueves?</span></div>
+          <div class="p-msg me"><span class="en">Thursday works. Thank you for checking on me.</span><span class="es">El jueves me va bien. Gracias por estar pendientes.</span></div>
+          <div class="p-card"><h4>📞 <span class="en">Call with your care team</span><span class="es">Llamada con tu equipo</span></h4><p><span class="en">Thursday · about 10 minutes · we review your month together and adjust your home program.</span><span class="es">Jueves · unos 10 minutos · revisamos tu mes juntos y ajustamos tu programa en casa.</span></p></div>
+          <button class="p-btn" type="button"><span class="en">Confirm Thursday</span><span class="es">Confirmar el jueves</span></button>
+        </div></div>
+
+        <div class="ppanel" data-ppanel="6"><div class="phone-body">
+          <div class="p-card" style="background:#fdf6e9;border-color:#eadfc6"><h4><span class="en">Your care team wants to check in</span><span class="es">Tu equipo quiere saber cómo estás</span></h4><p><span class="en">We noticed your pain scores went up this week. That's exactly why we check in — so we can help now, not at your next visit.</span><span class="es">Notamos que tu dolor subió esta semana. Por eso hacemos los registros: para ayudarte ahora, no en tu próxima visita.</span></p></div>
+          <button class="p-btn" type="button"><span class="en">Call me today</span><span class="es">Llámenme hoy</span></button>
+          <button class="p-btn ghost" type="button"><span class="en">Message the team instead</span><span class="es">Enviar un mensaje al equipo</span></button>
+          <p style="font-size:.82rem;color:#5b6d69;text-align:center;margin:0"><span class="en">A clinician — a real person on your team — makes every decision about your care.</span><span class="es">Un clínico, una persona real de tu equipo, toma cada decisión sobre tu cuidado.</span></p>
+        </div></div>
+
+        <div class="p-nav"><span><b>⌂</b><br><span class="en">Home</span><span class="es">Inicio</span></span><span><b>✓</b><br><span class="en">Check-in</span><span class="es">Registro</span></span><span><b>✉</b><br><span class="en">Messages</span><span class="es">Mensajes</span></span><span><b>▣</b><br><span class="en">Visits</span><span class="es">Visitas</span></span></div>
+      </div></div>
+    </div>
+
+    <!-- SUITE -->
+    <div>
+      <div class="col-label"><span class="col-label-left"><i data-lucide="monitor"></i> CURAVIA Suite — staff side</span><span class="pill">RTM Monitoring</span></div>
+      <div class="suite-window">
+        <div class="suite-chrome"><i></i><i></i><i></i><span>curavia · Suite — Staff Portal</span></div>
+        <div class="suite-body">
+          <nav class="suite-side" aria-label="Suite menu (demo)">
+            <a href="#live">Patient Records</a><a href="#live">Lab Results</a><a href="#live">Documents</a><a href="#live">Scribe</a>
+            <small>OPERATIONS</small>
+            <a href="#live">Billing Review</a><a href="#live" class="on">♥ RTM Monitoring</a><a href="#live">Dispatcher</a>
+            <small>INSIGHTS</small>
+            <a href="#live">Analytics</a><a href="#live">Audit Log</a><a href="#live">AI Safety</a>
+          </nav>
+          <div class="suite-main">
+            <div class="spanel on" data-spanel="1">
+              <h3>Enroll a patient</h3>
+              <p>Staff open the enrollment form. The patient agrees in the app — in their own language.</p>
+              <div style="display:grid;gap:10px;margin-top:14px">
+                <div class="s-field"><small>Patient</small>Demo Patient — M. G. · DOB on file</div>
+                <div class="s-field"><small>Diagnosis</small>M54.50 — low back pain</div>
+                <div class="s-field"><small>Ordering practitioner</small>On file · BPC care team</div>
+              </div>
+              <div class="s-row" style="margin-top:10px"><span>Consent captured in the app</span><span class="pill">✓ Recorded</span></div>
+              <div class="s-row"><span>Movement-sensor consent — separate opt-in, no location</span><span class="pill">✓ Recorded</span></div>
+              <div class="s-row"><span>One-time setup</span><span class="pill grey">Waits for education →</span></div>
+            </div>
+            <div class="spanel" data-spanel="2">
+              <h3>Education first</h3>
+              <p>Done with the patient, in the room. The setup is logged only after every step — never before.</p>
+              <div class="s-row"><span>1 · App orientation with the patient</span><span class="pill">✓ Done</span></div>
+              <div class="s-row"><span>2 · How check-ins work; what a check-in day means</span><span class="pill">✓ Done</span></div>
+              <div class="s-row"><span>3 · Cadence, cost-share, urgent-symptom guidance</span><span class="pill">✓ Done</span></div>
+              <div class="s-row"><span>4 · Movement sensor permission — granted on the patient's own phone</span><span class="pill">✓ Sensor on</span></div>
+              <div class="s-row"><span><strong>Setup now logged</strong></span><span class="pill">Once per episode</span></div>
+            </div>
+            <div class="spanel" data-spanel="3">
+              <h3>Check-ins arrive here</h3>
+              <p>Every check-in lands on this board the same day. The days count themselves.</p>
+              <div class="mini-stats"><div class="mini-stat"><b id="daysSuite">17</b><span>Check-in days (Nov)</span></div><div class="mini-stat"><b id="painSuite">4/10</b><span>Today's pain score</span></div><div class="mini-stat"><b>✓</b><span>Adherence reported</span></div></div>
+              <div class="daydots" aria-hidden="true"><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="full"></i><i class="today"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="s-row"><span>Movement sensor — today's session</span><span class="pill grey" id="sensorSuitePill">Waiting for movement</span></div>
+              <div class="s-row"><span>Session clock</span><span style="font-family:'IBM Plex Mono',monospace;font-size:.85rem">Timed by the system, not self-reported</span></div>
+              <p class="note" style="margin-top:10px;background:var(--mint-bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px"><strong style="color:var(--ink)">Try it:</strong> on the phone, start the movement session first — then pick a pain score and press <em>Send today's check-in</em>. Without sensor movement, the day does not count; with it, this board updates.</p>
+            </div>
+            <div class="spanel" data-spanel="4">
+              <h3>The month sorts itself</h3>
+              <p>The counted days set the tier. Nobody tracks this on paper.</p>
+              <div class="mini-stats"><div class="mini-stat"><b>18</b><span>Check-in days</span></div><div class="mini-stat"><b>Full</b><span>Tier reached</span></div><div class="mini-stat"><b>2–15</b><span>Days still count</span></div></div>
+              <div class="s-row"><span>16 or more check-in days</span><span class="pill">✓ Full tier</span></div>
+              <div class="s-row"><span>2–15 check-in days</span><span class="pill grey">Short-window tier</span></div>
+              <p>A light month is no longer a lost month.</p>
+            </div>
+            <div class="spanel" data-spanel="5">
+              <h3>Review, minutes, one real call</h3>
+              <p>The team reviews the data and talks with the patient. The minutes log themselves.</p>
+              <div class="mini-stats"><div class="mini-stat"><b>22</b><span>Minutes this month</span></div><div class="mini-stat"><b>✓</b><span>Live call done</span></div><div class="mini-stat"><b>1</b><span>Call required / month</span></div></div>
+              <div class="s-row"><span>Data review + care management</span><span class="pill">22 min logged</span></div>
+              <div class="s-row"><span>Live conversation with the patient</span><span class="pill">✓ Logged Thu</span></div>
+              <p>No live call in a month, no management billing that month — the board shows the gap before the month closes.</p>
+            </div>
+            <div class="spanel" data-spanel="6">
+              <h3>Risk flags</h3>
+              <p>The patient who is getting worse shows up here this week — not at the next visit.</p>
+              <div class="s-row"><span><strong>Demo Patient — M. G.</strong><br><small style="color:var(--muted)">Pain 4 → 8 over 5 days · check-ins stopped 2 days</small></span><span class="pill red">⚠ Call today</span></div>
+              <div class="s-row"><span><strong>Demo Patient — J. R.</strong><br><small style="color:var(--muted)">Steady · pain trending down</small></span><span class="pill">On track</span></div>
+              <div class="s-row"><span><strong>Demo Patient — A. T.</strong><br><small style="color:var(--muted)">9 check-in days · no live call yet</small></span><span class="pill amber">Schedule call</span></div>
+              <div class="s-row"><span><strong>Demo Patient — L. M.</strong><br><small style="color:var(--muted)">Sensor: no movement detected for 2 days · check-ins still arriving</small></span><span class="pill red">⚠ No movement</span></div>
+              <p>The flag goes to the team — including when the sensor goes quiet. The clinician decides what happens next.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="live-caption">
+    <div class="n" id="capNum">1</div>
+    <div>
+      <div class="cap-panel on" data-cpanel="1"><h3>Step 1 — Enrollment</h3><p>Staff enroll the patient in the Suite. The patient agrees on their phone, in their language.</p></div>
+      <div class="cap-panel" data-cpanel="2"><h3>Step 2 — Education first</h3><p>Short steps with the patient — including one tap that turns on the phone's movement sensor. Only then is the one-time setup logged.</p></div>
+      <div class="cap-panel" data-cpanel="3"><h3>Step 3 — Daily check-ins, sensor-verified</h3><p>The patient starts a movement session in the app; the sensor confirms real activity while the system times it. Then pain, function, and adherence — and only a sensor-verified day counts.</p></div>
+      <div class="cap-panel" data-cpanel="4"><h3>Step 4 — The monthly tier</h3><p>16 or more check-in days reaches the full tier. 2–15 days still counts. The system assigns it.</p></div>
+      <div class="cap-panel" data-cpanel="5"><h3>Step 5 — Review and a real call</h3><p>The team reviews the data, manages the patient, and holds one live conversation. Minutes are logged as they happen.</p></div>
+      <div class="cap-panel" data-cpanel="6"><h3>Step 6 — The risk flag</h3><p>Climbing pain, silent check-ins, or a sensor that stops seeing movement raise a flag. The patient gets a call this week.</p></div>
+    </div>
+    <div class="cap-nav">
+      <button type="button" id="capPrev" aria-label="Previous step">←</button>
+      <button type="button" id="capNext" aria-label="Next step">→</button>
+    </div>
+  </div>
+</section>
+
+<section class="qualify-sec" id="who-qualifies" aria-label="Who qualifies and what patients get from participating">
+  <div class="qualify-head">
+    <h2>Who qualifies — and what&rsquo;s in it for you</h2>
+    <p>The patient criteria and the incentive to take part, in the same plain language a patient hears it. RTM is an add-on to care already underway at Boston Pain Center — not a sign-up for new patients.</p>
+  </div>
+  <div class="qualify-grid">
+    <div class="qualify-card">
+      <h3><i data-lucide="clipboard-check"></i> Patient criteria</h3>
+      <p class="qc-sub">A patient joins the program when all of these are true:</p>
+      <ul class="qc-list">
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Already a Boston Pain Center patient</b><small>RTM is for patients already under care — not new sign-ups off the street.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>A condition managed with a home program</b><small>The first cohort is low back pain patients on a prescribed home exercise program.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Has a smartphone</b><small>Check-ins and movement sensing run in the CURAVIA app. No extra device to buy, wear, or charge.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Consent, twice over</b><small>RTM monitoring consent at enrollment, plus a separate movement-sensor consent — activity only, never location.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Can check in at least 16 days in the month</b><small>That is the participation level the program is built around — the days set the monthly tier.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Setup education completed first</b><small>App orientation, what a check-in day means, cadence, and cost-share — finished with a team member before enrollment counts.</small></span></li>
+      </ul>
+      <div class="qc-note light"><strong>Told up front:</strong> Medicare RTM can carry a patient cost-share. Patients hear that during setup education, before they agree — no surprises later.</div>
+    </div>
+    <div class="qualify-card accent">
+      <h3><i data-lucide="sparkles"></i> The incentive to participate</h3>
+      <p class="qc-sub">No cash, no gifts. What patients get is their own progress, made visible — and a team that is actually watching between visits.</p>
+      <ul class="qc-list">
+        <li><span class="qc-tick"><i data-lucide="flame"></i></span><span><b>Your streak, day by day</b><small>Every check-in day builds a visible streak in the app — patients see themselves showing up.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="bar-chart-3"></i></span><span><b>Your 16-day progress bar</b><small>A simple bar fills toward the full month, so patients always know where they stand.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="trending-down"></i></span><span><b>Your pain trend over time</b><small>Scores plotted across the month — improvement the patient can see, not just feel.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="award"></i></span><span><b>A milestone at the 16-day month</b><small>Recognition for completing a full month of participation.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="phone-call"></i></span><span><b>Care between visits</b><small>The team watches the check-ins, flags problems early, and calls live every month. The patient is never on their own between appointments.</small></span></li>
+      </ul>
+      <div class="qc-note dark"><strong>By design:</strong> incentives reward participation — doing the check-ins — never outcomes, and they stay nominal. The exact form of the 16-day milestone recognition is held for compliance sign-off before it goes live.</div>
+    </div>
+  </div>
+</section>
+
+<section class="rev-sec" id="revenue" aria-label="RTM codes, reimbursement, and practice revenue">
+  <div class="rev-head">
+    <h2>Codes &amp; reimbursement — the revenue</h2>
+    <p>RTM is the piece that pays every month. Medicare pays for the setup, the monthly monitoring, and the care team&rsquo;s management time — and CURAVIA tracks the days, the minutes, and the live call automatically, so what is billed is what the record proves.</p>
+  </div>
+
+  <div class="rev-card">
+    <h3><i data-lucide="receipt"></i> What Medicare pays — 2026 national averages</h3>
+    <div class="code-group">Setup</div>
+    <div class="code-row"><span class="code">98975</span><span class="what">Setup and education<small>Once per episode — logged only after the education steps are done.</small></span><span class="amt">$21.71</span></div>
+    <div class="code-group">Monitoring — device supply, by check-in days</div>
+    <div class="code-row"><span class="code">98977</span><span class="what">Device supply — 16+ check-in days<small>The full tier.</small></span><span class="amt">$39.75–$51.44</span></div>
+    <div class="code-row"><span class="code">98985</span><span class="what">Device supply — 2–15 check-in days<small>The short-window tier, new for 2026 — a light month is no longer a lost month.</small></span><span class="amt">$39.75</span></div>
+    <div class="code-group">Management time — care team review &amp; management</div>
+    <div class="code-row"><span class="code">98979</span><span class="what">Management time — 10–19 minutes</span><span class="amt">$26.05</span></div>
+    <div class="code-row"><span class="code">98980</span><span class="what">Management time — first 20+ minutes<small>Requires at least one live interaction with the patient that month.</small></span><span class="amt">$53.77</span></div>
+    <div class="code-row"><span class="code">98981</span><span class="what">Management time — each additional 20 minutes</span><span class="amt">$41.08</span></div>
+    <p class="rev-note">2026 Medicare national averages. Actual payment varies by locality and payer; commercial payers set their own rates. The one-time setup (98975) is per episode and is not counted in the monthly figures below.</p>
+  </div>
+
+  <div class="rev-grid" aria-label="Illustrative practice revenue">
+    <div class="rev-stat"><span class="rs-label">Per patient · full tier</span><b>$95–$105 / month</b><p>A patient at the full tier with 20 minutes of management time — every month, for as long as the episode runs, on top of visit revenue, from work the care team is already doing informally today.</p></div>
+    <div class="rev-stat"><span class="rs-label">100 patients · full tier</span><b>$9,500–$10,500 / mo</b><p>Roughly $114,000–$126,000 a year in new recurring revenue — no additional visits required.</p></div>
+    <div class="rev-stat"><span class="rs-label">300 patients · full tier</span><b>$340K–$380K / year</b><p>With ~12,000 visits a year, the large majority pain patients, the enrollment ceiling at BPC is not the constraint. Starting is.</p></div>
+  </div>
+
+  <div class="calc" aria-label="Illustrative revenue calculator">
+    <h4>Try the math — illustrative only</h4>
+    <p>Drag the cohort size. Uses national-average midpoints; your actuals will vary by locality and payer.</p>
+    <div class="calc-controls">
+      <div><label for="calcPatients">Enrolled patients: <output id="calcPatientsOut">100</output></label><input type="range" id="calcPatients" min="25" max="500" step="25" value="100"></div>
+      <div><label for="calcFullPct">% reaching full tier (16+ days)</label><select id="calcFullPct"><option value="0.60">60%</option><option value="0.75" selected>75%</option><option value="0.90">90%</option></select></div>
+      <div><label for="calcMgmt">Management time / patient</label><select id="calcMgmt"><option value="26.05">10–19 min — $26.05</option><option value="53.77" selected>20+ min — $53.77</option><option value="94.85">40+ min — $94.85</option></select></div>
+    </div>
+    <div class="calc-out">
+      <div class="co"><span>Estimated per month</span><b id="calcMonthly">$9,791</b><small id="calcBreakdown">75 full-tier + 25 short-window + 100 × management</small></div>
+      <div class="co"><span>Estimated per year</span><b id="calcYearly">$117,489</b><small>Recurring — no additional visits required</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="ccm-sec" id="ccm" aria-label="Second program — Chronic Care Management">
+  <div class="ccm-head">
+    <span class="ccm-badge"><i data-lucide="phone"></i> Second program · Runs entirely by phone</span>
+    <h2>Yes — there&rsquo;s another one: Chronic Care Management (CCM)</h2>
+    <p>RTM is not the only reimbursed program that runs through the phone. <strong>CCM is the strongest second program for Boston Pain Center</strong> — Medicare pays for care coordination done by phone, with no device, no app data, and no sensor. Just documented clinical-staff time, every month. It is the recommended next build in CURAVIA, on the same board-and-audit-trail pattern as RTM.</p>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h3><i data-lucide="activity"></i> RTM — built today</h3>
+      <p class="cc-big">App check-ins + movement sensor</p>
+      <p class="cc-sub">The patient reports data through the CURAVIA app. A day counts only when the phone&rsquo;s movement sensor has seen real movement.</p>
+      <ul class="qc-list">
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Needs the app</b><small>Daily check-ins on the patient&rsquo;s smartphone, 16+ days for the full tier.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Best for</b><small>Patients on a prescribed home program — first cohort: low back pain.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Pays</b><small>$95–$105 per patient per month at the full tier (see codes above).</small></span></li>
+      </ul>
+    </div>
+    <div class="compare-card next">
+      <h3><i data-lucide="phone-call"></i> CCM — recommended next</h3>
+      <p class="cc-big" style="color:#fff">Phone time only — no device at all</p>
+      <p class="cc-sub">The care team coordinates care by phone — medications, referrals, results, care-plan follow-up — and CURAVIA logs the minutes as they happen.</p>
+      <ul class="qc-list">
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Needs only a phone call</b><small>No app, no sensor, no device to buy, wear, or charge. Any phone works.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Best for</b><small>Patients with <b>2 or more chronic conditions</b> — most of BPC&rsquo;s pain patients qualify on conditions alone.</small></span></li>
+        <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Pays</b><small>About $62 per patient per month for the first 20 minutes — about $110 at 40 minutes.</small></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rev-card">
+    <h3><i data-lucide="receipt"></i> CCM codes — what Medicare pays</h3>
+    <div class="code-group">Clinical staff time — under physician direction</div>
+    <div class="code-row"><span class="code">99490</span><span class="what">Chronic care management — first 20 minutes / month<small>Clinical staff time for a patient with 2+ chronic conditions. The core CCM code.</small></span><span class="amt">~$62</span></div>
+    <div class="code-row"><span class="code">99439</span><span class="what">Each additional 20 minutes<small>Added to 99490 when the month&rsquo;s coordination runs longer.</small></span><span class="amt">~$48</span></div>
+    <div class="code-group">Physician / qualified clinician&rsquo;s own time</div>
+    <div class="code-row"><span class="code">99491</span><span class="what">CCM by the physician / QHP personally — first 30 minutes<small>When you do the care-management work yourself rather than through clinical staff.</small></span><span class="amt">~$84</span></div>
+    <div class="code-row"><span class="code">99437</span><span class="what">Each additional 30 minutes of physician / QHP time<small>Added to 99491.</small></span><span class="amt">~$67</span></div>
+    <p class="rev-note">Medicare national averages, rounded. Actual payment varies by locality and payer; commercial payers set their own rates. CCM requires documented time, a care plan, and patient consent — the same record discipline CURAVIA already enforces for RTM.</p>
+  </div>
+
+  <div class="rev-grid" aria-label="Illustrative CCM practice revenue">
+    <div class="rev-stat"><span class="rs-label">Per patient · 20 min / month</span><b>~$62 / month</b><p>One 20-minute block of documented phone coordination per patient, per month — recurring for as long as the patient stays enrolled.</p></div>
+    <div class="rev-stat"><span class="rs-label">100 patients · 20 min</span><b>~$6,200 / mo</b><p>Roughly $74,000 a year — from phone work the team already does informally today, now documented and billable.</p></div>
+    <div class="rev-stat"><span class="rs-label">100 patients · 40 min</span><b>~$11,000 / mo</b><p>At 40 minutes a month (99490 + 99439), the same 100 patients reach roughly $132,000 a year.</p></div>
+  </div>
+
+  <div class="qualify-card" style="margin-top:18px">
+    <h3><i data-lucide="clipboard-check"></i> Who qualifies for CCM</h3>
+    <p class="qc-sub">A wider door than RTM — no smartphone or home program required:</p>
+    <ul class="qc-list">
+      <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>2 or more chronic conditions</b><small>Expected to last at least 12 months — for example chronic pain alongside hypertension, diabetes, arthritis, or depression.</small></span></li>
+      <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Patient consent on record</b><small>Explained up front, including that Medicare CCM can carry a patient cost-share — same honest approach as RTM.</small></span></li>
+      <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>A care plan, shared with the patient</b><small>Created at enrollment and updated as the phone work happens.</small></span></li>
+      <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>20+ minutes of coordination a month</b><small>Phone calls, referral and result follow-up, medication coordination — timed and logged in the Suite, never reconstructed later.</small></span></li>
+    </ul>
+    <div class="qc-note light"><strong>One patient, two programs?</strong> RTM and CCM cover different work — app-reported monitoring vs. phone care coordination — and a patient can be in both when each program&rsquo;s own rules are met and the time is not double-counted. CURAVIA keeps the two boards and timers separate.</div>
+  </div>
+
+  <div class="roadmap" aria-label="Other non-mobile programs — full detail in the next section">
+    <div class="roadmap-item"><h4><i data-lucide="heart-pulse"></i> CPM — Chronic Pain Mgmt</h4><p>Monthly pain-management services built specifically for chronic pain — assessment, care plan, and phone follow-up. Made for exactly BPC&rsquo;s population. <a href="#other-programs">Full detail below ↓</a></p><span class="rm-code">G3002 · +G3003</span></div>
+    <div class="roadmap-item"><h4><i data-lucide="crosshair"></i> PCM — Principal Care Mgmt</h4><p>Like CCM, but focused on one high-risk condition, using the clinician&rsquo;s own time. Fits complex single-problem patients who don&rsquo;t meet CCM&rsquo;s 2-condition rule. <a href="#other-programs">Full detail below ↓</a></p><span class="rm-code">99424–99427</span></div>
+    <div class="roadmap-item"><h4><i data-lucide="hospital"></i> TCM — Transitional Care</h4><p>The post-discharge phone call within 2 business days, plus a follow-up visit. Episodic rather than monthly. <a href="#other-programs">Full detail below ↓</a></p><span class="rm-code">99495 · 99496</span></div>
+  </div>
+  <p class="rev-note" style="margin-top:14px"><strong>And RPM?</strong> Remote Physiologic Monitoring is the other &ldquo;remote&rdquo; program, but it does <strong>not</strong> run on phone self-report — it requires a device (blood-pressure cuff, scale) that uploads automatically. That is why CURAVIA was built on RTM, and why CCM — pure phone — is the right second program. <strong>Status:</strong> CCM, CPM, PCM, and TCM are not built into CURAVIA yet; CCM is the recommended next build, running on documented phone time in the Suite. All three other non-mobile programs are laid out in full in the <a href="#other-programs">next section</a>.</p>
+</section>
+
+<section class="other-sec" id="other-programs" aria-label="Other non-mobile programs — CPM, PCM, and TCM">
+  <div class="other-head">
+    <span class="ccm-badge"><i data-lucide="phone-call"></i> Non-mobile · No app, no device, no sensor</span>
+    <h2>The other non-mobile programs — add them as well</h2>
+    <p>CCM is not the only program that runs without the mobile app. <strong>CPM, PCM, and TCM also run entirely on documented phone and care-team time</strong> in the Suite — no smartphone, no check-in app, and no device required from the patient. Below is each one in full: what it is, its codes, who qualifies, and what it pays. Like CCM, none of these are built into CURAVIA yet — they are the next modules after CCM, on the same board, timers, and audit trail.</p>
+  </div>
+
+  <div class="detail-block">
+    <div class="detail-top">
+      <div>
+        <h3><i data-lucide="heart-pulse"></i> CPM — Chronic Pain Management</h3>
+        <p class="detail-big">Built specifically for chronic pain</p>
+        <p class="detail-sub">Medicare created CPM for exactly Boston Pain Center&rsquo;s population: ongoing pain assessment, a pain care plan, medication review, and monthly phone follow-up and coordination. If CCM is the general program, CPM is the pain-specific one.</p>
+      </div>
+      <span class="pill">Phone + care-team time</span>
+    </div>
+    <div class="code-group">CPM codes — Medicare national averages, rounded</div>
+    <div class="code-row"><span class="code">G3002</span><span class="what">Chronic pain management — first 30 minutes / month<small>Assessment, care plan, and pain-management services by the billing practitioner.</small></span><span class="amt">~$62</span></div>
+    <div class="code-row"><span class="code">G3003</span><span class="what">Each additional 15 minutes<small>Added to G3002 when the month&rsquo;s pain-management work runs longer.</small></span><span class="amt">~$30</span></div>
+    <div class="detail-grid">
+      <div>
+        <h4>Who qualifies</h4>
+        <ul class="qc-list">
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Chronic pain as the central problem</b><small>Ongoing pain the practice is actively managing — the core BPC population.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Consent + a documented pain care plan</b><small>Created at enrollment, reviewed and updated on the monthly calls.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>30+ minutes in the month</b><small>Face-to-face and phone pain-management time, timed and logged — never estimated later.</small></span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>What it pays</h4>
+        <ul class="qc-list">
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>~$62 per patient / month</b><small>At the first 30 minutes (G3002). At 45 minutes with G3003: ~$92.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>100 patients: ~$6,200 / mo</b><small>Roughly $74,400 a year — ~$9,200 / mo (~$110,400 / yr) at 45 minutes.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>1,600 patients: ~$99,200 / mo</b><small>At BPC scale (20% of 8,000) — ~$1.19M a year at 30 minutes.</small></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-block">
+    <div class="detail-top">
+      <div>
+        <h3><i data-lucide="crosshair"></i> PCM — Principal Care Management</h3>
+        <p class="detail-big">One high-risk condition, clinician-led</p>
+        <p class="detail-sub">PCM is CCM&rsquo;s focused sibling: instead of 2+ conditions, it covers <strong>one complex, high-risk condition</strong> that needs intensive management — and the time is the physician&rsquo;s or qualified clinician&rsquo;s own time, not general clinical-staff time.</p>
+      </div>
+      <span class="pill">Clinician&rsquo;s own time</span>
+    </div>
+    <div class="code-group">Physician / qualified clinician time</div>
+    <div class="code-row"><span class="code">99424</span><span class="what">PCM — first 30 minutes / month, clinician time<small>For a single high-risk condition requiring frequent adjustment and close monitoring.</small></span><span class="amt">~$83</span></div>
+    <div class="code-row"><span class="code">99425</span><span class="what">Each additional 30 minutes of clinician time<small>Added to 99424.</small></span><span class="amt">~$60</span></div>
+    <div class="code-group">Clinical staff time — under clinician direction</div>
+    <div class="code-row"><span class="code">99426</span><span class="what">PCM — first 30 minutes / month, clinical staff time<small>Staff care management for the same single-condition patient.</small></span><span class="amt">~$62</span></div>
+    <div class="code-row"><span class="code">99427</span><span class="what">Each additional 30 minutes of staff time<small>Added to 99426.</small></span><span class="amt">~$48</span></div>
+    <div class="detail-grid">
+      <div>
+        <h4>Who qualifies</h4>
+        <ul class="qc-list">
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>One high-risk chronic condition</b><small>Expected to last at least 3 months, at risk of flare, hospitalization, or functional decline — e.g. severe chronic pain needing frequent plan changes.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Consent + a disease-specific care plan</b><small>Focused on that one condition, shared with the patient.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>30+ minutes in the month</b><small>Phone coordination, result review, and plan adjustment — timed in the Suite.</small></span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>What it pays</h4>
+        <ul class="qc-list">
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>~$62–$83 per patient / month</b><small>~$62 on staff time (99426); ~$83 when you do the work personally (99424).</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>100 patients: ~$6,200–$8,300 / mo</b><small>Roughly $74,400–$99,600 a year, depending on who does the time.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Best as the overflow door</b><small>Catches complex single-condition patients who miss CCM&rsquo;s 2-condition rule.</small></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-block">
+    <div class="detail-top">
+      <div>
+        <h3><i data-lucide="hospital"></i> TCM — Transitional Care Management</h3>
+        <p class="detail-big">The post-discharge program — episodic, not monthly</p>
+        <p class="detail-sub">TCM pays for the work around a hospital or facility discharge: a phone (or video) contact <strong>within 2 business days</strong> of discharge, medication reconciliation, and a follow-up visit within 7 or 14 days. It is billed <strong>per discharge, not per month</strong> — the one program here that is episodic.</p>
+      </div>
+      <span class="pill amber">Per discharge / episode</span>
+    </div>
+    <div class="code-group">TCM codes — paid once per qualifying discharge</div>
+    <div class="code-row"><span class="code">99495</span><span class="what">Contact within 2 business days + visit within 14 days<small>Communication with the patient/caregiver within 2 business days of discharge, face-to-face visit within 14 days.</small></span><span class="amt">~$200</span></div>
+    <div class="code-row"><span class="code">99496</span><span class="what">Contact within 2 business days + visit within 7 days<small>The higher tier — the follow-up visit happens within 7 days of discharge.</small></span><span class="amt">~$280</span></div>
+    <div class="detail-grid">
+      <div>
+        <h4>Who qualifies</h4>
+        <ul class="qc-list">
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Any BPC patient discharged home</b><small>From a hospital, rehab, or skilled facility stay — no chronic-condition count required.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Contact within 2 business days</b><small>Phone contact is the trigger — miss the window and the episode cannot be billed. CURAVIA&rsquo;s discharge board would count the days down.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Visit + medication reconciliation</b><small>Visit within 7 days (99496) or 14 days (99495), meds reconciled by the visit.</small></span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>What it pays</h4>
+        <ul class="qc-list">
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>~$200–$280 per discharge</b><small>One payment per qualifying transition — the fastest-visit tier pays most.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>50 discharges / month: ~$10,000–$14,000</b><small>Roughly $120,000–$168,000 a year at that discharge pace — illustrative; it follows BPC&rsquo;s actual discharge volume.</small></span></li>
+          <li><span class="qc-tick"><i data-lucide="check"></i></span><span><b>Stacks on top of the monthly programs</b><small>A TCM episode covers the discharge window; the patient&rsquo;s monthly RTM / care-management enrollment continues around it, under each program&rsquo;s own rules.</small></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack-note"><strong>How they fit together — read this before adding the columns up:</strong> RTM stacks with <em>one</em> care-management program for the same patient, because the work and the time are different and never double-counted. CCM, CPM, and PCM are <strong>alternatives for a given patient in a given month</strong> — a patient sits in one of them, not all three at once. So the combined revenue story is: RTM + the right care-management program per patient, plus TCM episodes on top whenever a patient is discharged. The revenue table and calculator below now show every program on its own, and keep the combined total honest on that basis. <strong>And RPM stays out:</strong> it needs a device that uploads automatically — it is not a phone program.</div>
+  <p class="rev-note" style="margin-top:12px">Medicare national averages, rounded. Actual payment varies by locality and payer; commercial payers set their own rates. Every program above requires documented time, consent, and a care plan — the same hard-gate, no-billing-without-evidence discipline CURAVIA applies to RTM. <strong>Status:</strong> CPM, PCM, and TCM are not built into CURAVIA yet; build order stays CCM first, then CPM (pain-specific), PCM, and TCM.</p>
+</section>
+
+<section class="rev-sec" id="program-revenue" aria-label="Revenue by program — RTM, CCM, CPM, PCM, TCM, and combined">
+  <div class="rev-head">
+    <h2>Revenue by program — and combined</h2>
+    <p>Every program on its own — the mobile program (RTM) and <strong>all four non-mobile programs (CCM, CPM, PCM, TCM)</strong> — then the honest combined view. A patient can be enrolled in <strong>both RTM and one care-management program</strong> (CCM, CPM, or PCM — one of them per month, not all three), and TCM pays per discharge on top. CURAVIA never counts the same minute or day twice, so the combined total is real, billable revenue, not double-counting.</p>
+  </div>
+
+  <div class="scale-row" role="group" aria-label="Scale the revenue table by patient count, in steps of 100">
+    <span class="scale-label">Scale table:</span>
+    <button type="button" class="scale-btn" data-tscale="100" aria-pressed="true">100 patients</button>
+    <button type="button" class="scale-btn" data-tscale="200" aria-pressed="false">200</button>
+    <button type="button" class="scale-btn" data-tscale="300" aria-pressed="false">300</button>
+    <button type="button" class="scale-btn" data-tscale="400" aria-pressed="false">400</button>
+    <button type="button" class="scale-btn" data-tscale="500" aria-pressed="false">500</button>
+    <button type="button" class="scale-btn" data-tscale="1600" aria-pressed="false">1,600 — BPC at 20%</button>
+  </div>
+
+  <div class="prog-table" role="table" aria-label="Monthly revenue per program and combined">
+    <div class="prog-row head" role="row"><span>Program</span><span>Per patient / month</span><span id="progScaleHead">100 patients / month</span><span>Per year</span></div>
+    <div class="prog-row" role="row">
+      <span class="pname">RTM — Remote Therapeutic Monitoring<small>App check-ins + movement sensor · full tier, 20 min management</small></span>
+      <span class="pval" data-label="Per patient / month">$95–$105</span>
+      <span class="pval" data-label="Patients / month" id="rtmMonth">$9,500–$10,500</span>
+      <span class="pval" data-label="Per year" id="rtmYear">~$114,000–$126,000</span>
+    </div>
+    <div class="prog-row" role="row">
+      <span class="pname">CCM — Chronic Care Management<small>Phone care coordination · 20 documented minutes (99490)</small></span>
+      <span class="pval" data-label="Per patient / month">~$62</span>
+      <span class="pval" data-label="Patients / month" id="ccmMonth">~$6,200</span>
+      <span class="pval" data-label="Per year" id="ccmYear">~$74,400</span>
+    </div>
+    <div class="prog-row" role="row">
+      <span class="pname">CPM — Chronic Pain Management<small>Non-mobile · pain-specific · 30 minutes (G3002) — alternative to CCM for that patient that month</small></span>
+      <span class="pval" data-label="Per patient / month">~$62</span>
+      <span class="pval" data-label="Patients / month" id="cpmMonth">~$6,200</span>
+      <span class="pval" data-label="Per year" id="cpmYear">~$74,400</span>
+    </div>
+    <div class="prog-row" role="row">
+      <span class="pname">PCM — Principal Care Management<small>Non-mobile · one high-risk condition · 30 min staff time (99426) to clinician time (99424)</small></span>
+      <span class="pval" data-label="Per patient / month">~$62–$83</span>
+      <span class="pval" data-label="Patients / month" id="pcmMonth">~$6,200–$8,300</span>
+      <span class="pval" data-label="Per year" id="pcmYear">~$74,400–$99,600</span>
+    </div>
+    <div class="prog-row" role="row">
+      <span class="pname">TCM — Transitional Care Management<small>Non-mobile · per discharge, not per month · contact in 2 business days + visit in 7–14 days (99495/99496)</small></span>
+      <span class="pval" data-label="Per discharge">~$200–$280</span>
+      <span class="pval" data-label="Per discharge" id="tcmEpisode">~$200–$280 / discharge</span>
+      <span class="pval" data-label="Illustrative year" id="tcmYear">50 / mo ≈ $120K–$168K / yr</span>
+    </div>
+    <div class="prog-row total" role="row">
+      <span class="pname">Combined — RTM + CCM (example stack)<small>Same patient in RTM + one care-management program — separate work, separate time. RTM + CPM is the same range; add TCM per discharge on top.</small></span>
+      <span class="pval" data-label="Per patient / month">~$157–$167</span>
+      <span class="pval" data-label="Patients / month" id="combMonth">~$15,700–$16,700</span>
+      <span class="pval" data-label="Per year" id="combYear">~$188,400–$200,400</span>
+    </div>
+  </div>
+  <p class="rev-note">Medicare national averages from the code tables above. CCM at 40 minutes a month (99490 + 99439) pays ~$110 per patient instead of ~$62 — the RTM + CCM combined figure rises to roughly $205–$215 per dual-enrolled patient. RTM + CPM at 30 minutes is the same ~$157–$167 combined range as RTM + CCM; RTM + PCM runs ~$157–$188 depending on staff vs. clinician time. TCM does not scale with the buttons above — it follows discharge volume: ~$200–$280 per qualifying discharge (50 discharges a month ≈ $10,000–$14,000). Actual payment varies by locality and payer.</p>
+
+  <div class="bpc-card" aria-label="Boston Pain Center at full scale — 8,000 patients, 20 percent qualify">
+    <h3><i data-lucide="building-2"></i> Boston Pain Center — at your actual size</h3>
+    <p class="bpc-big">8,000 patients. If 20% qualify, that&rsquo;s <strong>1,600 patients</strong> in the programs.</p>
+    <p>Not a hypothetical cohort of 100 — this is BPC&rsquo;s own panel run through the same per-patient rates above. One in five patients qualifying is a conservative planning assumption for a pain practice: RTM needs a home program and a smartphone; CCM needs only 2+ chronic conditions and a phone.</p>
+    <div class="bpc-math" aria-label="8,000 patients times 20 percent equals 1,600 qualified patients">
+      <div class="bm"><b>8,000</b><span>Patients at BPC</span></div>
+      <span class="bm-op" aria-hidden="true">×</span>
+      <div class="bm"><b>20%</b><span>Qualify</span></div>
+      <span class="bm-op" aria-hidden="true">=</span>
+      <div class="bm result"><b>1,600</b><span>Qualified patients</span></div>
+    </div>
+    <div class="bpc-grid">
+      <div class="bg-item"><span>RTM alone · 1,600 patients</span><b>$152,000–$168,000 / mo</b><small>~$1.82M–$2.02M a year — full tier at $95–$105 per patient per month.</small></div>
+      <div class="bg-item"><span>CCM alone · 1,600 patients</span><b>~$99,200 / mo</b><small>~$1.19M a year at 20 minutes (~$62). At 40 minutes (~$110): ~$176,000 / mo, ~$2.11M a year.</small></div>
+      <div class="bg-item hl"><span>Both combined · 1,600 in both</span><b>~$251,200–$267,200 / mo</b><small>~$3.01M–$3.21M a year at ~$157–$167 per dual-enrolled patient. At 40-min CCM: ~$328,000–$344,000 / mo.</small></div>
+      <div class="bg-item"><span>CPM alone · 1,600 patients</span><b>~$99,200 / mo</b><small>~$1.19M a year at 30 minutes (~$62, G3002) — the pain-specific alternative to CCM for those patients.</small></div>
+      <div class="bg-item"><span>PCM alone · 1,600 patients</span><b>~$99,200–$132,800 / mo</b><small>~$1.19M–$1.59M a year — ~$62 on staff time to ~$83 on clinician time, for single-condition patients.</small></div>
+      <div class="bg-item"><span>TCM · per discharge, on top</span><b>~$200–$280 / discharge</b><small>Not a per-patient monthly figure — e.g. 50 qualifying discharges a month adds ~$10,000–$14,000 / mo on top of any stack above.</small></div>
+    </div>
+    <p style="margin-top:14px">Use the table scale button above — <strong style="color:#fff">1,600 — BPC at 20%</strong> — or set both sliders in the calculator below to 1,600 to see the same figures live. Enrollment would phase in over months, not all at once; the figures show the run-rate once 1,600 patients are enrolled and meeting each program&rsquo;s rules.</p>
+  </div>
+
+  <div class="calc" aria-label="Combined program revenue calculator">
+    <h4>Combine the programs — try your own mix</h4>
+    <p>Set how many patients sit in each program — the sliders move <strong>one patient at a time</strong>, or jump both programs at once with the scale buttons, in steps of 100. For Boston Pain Center at full scale, use <strong>1,600</strong> — that is 20% of BPC&rsquo;s 8,000 patients. Patients enrolled in both are counted once in each program — that is how the billing works, because the work and the time are separate.</p>
+    <div class="scale-row" role="group" aria-label="Set both programs to the same patient count, in steps of 100">
+      <span class="scale-label">Scale both:</span>
+      <button type="button" class="scale-btn" data-cscale="100">100 patients</button>
+      <button type="button" class="scale-btn" data-cscale="200">200</button>
+      <button type="button" class="scale-btn" data-cscale="300">300</button>
+      <button type="button" class="scale-btn" data-cscale="400">400</button>
+      <button type="button" class="scale-btn" data-cscale="500">500</button>
+      <button type="button" class="scale-btn" data-cscale="1000">1,000</button>
+      <button type="button" class="scale-btn" data-cscale="1600">1,600 — BPC at 20%</button>
+    </div>
+    <div class="calc-controls">
+      <div><label for="combRtm">RTM patients: <output id="combRtmOut">100</output></label><input type="range" id="combRtm" min="0" max="2000" step="1" value="100"></div>
+      <div><label for="combCcm">CCM patients: <output id="combCcmOut">100</output></label><input type="range" id="combCcm" min="0" max="2000" step="1" value="100"></div>
+      <div><label for="combCcmTime">CCM time / patient</label><select id="combCcmTime"><option value="62" selected>20 min — ~$62 (99490)</option><option value="110">40 min — ~$110 (99490 + 99439)</option></select></div>
+    </div>
+    <div class="comb-out">
+      <div class="co"><span>RTM revenue / month</span><b id="combRtmRev">$9,900</b><small id="combRtmNote">100 patients × $99 full-tier average</small></div>
+      <div class="co"><span>CCM revenue / month</span><b id="combCcmRev">$6,200</b><small id="combCcmNote">100 patients × ~$62</small></div>
+      <div class="co grand"><span>Combined / month</span><b id="combTotal">$16,100</b><small>RTM + CCM together</small></div>
+      <div class="co grand"><span>Combined / year</span><b id="combYearly">$193,200</b><small>Recurring — no additional visits required</small></div>
+    </div>
+    <h4 style="margin:20px 0 4px;font-size:1.05rem">The other non-mobile programs — size them too</h4>
+    <p>CPM and PCM are alternatives to CCM for a given patient in a given month — size different patient groups here, don&rsquo;t count the same patient in CCM, CPM, and PCM at once. TCM is per discharge. PCM uses ~$72 per patient below — the midpoint of staff time (~$62) and clinician time (~$83).</p>
+    <div class="calc-controls">
+      <div><label for="combCpm">CPM patients: <output id="combCpmOut">0</output></label><input type="range" id="combCpm" min="0" max="2000" step="1" value="0"></div>
+      <div><label for="combPcm">PCM patients: <output id="combPcmOut">0</output></label><input type="range" id="combPcm" min="0" max="2000" step="1" value="0"></div>
+      <div><label for="combTcm">TCM discharges / month: <output id="combTcmOut">0</output></label><input type="range" id="combTcm" min="0" max="500" step="1" value="0"></div>
+    </div>
+    <div class="comb-out three">
+      <div class="co"><span>CPM revenue / month</span><b id="combCpmRev">$0</b><small id="combCpmNote">0 patients × ~$62 (G3002)</small></div>
+      <div class="co"><span>PCM revenue / month</span><b id="combPcmRev">$0</b><small id="combPcmNote">0 patients × ~$72 average</small></div>
+      <div class="co"><span>TCM revenue / month</span><b id="combTcmRev">$0</b><small id="combTcmNote">0 discharges × ~$240 average</small></div>
+    </div>
+    <p class="rev-note" style="margin-top:14px">Illustrative only. RTM uses $99 per patient — the midpoint of the $95–$105 full-tier range above. CPM uses ~$62 (G3002, 30 min), PCM ~$72 (midpoint of 99426/99424), TCM ~$240 (midpoint of 99495/99496). One-time RTM setup (98975, $21.71 per episode) is not included. Practice-wide total = RTM + (each patient in exactly one of CCM / CPM / PCM) + TCM episodes.</p>
+  </div>
+</section>
+
+<section class="asks-sec" id="asks">
+  <div class="asks-card">
+    <div class="asks-head">
+      <div>
+        <h2>Three things I need from you, Roberto</h2>
+        <p>Nothing else blocks the launch. Each one is a short decision — I’ll handle the rest.</p>
+      </div>
+      <span class="badge-live"><i></i> Awaiting your go-ahead</span>
+    </div>
+    <div class="ask-line"><span class="num">1</span><p>Approve the first group of patients<span>Established low-back-pain patients already on a home program.</span></p><span class="ask-tag">Patients</span></div>
+    <div class="ask-line"><span class="num">2</span><p>Sign off on the record-review rules<span>So the CURAVIA 24/7 pre-visit review can go live.</span></p><span class="ask-tag">Clinical</span></div>
+    <div class="ask-line"><span class="num">3</span><p>Name who owns the monthly calls &amp; RTM board<span>One staff member — calls, flags, and the board each month.</span></p><span class="ask-tag">Staffing</span></div>
+    <div class="sig">
+      <div class="sig-left">
+        <span class="sig-avatar" aria-hidden="true">MM</span>
+        <p><b>Mohammed Morgan, MD</b><br>Founder &amp; CEO, IEC, Inc. · Head of IEC MSO</p>
+      </div>
+      <p>Questions? Call me directly — <a href="tel:+18578671767">857-867-1767</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p><strong>CURAVIA</strong> &nbsp;·&nbsp; An IEC, Inc. program &nbsp;·&nbsp; IEC MSO care team &nbsp;·&nbsp; Boston Pain Center</p>
+    <p>Bilingual EN / ES &nbsp;·&nbsp; Sensor-verified &nbsp;·&nbsp; Clinician-led</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.lucide) lucide.createIcons();
+  var live=document.getElementById('live'); if(!live) return;
+  var step=1, total=6, timer=null, sent=false;
+  var stepNames=['Enrollment','Education first','Daily check-ins · sensor','Monthly tier','Management & live call','Risk flag'];
+  var btns=live.querySelectorAll('.wf-btn'), pp=live.querySelectorAll('[data-ppanel]'),
+      sp=live.querySelectorAll('[data-spanel]'), cp=live.querySelectorAll('[data-cpanel]'),
+      capNum=document.getElementById('capNum'), stepCount=document.getElementById('stepCount'),
+      progressFill=document.getElementById('progressFill'), progressLabel=document.getElementById('progressLabel'),
+      playBtn=document.getElementById('playBtn');
+  function show(n){
+    step=Math.max(1,Math.min(total,n));
+    btns.forEach(function(b){b.setAttribute('aria-pressed', +b.dataset.step===step ? 'true':'false');});
+    pp.forEach(function(p){p.classList.toggle('on', +p.dataset.ppanel===step);});
+    sp.forEach(function(p){p.classList.toggle('on', +p.dataset.spanel===step);});
+    cp.forEach(function(p){p.classList.toggle('on', +p.dataset.cpanel===step);});
+    capNum.textContent=step; stepCount.textContent='Step '+step+' of '+total;
+    if(progressFill) progressFill.style.width=(step/total*100)+'%';
+    if(progressLabel) progressLabel.textContent='Step '+step+' — '+stepNames[step-1];
+  }
+  function stop(){ if(timer){clearInterval(timer); timer=null; playBtn.innerHTML='▶&nbsp; Play the workflow';} }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ stop(); show(+b.dataset.step); }); });
+  document.getElementById('prevBtn').addEventListener('click', function(){ stop(); show(step-1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ stop(); show(step+1); });
+  var capPrev=document.getElementById('capPrev'), capNext=document.getElementById('capNext');
+  if(capPrev) capPrev.addEventListener('click', function(){ stop(); show(step-1); });
+  if(capNext) capNext.addEventListener('click', function(){ stop(); show(step+1); });
+  playBtn.addEventListener('click', function(){
+    if(timer){ stop(); return; }
+    playBtn.innerHTML='⏸&nbsp; Pause';
+    timer=setInterval(function(){ show(step>=total ? 1 : step+1); }, 3600);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.target && (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')) return;
+    if(e.key==='ArrowRight'){ stop(); show(step+1); }
+    if(e.key==='ArrowLeft'){ stop(); show(step-1); }
+  });
+  var en=document.getElementById('langEn'), es=document.getElementById('langEs');
+  function setLang(spanish){
+    live.classList.toggle('lang-es', spanish);
+    en.setAttribute('aria-pressed', spanish?'false':'true');
+    es.setAttribute('aria-pressed', spanish?'true':'false');
+  }
+  en.addEventListener('click', function(){ setLang(false); });
+  es.addEventListener('click', function(){ setLang(true); });
+  var sensorVerified=false, sensorRunning=false, sensorSecs=0, sensorTimer=null;
+  var sensorCard=document.getElementById('sensorCard'), sensorBtn=document.getElementById('sensorBtn'),
+      sensorStatus=document.getElementById('sensorStatus'), sensorClock=document.getElementById('sensorClock'),
+      sensorMoves=document.getElementById('sensorMoves'), sensorSuitePill=document.getElementById('sensorSuitePill');
+  function sensorText(a,b){ return live.classList.contains('lang-es') ? b : a; }
+  function fmtClock(s){ var m=Math.floor(s/60), r=s%60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; }
+  if(sensorBtn){
+    sensorBtn.addEventListener('click', function(){
+      if(sensorRunning || sensorVerified) return;
+      sensorRunning=true; sensorCard.classList.add('live'); sensorBtn.disabled=true;
+      sensorBtn.innerHTML='<span class="en">Sensor listening — move with your phone…</span><span class="es">Sensor activo: muévete con tu teléfono…</span>';
+      sensorStatus.classList.remove('ok');
+      sensorStatus.innerHTML='<span class="en">Session running — the sensor is watching for movement.</span><span class="es">Sesión en curso: el sensor está detectando movimiento.</span>';
+      if(sensorSuitePill){ sensorSuitePill.textContent='● Session running'; sensorSuitePill.className='pill amber'; }
+      sensorTimer=setInterval(function(){
+        sensorSecs+=2;
+        sensorClock.textContent=fmtClock(sensorSecs);
+        sensorMoves.innerHTML=Math.round(sensorSecs*1.4)+' <span class="en">movements</span><span class="es">movimientos</span>';
+        if(sensorSecs>=12){
+          clearInterval(sensorTimer); sensorTimer=null; sensorRunning=false; sensorVerified=true;
+          sensorCard.classList.remove('live');
+          sensorBtn.innerHTML='<span class="en">✓ Movement verified</span><span class="es">✓ Movimiento verificado</span>';
+          sensorStatus.classList.add('ok');
+          sensorStatus.innerHTML='<span class="en">✓ Movement verified — today now counts. Send your check-in.</span><span class="es">✓ Movimiento verificado: hoy ya cuenta. Envía tu registro.</span>';
+          if(sensorSuitePill){ sensorSuitePill.textContent='✓ Movement verified · '+fmtClock(sensorSecs); sensorSuitePill.className='pill'; }
+        }
+      }, 400);
+    });
+  }
+  var pain=4, days=17;
+  var painVal=document.getElementById('painVal'), painSuite=document.getElementById('painSuite'),
+      daysPhone=document.getElementById('daysPhone'), daysSuite=document.getElementById('daysSuite'),
+      toast=document.getElementById('checkinToast');
+  live.querySelectorAll('#painRow button').forEach(function(b){
+    b.addEventListener('click', function(){
+      pain=+b.dataset.pain; painVal.textContent=pain;
+      live.querySelectorAll('#painRow button').forEach(function(x){ x.classList.toggle('sel', x===b); });
+      toast.textContent=''; toast.classList.remove('warn');
+    });
+  });
+  document.getElementById('sendCheckin').addEventListener('click', function(){
+    if(!sensorVerified){
+      toast.classList.add('warn');
+      toast.textContent = sensorText('⚠ Not counted yet — start the movement session above first. The sensor has to see movement.', '⚠ Aún no cuenta: inicia primero la sesión de movimiento. El sensor debe detectar movimiento.');
+      return;
+    }
+    toast.classList.remove('warn');
+    if(!sent){ sent=true; days++; }
+    daysPhone.textContent=days; daysSuite.textContent=days; painSuite.textContent=pain+'/10';
+    toast.textContent = sensorText('✓ Sent — movement verified, your care team can see it now.', '✓ Enviado: movimiento verificado, tu equipo ya lo puede ver.');
+  });
+  show(1);
+})();
+</script>
+<script>
+(function(){
+  if(window.lucide) lucide.createIcons();
+  var patients=document.getElementById('calcPatients'), pct=document.getElementById('calcFullPct'),
+      mgmt=document.getElementById('calcMgmt'), out=document.getElementById('calcPatientsOut'),
+      monthly=document.getElementById('calcMonthly'), yearly=document.getElementById('calcYearly'),
+      breakdown=document.getElementById('calcBreakdown');
+  if(!patients || !pct || !mgmt) return;
+  var FULL_MID=45.60, SHORT=39.75;
+  function money(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+  function calc(){
+    var n=+patients.value, full=Math.round(n*parseFloat(pct.value)), short=n-full, m=parseFloat(mgmt.value);
+    var total=full*FULL_MID + short*SHORT + n*m;
+    out.textContent=n;
+    monthly.textContent=money(total);
+    yearly.textContent=money(total*12);
+    breakdown.textContent=full+' full-tier + '+short+' short-window + '+n+' × management';
+  }
+  patients.addEventListener('input', calc);
+  pct.addEventListener('change', calc);
+  mgmt.addEventListener('change', calc);
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var rtm=document.getElementById('combRtm'), ccm=document.getElementById('combCcm'),
+      ccmTime=document.getElementById('combCcmTime'),
+      rtmOut=document.getElementById('combRtmOut'), ccmOut=document.getElementById('combCcmOut'),
+      rtmRev=document.getElementById('combRtmRev'), ccmRev=document.getElementById('combCcmRev'),
+      total=document.getElementById('combTotal'), yearly=document.getElementById('combYearly'),
+      rtmNote=document.getElementById('combRtmNote'), ccmNote=document.getElementById('combCcmNote'),
+      cpm=document.getElementById('combCpm'), pcm=document.getElementById('combPcm'), tcm=document.getElementById('combTcm'),
+      cpmOut=document.getElementById('combCpmOut'), pcmOut=document.getElementById('combPcmOut'), tcmOut=document.getElementById('combTcmOut'),
+      cpmRev=document.getElementById('combCpmRev'), pcmRev=document.getElementById('combPcmRev'), tcmRev=document.getElementById('combTcmRev'),
+      cpmNote=document.getElementById('combCpmNote'), pcmNote=document.getElementById('combPcmNote'), tcmNote=document.getElementById('combTcmNote');
+  if(!rtm || !ccm || !ccmTime) return;
+  var RTM_PER=99;
+  function money(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+  function calc(){
+    var rn=+rtm.value, cn=+ccm.value, cp=parseFloat(ccmTime.value);
+    var r=rn*RTM_PER, c=cn*cp;
+    rtmOut.textContent=rn; ccmOut.textContent=cn;
+    rtmRev.textContent=money(r); ccmRev.textContent=money(c);
+    total.textContent=money(r+c); yearly.textContent=money((r+c)*12);
+    rtmNote.textContent=rn+' patients × $99 full-tier average';
+    ccmNote.textContent=cn+' patients × ~$'+cp;
+    if(cpm && pcm && tcm){
+      var pn=+cpm.value, mn=+pcm.value, tn=+tcm.value;
+      cpmOut.textContent=pn; pcmOut.textContent=mn; tcmOut.textContent=tn;
+      cpmRev.textContent=money(pn*62); pcmRev.textContent=money(mn*72); tcmRev.textContent=money(tn*240);
+      cpmNote.textContent=pn+' patients × ~$62 (G3002)';
+      pcmNote.textContent=mn+' patients × ~$72 average';
+      tcmNote.textContent=tn+' discharges × ~$240 average';
+    }
+  }
+  rtm.addEventListener('input', calc);
+  ccm.addEventListener('input', calc);
+  ccmTime.addEventListener('change', calc);
+  if(cpm) cpm.addEventListener('input', calc);
+  if(pcm) pcm.addEventListener('input', calc);
+  if(tcm) tcm.addEventListener('input', calc);
+  document.querySelectorAll('[data-cscale]').forEach(function(b){
+    b.addEventListener('click', function(){
+      rtm.value=b.dataset.cscale; ccm.value=b.dataset.cscale; calc();
+    });
+  });
+  calc();
+})();
+</script>
+<script>
+(function(){
+  var head=document.getElementById('progScaleHead'),
+      rtmM=document.getElementById('rtmMonth'), rtmY=document.getElementById('rtmYear'),
+      ccmM=document.getElementById('ccmMonth'), ccmY=document.getElementById('ccmYear'),
+      cpmM=document.getElementById('cpmMonth'), cpmY=document.getElementById('cpmYear'),
+      pcmM=document.getElementById('pcmMonth'), pcmY=document.getElementById('pcmYear'),
+      combM=document.getElementById('combMonth'), combY=document.getElementById('combYear'),
+      btns=document.querySelectorAll('[data-tscale]');
+  if(!head || !rtmM || !btns.length) return;
+  function money(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+  function range(lo,hi,n,months){ return '~'+money(lo*n*months)+'–'+money(hi*n*months); }
+  function scale(n){
+    head.textContent=n+' patients / month';
+    rtmM.textContent=money(95*n)+'–'+money(105*n);
+    rtmY.textContent=range(95,105,n,12);
+    ccmM.textContent='~'+money(62*n);
+    ccmY.textContent='~'+money(62*n*12);
+    if(cpmM){ cpmM.textContent='~'+money(62*n); cpmY.textContent='~'+money(62*n*12); }
+    if(pcmM){ pcmM.textContent='~'+money(62*n)+'–'+money(83*n); pcmY.textContent=range(62,83,n,12); }
+    combM.textContent=range(157,167,n,1);
+    combY.textContent=range(157,167,n,12);
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', +b.dataset.tscale===n ? 'true':'false'); });
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ scale(+b.dataset.tscale); }); });
+  scale(100);
+})();
+</script>
+</body>
+</html>
